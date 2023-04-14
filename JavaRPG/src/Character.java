@@ -1,5 +1,5 @@
 public abstract class Character {
-	String name;
+	String nome;
 	int healthPoints;
 	int strength;
 	
