@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class GameLogic {
 	static Scanner sc = new Scanner(System.in);
 
-	static Player player; //creating a player
+	static Player player; // creating a player
 
 	// method to get input from console
 	public static int readInt(String prompt, int userChoices) {
@@ -12,23 +12,23 @@ public class GameLogic {
 			System.out.println(prompt);
 			try {
 				input = Integer.parseInt(sc.next());
-			} catch(Exception e ) {
+			} catch (Exception e) {
 				input = -1;
 				System.out.println("Por favor, entre com um número inteiro.");
 			}
-		} while(input < 1 || input > userChoices);
+		} while (input < 1 || input > userChoices);
 		return input;
 	}
 
 	// method to simulate a clear in the console
 	public static void clearConsole() {
-		for (int i = 0; i < 100; i++) 
+		for (int i = 0; i < 100; i++)
 			System.out.println();
 	}
 
 	// method to put a divider with size n
 	public static void printSeparator(int n) {
-		for(int i = 0; i < n; i++)
+		for (int i = 0; i < n; i++)
 			System.out.print("-");
 		System.out.println();
 	}
@@ -66,9 +66,9 @@ public class GameLogic {
 			clearConsole();
 			printHeading("Seu nome é: " + name + "\nEstá correto? (1)SIM (2)NÃO");
 			int input = readInt("->", 2);
-			if (input == 1) 
+			if (input == 1)
 				nameSet = true;
-		} while(!nameSet);
+		} while (!nameSet);
 
 		player = new Player(name);
 
@@ -90,7 +90,7 @@ public class GameLogic {
 			if (input == 1) {
 				continueJourney();
 				break;
-			} else if (input == 2){
+			} else if (input == 2) {
 				characterInfo();
 			} else {
 				break;
@@ -101,6 +101,7 @@ public class GameLogic {
 	public static void continueJourney() {
 		Story.intro();
 		Story.actI();
+		Combat.firstFight();
 	}
 
 	public static void characterInfo() {

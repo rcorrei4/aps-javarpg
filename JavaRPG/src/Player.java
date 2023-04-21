@@ -1,19 +1,20 @@
-public class Player extends Character{
+public class Player extends Character {
 
-	public int numAtkUpgrades, numDefUpgrades; 
-	
-	// 	Arrays para guardar os atributos/habilidades
-	public String[] atkUpgrades = {"Força", "Poder", "Arma Corporal"};
-	public String [] defUpgrades = {"Escudo","Droga p/ aumento de força", "Estimulante"};
+	public int numAtkUpgrades, numDefUpgrades;
+
+	// Arrays para guardar os atributos/habilidades
+	public String[] atkUpgrades = { "Força", "Poder", "Arma Corporal" };
+	public String[] defUpgrades = { "Escudo", "Droga p/ aumento de força", "Estimulante" };
+
 	public Player(String name) {
 		super(name, 100, 0);
-		// Setando upgrades para 0 
+		// Setando upgrades para 0
 		this.numAtkUpgrades = 0;
 		this.numDefUpgrades = 0;
 		// O jogador pode escolher uma habilidade
 		chooseTrait();
 	}
-	
+
 	@Override
 	public int attack() {
 		return 0;
@@ -23,7 +24,7 @@ public class Player extends Character{
 	public int defend() {
 		return 0;
 	}
-	
+
 	public void chooseTrait() {
 		GameLogic.clearConsole();
 		GameLogic.printHeading("Escolha uma habilidade: ");
@@ -33,14 +34,13 @@ public class Player extends Character{
 		System.out.println("(4) " + defUpgrades[0]);
 		System.out.println("(5) " + defUpgrades[1]);
 		System.out.println("(6) " + defUpgrades[2]);
-		
+
 		int input = GameLogic.readInt("-> ", 6);
 		GameLogic.clearConsole();
 		// lidando com os casos
 		if (input == 1) {
 			GameLogic.printHeading("Você escolheu: " + atkUpgrades[0] + "!");
-		}
-		else if (input == 2) {
+		} else if (input == 2) {
 			GameLogic.printHeading("Você escolheu: " + atkUpgrades[1] + "!");
 			numDefUpgrades++;
 		} else if (input == 3) {
@@ -55,7 +55,7 @@ public class Player extends Character{
 		} else if (input == 6) {
 			GameLogic.printHeading("Você escolheu: " + defUpgrades[2] + "!");
 			numDefUpgrades++;
-		} 
+		}
 		GameLogic.anythingToContinue();
 	}
 
