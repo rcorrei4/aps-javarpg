@@ -40,7 +40,7 @@ public class GameLogic {
 	}
 
 	public static void anythingToContinue() {
-		System.out.println("\nDigite algo para continuar...");
+		System.out.println("\nQuer continuar?");
 		sc.next();
 	}
 
@@ -102,5 +102,9 @@ public class GameLogic {
 
 	public static void characterInfo() {
 		// code to show the player's character info
+		System.out.println("Nome: " + player.name);
+		System.out.println("HP " + player.hp);
+		System.out.println("XP " + player.xp);
+
 	}
 }
