@@ -40,7 +40,7 @@ public class GameLogic {
 	}
 
 	public static void anythingToContinue() {
-		System.out.println("\nQuer continuar?");
+		System.out.println("\nDigite qualquer coisa para continuar...");
 		sc.next();
 	}
 
@@ -64,7 +64,7 @@ public class GameLogic {
 			name = sc.next();
 
 			clearConsole();
-			printHeading("Seu nome é: " + name + "\nEstá correto?");
+			printHeading("Seu nome é: " + name + "\nEstá correto? (1)SIM (2)NÃO");
 			int input = readInt("->", 2);
 			if (input == 1) 
 				nameSet = true;
@@ -89,6 +89,7 @@ public class GameLogic {
 			int input = readInt("->", 2);
 			if (input == 1) {
 				continueJourney();
+				break;
 			} else if (input == 2){
 				characterInfo();
 			} else {
@@ -98,13 +99,16 @@ public class GameLogic {
 	}
 
 	public static void continueJourney() {
+		Story.intro();
+		Story.actI();
 	}
 
 	public static void characterInfo() {
 		// code to show the player's character info
+		printHeading("Informações do personagem");
 		System.out.println("Nome: " + player.name);
 		System.out.println("HP " + player.hp);
 		System.out.println("XP " + player.xp);
-
+		printSeparator(30);
 	}
 }
