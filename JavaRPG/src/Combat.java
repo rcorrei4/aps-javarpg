@@ -1,8 +1,5 @@
-public class Combat {
-    public static void firstFight() {
-        Enemies inimigo1 = new WeakEnemies("Jorge", 100, false);
+//import java.util.Random;
 
-        inimigo1.chooseTraitsEnemies();
-    }
+public class Combat {
 
 }
