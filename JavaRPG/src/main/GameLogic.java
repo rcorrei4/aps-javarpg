@@ -1,3 +1,45 @@
+package main;
+
+import gui.Window;
+
+public class GameLogic {
+	private static int gameState = 0;
+	private static int gameStateLvl = 0;
+	
+	// method to start the game
+	public static void startGame() {
+		System.out.println(gameStateLvl);
+		if (gameStateLvl == 0) {	
+			Window.setDisplayText("Qual o seu nome?");
+		} else if (gameStateLvl == 1) {
+			Window.setDisplayText("Seu nome é: " + Window.getUserInput() + "\nEstá correto? (1)SIM (2)NÃO");
+		} else if (gameStateLvl == 2) {
+			if (Window.getUserInput().equals("1")) {
+				gameState += 1;
+				gameStateLvl = 0;
+				menu();
+			} else {
+				gameStateLvl = 0;
+				startGame();
+			}
+		}
+		gameStateLvl += 1;
+	}
+	
+	public static void menu() {
+		Window.setDisplayText("Teste");
+	}
+	
+	public static void handleUserInput() {
+		if (gameState == 0) {
+			startGame();
+		} else if (gameState == 1) {
+			menu();
+		}
+	}
+}
+
+/*
 import java.util.Scanner;
 import java.util.Random;
 
@@ -115,7 +157,7 @@ public class GameLogic {
 	 * GameLogic.anythingToContinue();
 	 * battle(weakEnemies);
 	 * }
-	 */
+	 
 
 	public static void battle() {
 		// main loop
@@ -166,3 +208,4 @@ public class GameLogic {
 		battle();
 	}
 }
+*/

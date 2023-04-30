@@ -1,3 +1,4 @@
+package main;
 public class Story {
     public static void intro() {
         GameLogic.clearConsole();

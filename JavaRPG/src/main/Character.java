@@ -1,3 +1,4 @@
+package main;
 public abstract class Character {
 
 	// Variáveis / Atributos que todos os personagens devem ter

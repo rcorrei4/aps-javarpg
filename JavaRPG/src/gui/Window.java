@@ -1,19 +1,64 @@
 package gui;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class Window {
-	public static void createWindow() {  
-		JFrame f=new JFrame();
-		          
-		JButton b=new JButton("click");
-		b.setBounds(150,100,100, 40);//x axis, y axis, width, height  
-		          
-		f.add(b);
-		          
-		f.setSize(500,400);//400 width and 500 height  
-		f.setLayout(null);
-		f.setVisible(true);
+import javax.swing.JFrame;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
+import main.GameLogic;
+
+public class Window implements ActionListener {
+	public static JFrame frame;
+	public static JTextArea displayText;
+	public static JTextField input;
+	public static String userInput;
+	
+	public Window () {
+		frame = new JFrame("JavaRPG");
+		displayText = new JTextArea();
+		input  = new JTextField();
+		userInput = "";
 	}
+	
+	public void createWindow() {
+		displayText.setBounds(15,15, 450,200);  
+		displayText.setWrapStyleWord(true);
+		displayText.setLineWrap(true);
+		displayText.setEditable(false); 
+		frame.add(displayText); 
+		frame.getContentPane().setBackground(new Color(50, 50, 50));
+		
+		input.setBounds(15,230,450,50);
+		input.addActionListener(this);
+		
+		frame.add(input);
+		
+		frame.setSize(500,350);  
+		frame.setLayout(null);
+		frame.setVisible(true);
+    }
+	
+	public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == input) {
+        	setUserInput();
+            GameLogic.handleUserInput();
+        }
+    }
+	
+	public static void setDisplayText(String text) {
+		displayText.setText(text);
+	}
+	
+	public static void setUserInput() {
+		userInput = input.getText();
+		input.setText("");
+	}
+	
+	public static String getUserInput() {
+		return userInput;
+	}
+	
 }
