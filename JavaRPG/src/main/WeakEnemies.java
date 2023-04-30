@@ -1,4 +1,5 @@
 package main;
+
 import java.util.Random;
 
 public class WeakEnemies extends Enemy {
@@ -17,18 +18,16 @@ public class WeakEnemies extends Enemy {
         int Choose = random.nextInt(3);
         if (Choose == 1) {
             System.out.println("Inimigo ataca! " + enemieAction[0]);
-            GameLogic.player.hp -= 30;
+            // GameLogic.player.hp -= 30;
             System.out.println("Você tomou 30 de dano!");
         } else if (Choose == 2) {
             System.out.println("Inimigo Defendeu! " + enemieAction[1]);
         } else {
             System.out.println("Inimigo usou Especial! " + enemieAction[2]);
-            GameLogic.player.hp -= 60;
+            // GameLogic.player.hp -= 60;
             System.out.println("Você tomou 60 de dano!");
         }
 
-        GameLogic.anythingToContinue();
-        GameLogic.clearConsole();
     }
 
 }
