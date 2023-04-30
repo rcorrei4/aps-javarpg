@@ -1,7 +1,6 @@
 package main;
 
 import gui.Window;
-import main.GameLogic;
 import java.util.HashMap;
 
 import java.util.Map;
@@ -9,11 +8,9 @@ import java.util.Map;
 public class Main {
 
 	public static void main(String[] args) {
-		GameLogic game = new GameLogic();
 		Window window = new Window();
 
 		window.createWindow();
-		game.startGame();
 
 		Map<String, Runnable> gameMap = new HashMap<>();
 		gameMap.put("startGame", GameLogic::startGame);

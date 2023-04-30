@@ -26,6 +26,15 @@ public class GameLogic {
 
 	// player = new Player(name);
 
+	public static void handleUserInput() {
+		if (gameState == 0) {
+			startGame();
+		} else if (gameState == 1) {
+			printMenu();
+		} else if (gameState == 2) {
+			continueJourney();
+		}
+	}
 	// method to start the game
 	public static void startGame() {
 		System.out.println(gameStateLvl);
@@ -37,23 +46,35 @@ public class GameLogic {
 			if (Window.getUserInput().equals("1")) {
 				gameState += 1;
 				gameStateLvl = 0;
-				menu();
+				handleUserInput();
 			} else {
 				gameStateLvl = 0;
-				startGame();
+				handleUserInput();
 			}
 		}
-		gameStateLvl += 1;
+		gameStateLvl++;
 	}
 
 	public static void printMenu() {
-		Window.setDisplayText("(1) Continuar Jornada\n(2) Informações do Personagem");
+		if(gameStateLvl == 0) {
+			Window.setDisplayText("(1) Continuar Jornada\n(2) Informações do Personagem");
+		} else if (gameStateLvl == 1) {
+			if(Window.getUserInput().equals("1")){
+				gameState = 2;
+				gameStateLvl = 0;
+				handleUserInput();
+			} else if (Window.getUserInput().equals("2")) {
+				// Window.setDisplayText("Informações do personagem" + "Nome: " + player.name + "\nHP: " + player.hp + "\nXP: " + player.xp);
+				Window.setDisplayText("teste");
+			}
+		}
+		gameStateLvl++;
+			
 	}
 
 	public static void characterInfo() {
 		// code to show the player's character info
-		Window.setDisplayText("Informações do personagem");
-		Window.setDisplayText("Nome: " + player.name + "\nHP: " + player.hp + "\nXP: " + player.xp);
+		
 
 	}
 
@@ -107,13 +128,7 @@ public class GameLogic {
 		Window.setDisplayText("Teste");
 	}
 
-	public static void handleUserInput() {
-		if (gameState == 0) {
-			startGame();
-		} else if (gameState == 1) {
-			menu();
-		}
-	}
+	
 }
 
 /*
