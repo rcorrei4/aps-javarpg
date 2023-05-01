@@ -5,21 +5,22 @@ import java.util.HashMap;
 
 import java.util.Map;
 
-public class Main {
+public class Main{
+	static Map<Integer, Runnable> gameMap = new HashMap<>();
 
 	public static void main(String[] args) {
 		Window window = new Window();
 
 		window.createWindow();
 
-		Map<String, Runnable> gameMap = new HashMap<>();
-		gameMap.put("startGame", GameLogic::startGame);
-		gameMap.put("printMenu", GameLogic::printMenu);
-		gameMap.put("characterInfo", GameLogic::characterInfo);
-		gameMap.put("continueJourney", GameLogic::continueJourney);
-		gameMap.put("randomBattle", () -> GameLogic.randomBattle(new WeakEnemies("Jorge", 100, 100, 0)));
+		
+		gameMap.put(0, GameLogic::startGame);
+		gameMap.put(1, GameLogic::printMenu);
+		gameMap.put(2, GameLogic::characterInfo);
+		gameMap.put(3, GameLogic::continueJourney);
+		gameMap.put(4, () -> GameLogic.randomBattle(new WeakEnemies("Jorge", 100, 100, 0)));
 
-		String userInput = "startGame"; // example userInput
+		int userInput = 0; // example userInput
 
 		// invoke the method based on the userInput
 		if (gameMap.containsKey(userInput)) {

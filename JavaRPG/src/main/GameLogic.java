@@ -26,56 +26,55 @@ public class GameLogic {
 
 	// player = new Player(name);
 
-	public static void handleUserInput() {
-		if (gameState == 0) {
-			startGame();
-		} else if (gameState == 1) {
-			printMenu();
-		} else if (gameState == 2) {
-			continueJourney();
+	public static void handleUserInput(boolean resetGameStateLvl, boolean nextGameState) {
+		if(resetGameStateLvl) {
+			gameStateLvl = 0;
+		} else {
+			gameStateLvl++;
 		}
+
+		if(nextGameState) {
+			gameState++;
+		}
+		Main.gameMap.get(gameState).run();
 	}
+
+	public static void handleUserInput() {
+		gameStateLvl++;
+		Main.gameMap.get(gameState).run();
+	}
+
 	// method to start the game
 	public static void startGame() {
-		System.out.println(gameStateLvl);
 		if (gameStateLvl == 0) {
 			Window.setDisplayText("Qual o seu nome?");
 		} else if (gameStateLvl == 1) {
 			Window.setDisplayText("Seu nome é: " + Window.getUserInput() + "\nEstá correto? (1)SIM (2)NÃO");
 		} else if (gameStateLvl == 2) {
 			if (Window.getUserInput().equals("1")) {
-				gameState += 1;
-				gameStateLvl = 0;
-				handleUserInput();
+				handleUserInput(true, true);
 			} else {
-				gameStateLvl = 0;
-				handleUserInput();
+				handleUserInput(true, false);
 			}
 		}
-		gameStateLvl++;
 	}
 
 	public static void printMenu() {
 		if(gameStateLvl == 0) {
+			gameStateLvl++;
 			Window.setDisplayText("(1) Continuar Jornada\n(2) Informações do Personagem");
 		} else if (gameStateLvl == 1) {
 			if(Window.getUserInput().equals("1")){
-				gameState = 2;
-				gameStateLvl = 0;
-				handleUserInput();
+				Window.setDisplayText("teste1");
 			} else if (Window.getUserInput().equals("2")) {
 				// Window.setDisplayText("Informações do personagem" + "Nome: " + player.name + "\nHP: " + player.hp + "\nXP: " + player.xp);
-				Window.setDisplayText("teste");
+				Window.setDisplayText("teste2");
 			}
 		}
-		gameStateLvl++;
-			
 	}
 
 	public static void characterInfo() {
-		// code to show the player's character info
 		
-
 	}
 
 	public static void randomBattle(Enemy weakEnemies) {
