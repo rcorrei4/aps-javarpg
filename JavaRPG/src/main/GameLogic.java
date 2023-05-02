@@ -1,14 +1,13 @@
 package main;
 
 import java.util.Random;
-
 import gui.Window;
 
 public class GameLogic {
 	private static int gameState = 0;
 	private static int gameStateLvl = 0;
 
-	static Player player; // creating a player
+	static Player player = null; // creating a player
 
 	public static int readInt(String prompt, int userChoices) {
 		int input;
@@ -24,7 +23,7 @@ public class GameLogic {
 		return input;
 	}
 
-	// Method called when user press ENTER and goes to the next gameState
+	// Method called when user press ENTER or is called manually, goes to the next gameStateLvl
 	public static void handleUserInput() {
 		gameStateLvl++;
 		Main.gameMap.get(gameState).run();
@@ -49,12 +48,20 @@ public class GameLogic {
 		if (gameStateLvl == 0) {
 			Window.setDisplayText("Qual o seu nome?");
 		} else if (gameStateLvl == 1) {
-			player = new Player(Window.getUserInput());
-			Window.setDisplayText("Seu nome é: " + Window.getUserInput() + "\nEstá correto? (1)SIM (2)NÃO");
+			if(!Window.getUserInput().isEmpty()) {
+				player = new Player(Window.getUserInput());
+				Window.setDisplayText("Seu nome é: " + Window.getUserInput() + "\nEstá correto? (1)SIM (2)NÃO");
+			} else {
+				Window.setDisplayText("Nome não pode ficar vazio!");
+			}
 		} else if (gameStateLvl == 2) {
+			if(player != null) {
 			// If name is correct continue, if not do all over again
-			if (Window.getUserInput().equals("1")) {
-				handleUserInput(true, true);
+				if (Window.getUserInput().equals("1")) {
+					handleUserInput(true, true);
+				} else {
+					handleUserInput(true, false);
+				}
 			} else {
 				handleUserInput(true, false);
 			}
@@ -89,7 +96,6 @@ public class GameLogic {
 	public static void battle() {
 		// main loop
 		while (true) {
-
 			WeakEnemies enemy1 = new WeakEnemies("Jorge", 100, 100, 0);
 			Window.setDisplayText(enemy1.name + "\nHP " + enemy1.hp + "/" + enemy1.maxHp + player.name + "\nHP "
 					+ player.hp + "/" + player.maxHp + "Escolha uma ação: "

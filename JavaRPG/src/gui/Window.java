@@ -51,6 +51,7 @@ public class Window implements ActionListener {
         }
     }
 	
+	// Add typewriter effect later
 	public static void setDisplayText(String text) {
 		displayText.setText(text);
 	}
