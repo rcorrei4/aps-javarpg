@@ -24,8 +24,14 @@ public class GameLogic {
 		return input;
 	}
 
-	// player = new Player(name);
+	// Method called when user press ENTER and goes to the next gameState
+	public static void handleUserInput() {
+		gameStateLvl++;
+		Main.gameMap.get(gameState).run();
+	}
 
+	/* Another method when user press ENTER but with the options to reset the gameStateLvl
+	and going to the next gameState */
 	public static void handleUserInput(boolean resetGameStateLvl, boolean nextGameState) {
 		if(resetGameStateLvl) {
 			gameStateLvl = 0;
@@ -39,18 +45,14 @@ public class GameLogic {
 		Main.gameMap.get(gameState).run();
 	}
 
-	public static void handleUserInput() {
-		gameStateLvl++;
-		Main.gameMap.get(gameState).run();
-	}
-
-	// method to start the game
 	public static void startGame() {
 		if (gameStateLvl == 0) {
 			Window.setDisplayText("Qual o seu nome?");
 		} else if (gameStateLvl == 1) {
+			player = new Player(Window.getUserInput());
 			Window.setDisplayText("Seu nome é: " + Window.getUserInput() + "\nEstá correto? (1)SIM (2)NÃO");
 		} else if (gameStateLvl == 2) {
+			// If name is correct continue, if not do all over again
 			if (Window.getUserInput().equals("1")) {
 				handleUserInput(true, true);
 			} else {
@@ -61,20 +63,22 @@ public class GameLogic {
 
 	public static void printMenu() {
 		if(gameStateLvl == 0) {
-			gameStateLvl++;
 			Window.setDisplayText("(1) Continuar Jornada\n(2) Informações do Personagem");
 		} else if (gameStateLvl == 1) {
 			if(Window.getUserInput().equals("1")){
-				Window.setDisplayText("teste1");
+				handleUserInput(true, true);
 			} else if (Window.getUserInput().equals("2")) {
-				// Window.setDisplayText("Informações do personagem" + "Nome: " + player.name + "\nHP: " + player.hp + "\nXP: " + player.xp);
-				Window.setDisplayText("teste2");
+				characterInfo();
 			}
 		}
 	}
 
 	public static void characterInfo() {
-		
+		gameStateLvl -= 2;
+		Window.setDisplayText(
+			"Informações do personagem:" + 
+			"\n\nNome: " + player.name
+		);
 	}
 
 	public static void randomBattle(Enemy weakEnemies) {
@@ -118,13 +122,13 @@ public class GameLogic {
 	}
 
 	public static void continueJourney() {
-		Story.intro();
-		Story.actI();
-		battle();
-	}
-
-	public static void menu() {
-		Window.setDisplayText("Teste");
+		if(gameStateLvl == 0) {
+			Story.intro();
+		} else if (gameStateLvl == 1) {
+			Story.actI();
+		} else if (gameStateLvl == 2) {
+			Story.actI_1();
+		}
 	}
 
 	

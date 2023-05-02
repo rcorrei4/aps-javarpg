@@ -3,6 +3,7 @@ package gui;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.Insets;
 
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
@@ -20,7 +21,6 @@ public class Window implements ActionListener {
 		frame = new JFrame("JavaRPG");
 		displayText = new JTextArea();
 		input  = new JTextField();
-		userInput = "";
 	}
 	
 	public void createWindow() {
@@ -28,10 +28,12 @@ public class Window implements ActionListener {
 		displayText.setWrapStyleWord(true);
 		displayText.setLineWrap(true);
 		displayText.setEditable(false); 
+		displayText.setMargin(new Insets(5,5,5,5));
 		frame.add(displayText); 
 		frame.getContentPane().setBackground(new Color(50, 50, 50));
 		
 		input.setBounds(15,230,450,50);
+		input.setMargin(new Insets(5,5,5,5));
 		input.addActionListener(this);
 		
 		frame.add(input);
@@ -43,18 +45,14 @@ public class Window implements ActionListener {
 	
 	public void actionPerformed(ActionEvent e) {
         if (e.getSource() == input) {
-        	setUserInput();
+        	userInput = input.getText();
+			input.setText("");
             GameLogic.handleUserInput();
         }
     }
 	
 	public static void setDisplayText(String text) {
 		displayText.setText(text);
-	}
-	
-	public static void setUserInput() {
-		userInput = input.getText();
-		input.setText("");
 	}
 	
 	public static String getUserInput() {

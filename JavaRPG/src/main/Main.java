@@ -13,11 +13,11 @@ public class Main{
 
 		window.createWindow();
 
-		
+		// Hashmap for the gameLvls
 		gameMap.put(0, GameLogic::startGame);
 		gameMap.put(1, GameLogic::printMenu);
-		gameMap.put(2, GameLogic::characterInfo);
-		gameMap.put(3, GameLogic::continueJourney);
+		gameMap.put(2, GameLogic::continueJourney);
+		gameMap.put(3, GameLogic::characterInfo);
 		gameMap.put(4, () -> GameLogic.randomBattle(new WeakEnemies("Jorge", 100, 100, 0)));
 
 		int userInput = 0; // example userInput
