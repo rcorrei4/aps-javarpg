@@ -74,23 +74,30 @@ public class GameLogic {
 		} else if (gameStateLvl == 1) {
 			if(Window.getUserInput().equals("1")){
 				handleUserInput(true, true);
+				continueJourney();
 			} else if (Window.getUserInput().equals("2")) {
 				characterInfo();
 			}
+			
 		}
 	}
 
 	public static void characterInfo() {
-		gameStateLvl -= 2;
+		gameStateLvl -= 2; // não entendi
 		Window.setDisplayText(
 			"Informações do personagem:" + 
-			"\n\nNome: " + player.name
+			"\n\nNome: " + player.name + "\nHP:" + player.hp + "\nXP:" + player.xp
 		);
-	}
+			handleUserInput(true, true);
+		}
+	
 
 	public static void randomBattle(Enemy weakEnemies) {
-		Window.setDisplayText("Você encontrou os mercenários. Lute!");
-		battle();
+		if(gameStateLvl == 0){
+			Window.setDisplayText("Você encontrou os mercenários. Lute!");
+		}else if (gameStateLvl == 1){
+			battle();
+		}
 	}
 
 	public static void battle() {
@@ -134,6 +141,8 @@ public class GameLogic {
 			Story.actI();
 		} else if (gameStateLvl == 2) {
 			Story.actI_1();
+		} else if(gameStateLvl == 3) {
+			battle();
 		}
 	}
 
