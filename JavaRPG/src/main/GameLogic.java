@@ -9,20 +9,6 @@ public class GameLogic {
 
 	static Player player = null; // creating a player
 
-	public static int readInt(String prompt, int userChoices) {
-		int input;
-		do {
-			Window.setDisplayText(prompt);
-			try {
-				input = Integer.parseInt(Window.getUserInput());
-			} catch (Exception e) {
-				input = -1;
-				Window.setDisplayText("Por favor, entre com um número inteiro.");
-			}
-		} while (input < 1 || input > userChoices);
-		return input;
-	}
-
 	// Method called when user press ENTER or is called manually, goes to the next gameStateLvl
 	public static void handleUserInput() {
 		gameStateLvl++;
@@ -45,16 +31,34 @@ public class GameLogic {
 	}
 
 	public static void startGame() {
-		if (gameStateLvl == 0) {
+		if(gameStateLvl == 0) {
+			Window.setDisplayText("(1) Criar novo jogo\n (2)");
+			if(Window.getUserInput().equals("1")){
+				//txt
+			} else if (Window.getUserInput().equals("2")){
+				
+				continueJourney();
+			}
+		}else if (gameStateLvl == 1) {
+			if(Window.getUserInput().equals("1")){
+				handleUserInput(true, true);
+				saveGame();
+				continueJourney();
+			} else if(Window.getUserInput().equals("2")){
+				//printa comandos básicos do game
+				Window.setDisplayText("Comandos");
+				handleUserInput(true, false);	
+			}
+		} else if (gameStateLvl == 2) {			
 			Window.setDisplayText("Qual o seu nome?");
-		} else if (gameStateLvl == 1) {
+		} else if (gameStateLvl == 3) {
 			if(!Window.getUserInput().isEmpty()) {
 				player = new Player(Window.getUserInput());
 				Window.setDisplayText("Seu nome é: " + Window.getUserInput() + "\nEstá correto? (1)SIM (2)NÃO");
 			} else {
 				Window.setDisplayText("Nome não pode ficar vazio!");
 			}
-		} else if (gameStateLvl == 2) {
+		} else if (gameStateLvl == 4) {
 			if(player != null) {
 			// If name is correct continue, if not do all over again
 				if (Window.getUserInput().equals("1")) {
@@ -62,34 +66,22 @@ public class GameLogic {
 				} else {
 					handleUserInput(true, false);
 				}
-			} else {
-				handleUserInput(true, false);
+				} else {
+					handleUserInput(true, false);
 			}
 		}
 	}
 
-	public static void printMenu() {
-		if(gameStateLvl == 0) {
-			Window.setDisplayText("(1) Continuar Jornada\n(2) Informações do Personagem");
-		} else if (gameStateLvl == 1) {
-			if(Window.getUserInput().equals("1")){
-				handleUserInput(true, true);
-				continueJourney();
-			} else if (Window.getUserInput().equals("2")) {
-				characterInfo();
-			}
-			
-		}
+	public static void saveGame(){
 	}
 
 	public static void characterInfo() {
-		gameStateLvl -= 2; // não entendi
 		Window.setDisplayText(
 			"Informações do personagem:" + 
 			"\n\nNome: " + player.name + "\nHP:" + player.hp + "\nXP:" + player.xp
 		);
-			handleUserInput(true, true);
-		}
+		gameStateLvl -= 1;
+	}
 	
 
 	public static void randomBattle(Enemy weakEnemies) {
@@ -99,7 +91,7 @@ public class GameLogic {
 			battle();
 		}
 	}
-
+	
 	public static void battle() {
 		// main loop
 		while (true) {

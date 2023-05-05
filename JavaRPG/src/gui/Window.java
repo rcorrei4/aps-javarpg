@@ -27,7 +27,7 @@ public class Window implements ActionListener {
 		displayText.setBounds(15,15, 450,200);  
 		displayText.setWrapStyleWord(true);
 		displayText.setLineWrap(true);
-		displayText.setEditable(false); 
+		displayText.setEditable(false);
 		displayText.setMargin(new Insets(5,5,5,5));
 		frame.add(displayText); 
 		frame.getContentPane().setBackground(new Color(50, 50, 50));
@@ -35,7 +35,7 @@ public class Window implements ActionListener {
 		input.setBounds(15,230,450,50);
 		input.setMargin(new Insets(5,5,5,5));
 		input.addActionListener(this);
-		
+	
 		frame.add(input);
 		
 		frame.setSize(500,350);  
@@ -47,7 +47,11 @@ public class Window implements ActionListener {
         if (e.getSource() == input) {
         	userInput = input.getText();
 			input.setText("");
-            GameLogic.handleUserInput();
+			if (getUserInput().equals("menu")){
+				GameLogic.characterInfo();
+			} else {
+				GameLogic.handleUserInput();
+			}
         }
     }
 	
