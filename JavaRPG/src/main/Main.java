@@ -15,11 +15,11 @@ public class Main {
 
 		// Hashmap for the gameLvls
 		gameMap.put(0, GameLogic::startGame);
-		gameMap.put(1, GameLogic::continueJourney);
-		gameMap.put(2, GameLogic::characterInfo);
+		gameMap.put(1, GameLogic::saveGame);
+		gameMap.put(2, GameLogic::continueJourney);
+		// gameMap.put(3, GameLogic::characterInfo);
 		gameMap.put(3, () -> GameLogic.randomBattle(new WeakEnemies("Jorge", 100, 100, 0)));
-
-		int userInput = 0; // example userInput
+		int userInput = 0; // example userInpu4
 
 		// invoke the method based on the userInput
 		if (gameMap.containsKey(userInput)) {

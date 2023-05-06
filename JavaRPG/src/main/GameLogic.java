@@ -39,58 +39,34 @@ public class GameLogic {
 			Window.setDisplayText("(1) Criar novo jogo\n(2) Carregar Jogo");
 		} else if (gameStateLvl == 1) {
 			if (Window.getUserInput() != null && Window.getUserInput().equals("1")) {
-				Window.setDisplayText("Digite seu nome: ");
-				// handleUserInput(true, true);
-			} else if (!Window.getUserInput().isEmpty()) {
+				handleUserInput(true, true);
+			} else if (Window.getUserInput() != null && Window.getUserInput().equals("2")) {
+				continueJourney();
+			}
+		}
+	}
+
+	public static void saveGame() {
+		if (gameStateLvl == 0) {
+			Window.setDisplayText("Digite seu nome: ");
+		} else if (gameStateLvl == 1) {
+			if (!Window.getUserInput().isEmpty()) {
 				player = new Player(Window.getUserInput());
 				Window.setDisplayText("Seu nome é: " + Window.getUserInput() + "\nEstá correto? (1) Sim (2)Não");
 			} else {
-				Window.setDisplayText("Nome não pode ficar vazio!");
+				handleUserInput(true, false);
 			}
-		} else if (gameStateLvl == 3) {
+		} else if (gameStateLvl == 2) {
 			if (player != null) {
 				if (Window.getUserInput() != null && Window.getUserInput().equals("1")) {
 					handleUserInput(true, true);
 				} else {
 					handleUserInput(true, false);
 				}
+			} else {
+				handleUserInput(true, false);
 			}
-		} else {
-			handleUserInput(true, false);
 		}
-	}
-	/*
-	 * public static void startGame() {
-	 * if (gameStateLvl == 0) {
-	 * handleUserInput(true, true);
-	 * Window.setDisplayText("(1) Criar novo jogo\n(2)Carregar jogo");
-	 * if (Window.getUserInput().equals("1")) {
-	 * Window.setDisplayText("Qual seu nome? ");
-	 * } else if (!Window.getUserInput().isEmpty()) {
-	 * player = new Player(Window.getUserInput());
-	 * Window.setDisplayText("Seu nome é: " + Window.getUserInput() +
-	 * "\nEstá correto? (1) SIM (2) NÃO");
-	 * } else {
-	 * Window.setDisplayText("Nome não pode ficar vazio!");
-	 * }
-	 * } else if (gameStateLvl == 2) {
-	 * if (player != null) {
-	 * if (Window.getUserInput().equals("1")) {
-	 * handleUserInput(true, true);
-	 * } else {
-	 * handleUserInput(true, false);
-	 * }
-	 * } else {
-	 * handleUserInput(true, false);
-	 * }
-	 * 
-	 * }
-	 * 
-	 * }
-	 */
-
-	public static void saveGame() {
-
 	}
 
 	public static void characterInfo() {
