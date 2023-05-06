@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 import java.util.Map;
 
-public class Main{
+public class Main {
 	static Map<Integer, Runnable> gameMap = new HashMap<>();
 
 	public static void main(String[] args) {

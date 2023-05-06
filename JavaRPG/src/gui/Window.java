@@ -16,52 +16,52 @@ public class Window implements ActionListener {
 	public static JTextArea displayText;
 	public static JTextField input;
 	public static String userInput;
-	
-	public Window () {
+
+	public Window() {
 		frame = new JFrame("JavaRPG");
 		displayText = new JTextArea();
-		input  = new JTextField();
+		input = new JTextField();
 	}
-	
+
 	public void createWindow() {
-		displayText.setBounds(15,15, 450,200);  
+		displayText.setBounds(15, 15, 450, 200);
 		displayText.setWrapStyleWord(true);
 		displayText.setLineWrap(true);
 		displayText.setEditable(false);
-		displayText.setMargin(new Insets(5,5,5,5));
-		frame.add(displayText); 
+		displayText.setMargin(new Insets(5, 5, 5, 5));
+		frame.add(displayText);
 		frame.getContentPane().setBackground(new Color(50, 50, 50));
-		
-		input.setBounds(15,230,450,50);
-		input.setMargin(new Insets(5,5,5,5));
+
+		input.setBounds(15, 230, 450, 50);
+		input.setMargin(new Insets(5, 5, 5, 5));
 		input.addActionListener(this);
-	
+
 		frame.add(input);
-		
-		frame.setSize(500,350);  
+
+		frame.setSize(500, 350);
 		frame.setLayout(null);
 		frame.setVisible(true);
-    }
-	
+	}
+
 	public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == input) {
-        	userInput = input.getText();
+		if (e.getSource() == input) {
+			userInput = input.getText();
 			input.setText("");
-			if (getUserInput().equals("menu")){
+			if (getUserInput().equals("menu")) {
 				GameLogic.characterInfo();
 			} else {
 				GameLogic.handleUserInput();
 			}
-        }
-    }
-	
+		}
+	}
+
 	// Add typewriter effect later
 	public static void setDisplayText(String text) {
 		displayText.setText(text);
 	}
-	
+
 	public static String getUserInput() {
 		return userInput;
 	}
-	
+
 }
