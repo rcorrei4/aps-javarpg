@@ -10,8 +10,8 @@ public class Player extends Character {
 	public String[] atkUpgrades = { "Arma Corporal", "Espada", "Metralhadora" };
 	public String[] defUpgrades = { "Escudo", "Droga p/ aumento de força", "Estimulante" };
 
-	public Player(String name) {
-		super(name, 100, 100, 0);
+	public Player(String name, int hp, int maxHp, int xp, int atkDamage) {
+		super(name, hp, maxHp, xp, atkDamage);
 		// Setando upgrades para 0
 		this.numAtkUpgrades = 0;
 		this.numDefUpgrades = 0;
@@ -20,13 +20,16 @@ public class Player extends Character {
 	}
 
 	@Override
-	public int attack() {
-		return 0;
-
+	public int attack () {
+		return atkDamage;
+	}
+	@Override
+	public int defend () {
+		return 10 % maxHp;
 	}
 
 	@Override
-	public int defend() {
+	public int useItem () {
 		return 0;
 	}
 
