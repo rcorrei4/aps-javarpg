@@ -92,10 +92,12 @@ public class GameLogic {
 		} else if (gameStateLvl == 4) {
 			if (player.hp <= 0) {
 				player.hp = player.maxHp;
-				handleUserInput(true, true);
+				gameStateLvl++;
 			} else {
 				battle(currentEnemy);
 			}
+		} else if (gameStateLvl == 5) {
+			Story.actII_2();
 		}
 	}
 
@@ -172,10 +174,6 @@ public class GameLogic {
 			);
 			return;
 		}
-	}
-	
-	public static void teste () {
-		System.out.println("blablabla");
 	}
 
 	private static boolean tryToEscape() {
