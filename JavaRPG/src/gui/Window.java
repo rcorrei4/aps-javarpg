@@ -53,6 +53,7 @@ public class Window implements ActionListener {
 				GameLogic.handleUserInput();
 			}
 		}
+		input.requestFocus();
 	}
 
 	// Add typewriter effect later

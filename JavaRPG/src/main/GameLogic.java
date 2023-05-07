@@ -6,6 +6,8 @@ import gui.Window;
 public class GameLogic {
 	private static int gameState = 0;
 	private static int gameStateLvl = 0;
+	private static Enemy currentEnemy;
+	private static String previousWindowText;
 
 	static Player player = null; // creating a player
 
@@ -86,69 +88,89 @@ public class GameLogic {
 			Story.actI_1();
 		} else if (gameStateLvl == 3) {
 			Window.setDisplayText("Você encontrou os mercenários. Lute!");
+			currentEnemy = new Enemy("Mercenários", 100, 100, 0, 2);
 		} else if (gameStateLvl == 4) {
-			System.out.println("teste");
 			if (player.hp <= 0) {
 				player.hp = player.maxHp;
 				handleUserInput(true, true);
 			} else {
-				Enemy enemy1 = new Enemy("Mercenários", 1, 1, 0, 2);
-				battle(enemy1);
+				battle(currentEnemy);
 			}
 		}
 	}
 
 	public static void battle(Enemy enemy) {
 		gameStateLvl -= 1;
-		int action = enemy.randomAction();
-		Window.setDisplayText(
-			enemy.name + "\nHP:" + enemy.hp + "/" + enemy.maxHp +
-			"\n\n\nNome: " + player.name + "\nHP:" + player.hp + "/" + player.maxHp + "\nXP:" + player.xp +
-			"\n\nAtacar (1) - Defender-se (2) - Utilizar item (3)"
-		);
+		battleRound(enemy);
+	}
 
-		String input = Window.getUserInput();
-		int playerAction = Integer.parseInt(input);
-		int enemyAction = enemy.randomAction();
+	public static void battleRound(Enemy enemy) {
+		previousWindowText = "";
 
-		switch (playerAction) {
-			case 1:
-				int damageToEnemy = player.attack();
-				enemy.hp -= damageToEnemy;
-				Window.setDisplayText("Você atacou " + enemy.name + " causando " + damageToEnemy + " de dano!");
-				if (enemy.hp <= 0) {
-					Window.setDisplayText(enemy.name + " foi derrotado!");
-					return;
-				}
+		try {
+			String input = Window.getUserInput();
+			int playerAction = Integer.parseInt(input);
 
-				int damageToPlayer = enemy.attack();
-				player.hp -= damageToPlayer;
-				Window.setDisplayText(enemy.name + " contra-atacou causando " + damageToPlayer + " de dano!");
-				if (player.hp <= 0) {
-					Window.setDisplayText("Você foi derrotado!");
-					return;
-				}
-				break;
-			case 2:
-				int defense = player.defend();
-				Window.setDisplayText("Você se defendeu e ganhou " + defense + " pontos de defesa!");
-				int enemyDamage = enemy.attack() - defense;
-				if (enemyDamage < 0) {
-					enemyDamage = 0;
-				}
-				player.hp -= enemyDamage;
-				Window.setDisplayText(enemy.name + " atacou mas você se defendeu. Recebeu " + enemyDamage + " de dano!");
-				if (player.hp <= 0) {
-					Window.setDisplayText("Você foi derrotado!");
-					return;
-				}
-				break;
-			case 3:
-				// Implementar uso de itens
-				break;
-			default:
-				Window.setDisplayText("Comando inválido!");
-				break;
+			switch (playerAction) {
+				case 1:
+					double damageToEnemy = player.attack() - enemy.currentDefensePoints;
+					if (damageToEnemy < 0) {
+						damageToEnemy = 0;
+					}
+					enemy.hp -= damageToEnemy;
+					previousWindowText += "Você atacou " + enemy.name + " causando " + damageToEnemy + " de dano!\n";
+					if (enemy.hp <= 0) {
+						previousWindowText += "\n\n" + enemy.name + " foi derrotado!";
+						return;
+					}
+					break;
+				case 2:
+					double defensePoints = player.increaseDefense();
+					System.out.println(defensePoints);
+					previousWindowText += "Você se defendeu e ganhou " + defensePoints + " pontos de defesa!\n";
+					break;
+				case 3:
+					// Implementar uso de itens
+					break;
+				default:
+					previousWindowText += "Comando inválido!\n";
+					break;
+			}
+			int enemyAction = enemy.randomAction();
+			switch (enemyAction) {
+				case 1:
+					double damageToPlayer = enemy.attack() - player.currentDefensePoints;
+					if (damageToPlayer < 0) {
+						damageToPlayer = 0;
+					}
+					player.hp -= damageToPlayer;
+					previousWindowText += enemy.name + " atacou causando " + damageToPlayer + " de dano!";
+					if (player.hp <= 0) {
+						previousWindowText += "\n\nVocê foi derrotado!";
+						return;
+					}
+					break;
+				case 2:
+					double defensePoints = enemy.increaseDefense();
+					previousWindowText += enemy.name + " se defendeu e ganhou " + defensePoints + " pontos de defesa!";
+					break;
+				case 3:
+					System.out.println("Item especial enemy");
+					break;
+			}
+
+			Window.setDisplayText(
+				enemy.name + "\nHP:" + enemy.hp + "/" + enemy.maxHp +
+				"\n\n\nNome: " + player.name + "\nHP:" + player.hp + "/" + player.maxHp + "\nXP:" + player.xp +
+				"\n\nAtacar (1) - Defender-se (2) - Utilizar item (3)\n\n" + previousWindowText
+			);
+		} catch (NumberFormatException erro1) {
+			Window.setDisplayText(
+				enemy.name + "\nHP:" + enemy.hp + "/" + enemy.maxHp +
+				"\n\n\nNome: " + player.name + "\nHP:" + player.hp + "/" + player.maxHp + "\nXP:" + player.xp +
+				"\n\nAtacar (1) - Defender-se (2) - Utilizar item (3)\n\n" + previousWindowText
+			);
+			return;
 		}
 	}
 	

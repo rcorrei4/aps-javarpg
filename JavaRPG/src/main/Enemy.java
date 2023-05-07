@@ -5,7 +5,7 @@ import java.util.Random;
 public class Enemy extends Character {
     private Random random;
 
-    public Enemy(String name, int hp, int maxHp, int xp, int atkDamage) {
+    public Enemy(String name, int hp, int maxHp, int xp, double atkDamage) {
         super(name, hp, maxHp, xp, atkDamage);
         random = new Random();
     }
@@ -13,26 +13,27 @@ public class Enemy extends Character {
     public int randomAction () {
        int action = random.nextInt(3);
        if(action == 0) {
-            return attack();
+            return 1;
        } else if (action == 1) {
-            return defend();
+            return 2;
        } else {
-            return useItem();
+            return 3;
        }
     }
 
     @Override
-    public int attack () {
+    public double attack () {
         return atkDamage;
     }
 
     @Override
-    public int defend () {
-        return 1;
+    public double increaseDefense () {
+        currentDefensePoints += 5 % maxHp;
+        return 1 % maxHp;
     }
 
     @Override
     public int useItem () {
-        return 2;
+        return 0;
     }
 }

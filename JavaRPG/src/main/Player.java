@@ -20,18 +20,23 @@ public class Player extends Character {
 	}
 
 	@Override
-	public int attack () {
+	public double attack () {
 		return atkDamage;
 	}
 	@Override
-	public int defend () {
-		return 10 % maxHp;
+	public double increaseDefense () {
+		currentDefensePoints += 5 % maxHp;
+		return 1.5 % maxHp;
 	}
 
 	@Override
 	public int useItem () {
 		return 0;
 	}
+
+	public void removeStats() {
+		currentDefensePoints = 0;
+	};
 
 	public void chooseTrait() {
 		Window.setDisplayText("Escolha uma habilidade: ");
