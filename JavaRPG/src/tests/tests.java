@@ -20,6 +20,6 @@ public class tests extends JDialog {
         parent.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         parent.setVisible(true);
 
-        new tests(parent, "Hello, World!");
+        new tests(parent, "Hello World!");
     }
 }
