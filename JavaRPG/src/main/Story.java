@@ -33,7 +33,7 @@ public class Story {
     public static void act1_2 () {
         Window.setDisplayText(
             "Embora ela tenha conseguido lutar contra eles, ele ficou gravemente ferido e traumatizado pela experiência." +
-            "Determinado a continuar seu trabalho, mas com medo de sua segurança, Akira Kankyo decidiu adotar uma nova" +
+            "Determinado a continuar seu trabalho, mas com medo de sua segurança, Akira Kankyo decidiu adotar uma nova " +
             "abordagem para seu ativismo"
         );
     }

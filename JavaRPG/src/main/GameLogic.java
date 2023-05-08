@@ -157,7 +157,7 @@ public class GameLogic {
 					break;
 				case 3:
 					// Implementar uso de itens
-					Player.invetory();
+					player.invetory();
 					break;
 				default:
 					previousWindowText += "Comando inválido!\n";
@@ -235,7 +235,9 @@ public class GameLogic {
 			} else {
 				battle(currentEnemy);
 			}
-		} else if (gameStateLvl == 5) {
+		} else if (gameStateLvl == 5){
+			Story.act1_2();
+		}else if (gameStateLvl == 6) {
 			handleUserInput(true, true);
 		}
 	}

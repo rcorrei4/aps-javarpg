@@ -24,7 +24,7 @@ public class Window implements ActionListener {
 	}
 
 	public void createWindow() {
-		displayText.setBounds(15, 15, 450, 200);
+		displayText.setBounds(15, 15, 450, 280);
 		displayText.setWrapStyleWord(true);
 		displayText.setLineWrap(true);
 		displayText.setEditable(false);
@@ -32,13 +32,13 @@ public class Window implements ActionListener {
 		frame.add(displayText);
 		frame.getContentPane().setBackground(new Color(50, 50, 50));
 
-		input.setBounds(15, 230, 450, 50);
+		input.setBounds(15, 300, 450, 50);
 		input.setMargin(new Insets(5, 5, 5, 5));
 		input.addActionListener(this);
 
 		frame.add(input);
 
-		frame.setSize(500, 450);
+		frame.setSize(500, 420);
 		frame.setLayout(null);
 		frame.setVisible(true);
 	}

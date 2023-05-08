@@ -29,7 +29,7 @@ public class Player extends Character {
 	}
 
 	@Override
-	public static int useItem() {
+	public int useItem() {
 		return 0;
 	}
 
@@ -37,7 +37,7 @@ public class Player extends Character {
 		currentDefensePoints = 0;
 	};
 
-	public static void invetory() {
+	public void invetory() {
 		//inventário do player
 		Window.setDisplayText("Inventário:\n(1) " + items[0] + "\n(2) " + items[1] + "\n(3) " + items[2]);
 		if(Window.getUserInput() != null && Window.getUserInput().equals("1")){
