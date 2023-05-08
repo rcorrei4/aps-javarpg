@@ -17,6 +17,8 @@ public class Main {
 		gameMap.put(0, GameLogic::startGame);
 		gameMap.put(1, GameLogic::saveGame);
 		gameMap.put(2, GameLogic::firstChapter);
+		gameMap.put(3, GameLogic::secondChapter);
+		gameMap.put(666, GameLogic::deathScreen);
 		
 		int userInput = 0; // example userInpu4
 

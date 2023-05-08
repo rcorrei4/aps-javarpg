@@ -3,6 +3,13 @@ package main;
 import java.util.Random;
 import gui.Window;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
+
 public class GameLogic {
 	private static int gameState = 0;
 	private static int gameStateLvl = 0;
@@ -43,7 +50,7 @@ public class GameLogic {
 			if (Window.getUserInput() != null && Window.getUserInput().equals("1")) {
 				handleUserInput(true, true);
 			} else if (Window.getUserInput() != null && Window.getUserInput().equals("2")) {
-				gameState = 2;
+				loadData();
 				handleUserInput(true, false);
 			}
 		}
@@ -72,33 +79,50 @@ public class GameLogic {
 		}
 	}
 
+	public static void loadData(){
+		try{
+			BufferedReader br = new BufferedReader(new FileReader("saveFile.txt"));
+			player.name = br.readLine();
+			player.maxHp = Integer.parseInt(br.readLine());
+			player.hp = Integer.parseInt(br.readLine());
+			player.xp = Integer.parseInt(br.readLine());
+			gameState = Integer.parseInt(br.readLine());
+			gameStateLvl = Integer.parseInt(br.readLine());
+			
+			br.close();
+		}
+		catch(Exception e){
+
+		}
+	}
+
+	public static void saveWriter(){
+		try{
+			BufferedWriter bw = new BufferedWriter(new FileWriter("saveFile.txt"));
+			bw.write(player.name);
+			bw.newLine();
+			bw.write(""+player.maxHp);
+			bw.newLine();
+			bw.write(""+player.hp);
+			bw.newLine();
+			bw.write(""+player.xp);
+			bw.newLine();
+			bw.write(""+gameState);
+			bw.newLine();
+			bw.write(""+gameStateLvl);
+
+			bw.close();
+		}
+		catch(Exception e){
+			
+		}
+	}
+
 	public static void characterInfo() {
 		Window.setDisplayText(
 				"Informações do personagem:" +
 						"\n\nNome: " + player.name + "\nHP:" + player.hp + "\nXP:" + player.xp);
 		gameStateLvl -= 1;
-	}
-
-	public static void firstChapter() {
-		if (gameStateLvl == 0) {
-			Story.intro();
-		} else if (gameStateLvl == 1) {
-			Story.actI();
-		} else if (gameStateLvl == 2) {
-			Story.actI_1();
-		} else if (gameStateLvl == 3) {
-			Window.setDisplayText("Você encontrou os mercenários. Lute!");
-			currentEnemy = new Enemy("Mercenários", 100, 100, 0, 2);
-		} else if (gameStateLvl == 4) {
-			if (player.hp <= 0) {
-				player.hp = player.maxHp;
-				gameStateLvl++;
-			} else {
-				battle(currentEnemy);
-			}
-		} else if (gameStateLvl == 5) {
-			Story.actII_2();
-		}
 	}
 
 	public static void battle(Enemy enemy) {
@@ -123,7 +147,7 @@ public class GameLogic {
 					previousWindowText += "Você atacou " + enemy.name + " causando " + damageToEnemy + " de dano!\n";
 					if (enemy.hp <= 0) {
 						previousWindowText += "\n\n" + enemy.name + " foi derrotado!";
-						return;
+						gameStateLvl++;
 					}
 					break;
 				case 2:
@@ -133,6 +157,7 @@ public class GameLogic {
 					break;
 				case 3:
 					// Implementar uso de itens
+					Player.invetory();
 					break;
 				default:
 					previousWindowText += "Comando inválido!\n";
@@ -149,7 +174,7 @@ public class GameLogic {
 					previousWindowText += enemy.name + " atacou causando " + damageToPlayer + " de dano!";
 					if (player.hp <= 0) {
 						previousWindowText += "\n\nVocê foi derrotado!";
-						return;
+						gameStateLvl++;
 					}
 					break;
 				case 2:
@@ -164,7 +189,7 @@ public class GameLogic {
 			Window.setDisplayText(
 				enemy.name + "\nHP:" + enemy.hp + "/" + enemy.maxHp +
 				"\n\n\nNome: " + player.name + "\nHP:" + player.hp + "/" + player.maxHp + "\nXP:" + player.xp +
-				"\n\nAtacar (1) - Defender-se (2) - Utilizar item (3)\n\n" + previousWindowText
+				"\n\nAtacar (1) - Defender-se (2) - Abrir Invetário (3)\n\n" + previousWindowText
 			);
 		} catch (NumberFormatException erro1) {
 			Window.setDisplayText(
@@ -176,8 +201,57 @@ public class GameLogic {
 		}
 	}
 
-	private static boolean tryToEscape() {
-		Random random = new Random();
-		return random.nextInt(100) < 50;// 50% de chance de escapar
+	public static void deathScreen() {
+		if (gameStateLvl == 0) {
+			Window.setDisplayText("(1) Retomar progresso anterior\n(2) Voltar ao início\n(3) Sair do jogo");
+		} else if (gameStateLvl == 1) {
+			if (Window.getUserInput().equals("1")) {
+				// Retomar save
+			} else if (Window.getUserInput().equals("2")) {
+				gameState = 0;
+				gameStateLvl = 0;
+			} else {
+				System.exit(0);
+			}
+		}
+		
+		
+	}
+
+	public static void firstChapter() {
+		if (gameStateLvl == 0) {
+			Story.intro();
+		} else if (gameStateLvl == 1) {
+			Story.act1();
+		} else if (gameStateLvl == 2) {
+			Story.act1_1();
+		} else if (gameStateLvl == 3) {
+			Window.setDisplayText("Você encontrou os mercenários. Lute!");
+			currentEnemy = new Enemy("Mercenários", 100, 100, 0, 2);
+		} else if (gameStateLvl == 4) {
+			if (player.hp <= 0) {
+				player.hp = player.maxHp;
+				gameStateLvl++;
+			} else {
+				battle(currentEnemy);
+			}
+		} else if (gameStateLvl == 5) {
+			handleUserInput(true, true);
+		}
+	}
+
+	public static void secondChapter() {
+		if (gameStateLvl == 0) {
+			Story.act2_1();
+		} else if (gameStateLvl == 1) {
+			Story.act2_2();
+		} else if (gameStateLvl == 2) {
+			if (player.hp <= 0) {
+				gameState = 999;
+				gameStateLvl = 0;
+			} else {
+				battle(currentEnemy);
+			}
+		}
 	}
 }

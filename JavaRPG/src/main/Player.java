@@ -4,16 +4,15 @@ import gui.Window;
 
 public class Player extends Character {
 
-	public int numAtkUpgrades, numDefUpgrades;
+	public int numDefUpgrades;
 
 	// Arrays para guardar os atributos/habilidades
-	public String[] atkUpgrades = { "Arma Corporal", "Espada", "Metralhadora" };
-	public String[] defUpgrades = { "Escudo", "Droga p/ aumento de força", "Estimulante" };
+	//public static String[] itemsAttk = { "Arma Corporal", "Espada", "Metralhadora" };
+	public static String[] items = { "Escudo", "Droga p/ aumento de força", "Estimulante" };
 
 	public Player(String name, int hp, int maxHp, int xp, int atkDamage) {
 		super(name, hp, maxHp, xp, atkDamage);
 		// Setando upgrades para 0
-		this.numAtkUpgrades = 0;
 		this.numDefUpgrades = 0;
 		// O jogador pode escolher uma habilidade
 
@@ -25,12 +24,12 @@ public class Player extends Character {
 	}
 	@Override
 	public double increaseDefense () {
-		currentDefensePoints += 5 % maxHp;
+		currentDefensePoints += 1.5 % maxHp;
 		return 1.5 % maxHp;
 	}
 
 	@Override
-	public int useItem () {
+	public static int useItem() {
 		return 0;
 	}
 
@@ -38,11 +37,21 @@ public class Player extends Character {
 		currentDefensePoints = 0;
 	};
 
-	public void chooseTrait() {
-		Window.setDisplayText("Escolha uma habilidade: ");
-		System.out.println("(1) " + atkUpgrades[0]);
-		System.out.println("(2) " + atkUpgrades[1]);
-		System.out.println("(3) " + atkUpgrades[2]);
+	public static void invetory() {
+		//inventário do player
+		Window.setDisplayText("Inventário:\n(1) " + items[0] + "\n(2) " + items[1] + "\n(3) " + items[2]);
+		if(Window.getUserInput() != null && Window.getUserInput().equals("1")){
+			//use item 1
+			useItem();
+		} else if (Window.getUserInput() != null && Window.getUserInput().equals("2")) {
+			//use item 2
+			useItem();
+		} else if (Window.getUserInput() != null && Window.getUserInput().equals("3")){
+			//use item 3
+			useItem();
+		}
+	}
+}
 		/*
 		 * int input = Window.getUserInput("-> ", 3);
 		 * 
@@ -59,5 +68,4 @@ public class Player extends Character {
 		 * }
 		 */
 
-	}
-}
+	
