@@ -51,4 +51,8 @@ public class Story {
         "pela cidade, ajudando as pessoas a sobreviver em um mundo cada vez mais difícil de viver. No entanto, à medida que seu trabalho" +
         "se tornava mais visível, Akira Kankyo mais uma vez se viu na mira das corporações, que estavam determinadas a acabar com seus esforços."
     }
+
+    public static void act3_1 () {
+        
+    }
 }

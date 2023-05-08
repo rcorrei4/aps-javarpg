@@ -5,11 +5,10 @@ import gui.Window;
 public class Player extends Character {
 
 	public int numDefUpgrades;
-
 	// Arrays para guardar os atributos/habilidades
 	//public static String[] itemsAttk = { "Arma Corporal", "Espada", "Metralhadora" };
 	public static String[] items = { "Escudo", "Droga p/ aumento de força", "Estimulante" };
-
+										//0      //1 							//2
 	public Player(String name, int hp, int maxHp, int xp, int atkDamage) {
 		super(name, hp, maxHp, xp, atkDamage);
 		// Setando upgrades para 0
@@ -30,27 +29,57 @@ public class Player extends Character {
 
 	@Override
 	public int useItem() {
+		String inventoryMsg = "";
+
+		for(int i = 0; i < items.length; i++){
+			if(items[i].equals(0)){
+				//defesa
+				double defensePoints = GameLogic.player.increaseDefense();
+				System.out.println(defensePoints);
+				inventoryMsg += "Você usou o escudo e ganhou " + defensePoints + " pontos de defesa!\n";				
+			} else if(items[i].equals(1)){
+				//aumenta força
+				increaseStrength();
+				double damagePoints = GameLogic.player.increaseStrength();
+				System.out.println(damagePoints);
+				inventoryMsg += "Você usou o tal e ganhou " + damagePoints + "pontos de ataque!\n"; 
+			} else if(items[i].equals(2)){
+				//estimulante
+				increaseHp();
+			}
+		}
+
 		return 0;
 	}
+
+	@Override
+	public double increaseStrength () {
+		atkDamage =+ atkDamage;
+		
+		return 0;
+	}
+
+	@Override
+	public double increaseHp() {
+		return 0;
+	}
+
+
 
 	public void removeStats() {
 		currentDefensePoints = 0;
 	};
 
-	public void invetory() {
-		//inventário do player
-		Window.setDisplayText("Inventário:\n(1) " + items[0] + "\n(2) " + items[1] + "\n(3) " + items[2]);
-		if(Window.getUserInput() != null && Window.getUserInput().equals("1")){
-			//use item 1
-			useItem();
-		} else if (Window.getUserInput() != null && Window.getUserInput().equals("2")) {
-			//use item 2
-			useItem();
-		} else if (Window.getUserInput() != null && Window.getUserInput().equals("3")){
-			//use item 3
-			useItem();
+	
+
+	public static void printInvetory() {
+		String inventory = "";
+		for (int i = 0; i < items.length; i++) {
+			inventory += "\n" + items[i];
 		}
-	}
+		Window.setDisplayText(inventory);
+	
+	} 
 }
 		/*
 		 * int input = Window.getUserInput("-> ", 3);

@@ -1,29 +1,35 @@
 package main;
 
-import java.util.Random;
-
 public class Enemy extends Character {
-    private Random random;
+    
+	// Chances de cada ação que o inimigo pode fazer
+	private static final double ATTACK_WEIGHT = 0.6;
+    private static final double DEFENSE_WEIGHT = 0.3;
+
 
     public Enemy(String name, int hp, int maxHp, int xp, double atkDamage) {
         super(name, hp, maxHp, xp, atkDamage);
-        random = new Random();
     }
 
     public int randomAction () {
-       int action = random.nextInt(3);
-       if(action == 0) {
+        double rand = Math.random();
+        if(rand < ATTACK_WEIGHT) {
             return 1;
-       } else if (action == 1) {
+        } else if (rand < ATTACK_WEIGHT + DEFENSE_WEIGHT) {
             return 2;
-       } else {
+        } else {
             return 3;
-       }
+        }
     }
 
     @Override
     public double attack () {
         return atkDamage;
+    }
+
+    @Override
+    public int useItem () {
+        return 0;
     }
 
     @Override
@@ -33,7 +39,13 @@ public class Enemy extends Character {
     }
 
     @Override
-    public int useItem () {
-        return 0;
-    }
+	public double increaseStrength () {
+		
+		return 0;
+	}
+
+	@Override
+	public double increaseHp() {
+		return 0;
+	}
 }

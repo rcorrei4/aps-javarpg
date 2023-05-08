@@ -49,6 +49,8 @@ public class Window implements ActionListener {
 			input.setText("");
 			if (getUserInput().equals("menu")) {
 				GameLogic.characterInfo();
+			} else if (getUserInput().equals("i")) {
+				GameLogic.inventory();
 			} else {
 				GameLogic.handleUserInput();
 			}

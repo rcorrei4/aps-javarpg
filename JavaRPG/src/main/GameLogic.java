@@ -1,13 +1,10 @@
 package main;
 
-import java.util.Random;
 import gui.Window;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.IOException;
 
 
 public class GameLogic {
@@ -15,6 +12,7 @@ public class GameLogic {
 	private static int gameStateLvl = 0;
 	private static Enemy currentEnemy;
 	private static String previousWindowText;
+	public static boolean onInventory;
 
 	static Player player = null; // creating a player
 
@@ -157,7 +155,7 @@ public class GameLogic {
 					break;
 				case 3:
 					// Implementar uso de itens
-					player.invetory();
+					player.printInvetory();
 					break;
 				default:
 					previousWindowText += "Comando inválido!\n";
@@ -218,6 +216,24 @@ public class GameLogic {
 		
 	}
 
+	public static void inventory() {
+		onInventory = true;
+		gameStateLvl = 0; 
+		if(gameStateLvl == 0){
+			if (Window.getUserInput().equals("1")){// ja volto
+				// bele
+				player.useItem();
+			} else  if(Window.getUserInput().equals("2")){
+				player.useItem();
+			} else if(Window.getUserInput().equals("3")) {
+				player.useItem();
+			}
+		}
+	}
+
+
+
+
 	public static void firstChapter() {
 		if (gameStateLvl == 0) {
 			Story.intro();
@@ -247,13 +263,20 @@ public class GameLogic {
 			Story.act2_1();
 		} else if (gameStateLvl == 1) {
 			Story.act2_2();
+			currentEnemy = new Enemy("Mercenários", 15, 15, 0, 1);
 		} else if (gameStateLvl == 2) {
 			if (player.hp <= 0) {
 				gameState = 999;
 				gameStateLvl = 0;
-			} else {
+			} else if (currentEnemy.hp <= 0) {
+				handleUserInput(true, true);
+			}else {
 				battle(currentEnemy);
 			}
 		}
+	}
+
+	public static void thirChapter () {
+		
 	}
 }
