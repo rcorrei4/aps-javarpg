@@ -72,7 +72,7 @@ public class Player extends Character {
 
 	
 
-	public static void printInvetory() {
+	public void printInventory() {
 		String inventory = "";
 		for (int i = 0; i < items.length; i++) {
 			inventory += "\n" + items[i];

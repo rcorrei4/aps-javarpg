@@ -46,10 +46,42 @@ public class Story {
     }
 
     public static void act2_2 () {
-        "À medida que o trabalho de Akira Kankyo continuou, ela se tornou conhecida como a 'Advogada das Sombras', uma figura" +
-        "misteriosa que se tornou um farol de esperança para o povo de NeoTóquio. Suas invenções e redes começaram a se espalhar" +
-        "pela cidade, ajudando as pessoas a sobreviver em um mundo cada vez mais difícil de viver. No entanto, à medida que seu trabalho" +
-        "se tornava mais visível, Akira Kankyo mais uma vez se viu na mira das corporações, que estavam determinadas a acabar com seus esforços."
+    	Window.setDisplayText(
+	        "À medida que o trabalho de Akira Kankyo continuou, ela se tornou conhecida como a 'Advogada das Sombras', uma figura" +
+	        "misteriosa que se tornou um farol de esperança para o povo de NeoTóquio. Suas invenções e redes começaram a se espalhar" +
+	        "pela cidade, ajudando as pessoas a sobreviver em um mundo cada vez mais difícil de viver. No entanto, à medida que seu trabalho" +
+	        "se tornava mais visível, Akira Kankyo mais uma vez se viu na mira das corporações, que estavam determinadas a acabar com seus esforços."
+        );
+    }
+    
+    public static void act2_3 () {
+    	Window.setDisplayText("[Você encontra mercenários ao tentar um caminho alternativo para sua casa.]");
+    }
+    
+    public static void act2_4 () {
+    	Window.setDisplayText(
+			"Mercenário: Ei, o que você está fazendo aqui? Este é o território da Corporação Arashi, saia imediatamente ou " + 
+			"você vai se arrepender!"
+    	);
+    }
+    
+    public static void act2_5 () {
+    	Window.setDisplayText(
+    		"Eu estou aqui para proteger as pessoas desta cidade. E vocês estão aqui para causar mais danos e sofrimento."
+    	);
+    }
+    
+    public static void act2_6 () {
+    	Window.setDisplayText(
+    		"Hah! Quem é você para nos dizer o que fazer? Nós estamos sendo pagos para fazer um trabalho e vamos fazê-lo, mesmo " +
+    		"que isso signifique pisar em algumas pessoas."
+    	);
+    }
+    
+    public static void act2_7 () {
+    	Window.setDisplayText(
+    		"Eu não vou deixar vocês causarem mais danos nesta cidade. É hora de acabar com isso."
+    	);
     }
 
     public static void act3_1 () {

@@ -155,7 +155,7 @@ public class GameLogic {
 					break;
 				case 3:
 					// Implementar uso de itens
-					player.printInvetory();
+					player.printInventory();
 					break;
 				default:
 					previousWindowText += "Comando inválido!\n";
@@ -195,7 +195,6 @@ public class GameLogic {
 				"\n\n\nNome: " + player.name + "\nHP:" + player.hp + "/" + player.maxHp + "\nXP:" + player.xp +
 				"\n\nAtacar (1) - Defender-se (2) - Utilizar item (3)\n\n" + previousWindowText
 			);
-			return;
 		}
 	}
 
@@ -259,24 +258,35 @@ public class GameLogic {
 	}
 
 	public static void secondChapter() {
+		System.out.println(gameStateLvl);
 		if (gameStateLvl == 0) {
 			Story.act2_1();
 		} else if (gameStateLvl == 1) {
 			Story.act2_2();
-			currentEnemy = new Enemy("Mercenários", 15, 15, 0, 1);
 		} else if (gameStateLvl == 2) {
+			Story.act2_3();
+		} else if (gameStateLvl == 3) {
+			Story.act2_4();
+		} else if (gameStateLvl == 4) {
+			Story.act2_5();
+		} else if (gameStateLvl == 5) {
+			Story.act2_6();
+		} else if (gameStateLvl == 6) {
+			Story.act2_7();
+			currentEnemy = new Enemy("Mercenários", 15, 15, 0, 1);
+		} else if (gameStateLvl == 7) {
 			if (player.hp <= 0) {
 				gameState = 999;
 				gameStateLvl = 0;
 			} else if (currentEnemy.hp <= 0) {
 				handleUserInput(true, true);
-			}else {
+			} else {
 				battle(currentEnemy);
 			}
 		}
 	}
 
-	public static void thirChapter () {
+	public static void thirdChapter () {
 		
 	}
 }
