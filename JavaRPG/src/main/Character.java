@@ -1,4 +1,5 @@
 package main;
+
 public abstract class Character {
 
 	// Variáveis / Atributos que todos os personagens devem ter
@@ -10,6 +11,7 @@ public abstract class Character {
 	public double atkDamage;
 	public double currentDefensePoints;
 	public double currentAttackPoints;
+	public double currentHpPoints;
 
 	// Construtor para os personagens
 	public Character(String name, int hp, int maxHp, int xp, double atkDamage) {
@@ -20,13 +22,16 @@ public abstract class Character {
 		this.atkDamage = atkDamage;
 		this.currentDefensePoints = 0;
 		this.currentAttackPoints = 0;
+		this.currentHpPoints = 0;
 	}
 
 	// Métodos que todos os personagens devem ter
 	public abstract double attack();
+
 	public abstract double increaseDefense();
+
 	public abstract double increaseStrength();
+
 	public abstract double increaseHp();
-	public abstract int useItem();
 
 }

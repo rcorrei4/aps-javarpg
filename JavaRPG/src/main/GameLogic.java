@@ -6,7 +6,6 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 
-
 public class GameLogic {
 	private static int gameState = 0;
 	private static int gameStateLvl = 0;
@@ -77,8 +76,8 @@ public class GameLogic {
 		}
 	}
 
-	public static void loadData(){
-		try{
+	public static void loadData() {
+		try {
 			BufferedReader br = new BufferedReader(new FileReader("saveFile.txt"));
 			player.name = br.readLine();
 			player.maxHp = Integer.parseInt(br.readLine());
@@ -86,33 +85,31 @@ public class GameLogic {
 			player.xp = Integer.parseInt(br.readLine());
 			gameState = Integer.parseInt(br.readLine());
 			gameStateLvl = Integer.parseInt(br.readLine());
-			
+
 			br.close();
-		}
-		catch(Exception e){
+		} catch (Exception e) {
 
 		}
 	}
 
-	public static void saveWriter(){
-		try{
+	public static void saveWriter() {
+		try {
 			BufferedWriter bw = new BufferedWriter(new FileWriter("saveFile.txt"));
 			bw.write(player.name);
 			bw.newLine();
-			bw.write(""+player.maxHp);
+			bw.write("" + player.maxHp);
 			bw.newLine();
-			bw.write(""+player.hp);
+			bw.write("" + player.hp);
 			bw.newLine();
-			bw.write(""+player.xp);
+			bw.write("" + player.xp);
 			bw.newLine();
-			bw.write(""+gameState);
+			bw.write("" + gameState);
 			bw.newLine();
-			bw.write(""+gameStateLvl);
+			bw.write("" + gameStateLvl);
 
 			bw.close();
-		}
-		catch(Exception e){
-			
+		} catch (Exception e) {
+
 		}
 	}
 
@@ -155,7 +152,7 @@ public class GameLogic {
 					break;
 				case 3:
 					// Implementar uso de itens
-					player.printInventory();
+					Inventory.printInventory();
 					break;
 				default:
 					previousWindowText += "Comando inválido!\n";
@@ -185,16 +182,16 @@ public class GameLogic {
 			}
 
 			Window.setDisplayText(
-				enemy.name + "\nHP:" + enemy.hp + "/" + enemy.maxHp +
-				"\n\n\nNome: " + player.name + "\nHP:" + player.hp + "/" + player.maxHp + "\nXP:" + player.xp +
-				"\n\nAtacar (1) - Defender-se (2) - Abrir Invetário (3)\n\n" + previousWindowText
-			);
+					enemy.name + "\nHP:" + enemy.hp + "/" + enemy.maxHp +
+							"\n\n\nNome: " + player.name + "\nHP:" + player.hp + "/" + player.maxHp + "\nXP:"
+							+ player.xp +
+							"\n\nAtacar (1) - Defender-se (2) - Abrir Invetário (3)\n\n" + previousWindowText);
 		} catch (NumberFormatException erro1) {
 			Window.setDisplayText(
-				enemy.name + "\nHP:" + enemy.hp + "/" + enemy.maxHp +
-				"\n\n\nNome: " + player.name + "\nHP:" + player.hp + "/" + player.maxHp + "\nXP:" + player.xp +
-				"\n\nAtacar (1) - Defender-se (2) - Utilizar item (3)\n\n" + previousWindowText
-			);
+					enemy.name + "\nHP:" + enemy.hp + "/" + enemy.maxHp +
+							"\n\n\nNome: " + player.name + "\nHP:" + player.hp + "/" + player.maxHp + "\nXP:"
+							+ player.xp +
+							"\n\nAtacar (1) - Defender-se (2) - Utilizar item (3)\n\n" + previousWindowText);
 		}
 	}
 
@@ -211,27 +208,8 @@ public class GameLogic {
 				System.exit(0);
 			}
 		}
-		
-		
+
 	}
-
-	public static void inventory() {
-		onInventory = true;
-		gameStateLvl = 0; 
-		if(gameStateLvl == 0){
-			if (Window.getUserInput().equals("1")){// ja volto
-				// bele
-				player.useItem();
-			} else  if(Window.getUserInput().equals("2")){
-				player.useItem();
-			} else if(Window.getUserInput().equals("3")) {
-				player.useItem();
-			}
-		}
-	}
-
-
-
 
 	public static void firstChapter() {
 		if (gameStateLvl == 0) {
@@ -250,9 +228,9 @@ public class GameLogic {
 			} else {
 				battle(currentEnemy);
 			}
-		} else if (gameStateLvl == 5){
+		} else if (gameStateLvl == 5) {
 			Story.act1_2();
-		}else if (gameStateLvl == 6) {
+		} else if (gameStateLvl == 6) {
 			handleUserInput(true, true);
 		}
 	}
@@ -286,7 +264,7 @@ public class GameLogic {
 		}
 	}
 
-	public static void thirdChapter () {
-		
+	public static void thirdChapter() {
+
 	}
 }

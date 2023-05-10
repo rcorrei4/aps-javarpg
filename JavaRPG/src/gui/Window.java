@@ -10,6 +10,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import main.GameLogic;
+import main.Inventory;
 
 public class Window implements ActionListener {
 	public static JFrame frame;
@@ -50,7 +51,7 @@ public class Window implements ActionListener {
 			if (getUserInput().equals("menu")) {
 				GameLogic.characterInfo();
 			} else if (getUserInput().equals("i")) {
-				GameLogic.inventory();
+				Inventory.printInventory();
 			} else {
 				GameLogic.handleUserInput();
 			}
