@@ -4,12 +4,12 @@ import gui.Window;
 
 public class Inventory {
 
-    public static String[] items = { "Escudo", "Droga p/ aumento de força", "Estimulante\n" };
+    public static String[] items = { "(1) Escudo", "(2) Droga p/ aumento de força", "(3) Estimulante\n" };
 
     public static void printInventory() {
         String inventory = "";
         for (int i = 0; i < items.length; i++) {
-            inventory += "\n" + (i + 1) + ". " + items[i];
+            inventory += "\n" + items[i];
         }
         Window.setDisplayText(inventory);
     }
@@ -26,7 +26,7 @@ public class Inventory {
             // aumenta força
             double damagePoints = GameLogic.player.increaseStrength();
             System.out.println(damagePoints);
-            itemMsg += "Você usou o tal e ganhou " + damagePoints + " pontos de ataque!\n";
+            itemMsg += "Você usou durateston e ganhou " + damagePoints + " pontos de ataque!\n";
             removeItem(1);
         } else if (Window.getUserInput().equals("3")) {
             // uso do estimulante
@@ -41,6 +41,16 @@ public class Inventory {
             return;
         }
         Window.setDisplayText(itemMsg);
+    }
+
+    public static void addItem(String item) {
+        String[] newItems = new String[items.length + 1]; // new array with the new items
+        for (int i = 0; i < items.length; i++) {
+            newItems[i] = items[i];
+        }
+        newItems[newItems.length - 1] = item;
+        items = newItems;
+        Window.setDisplayText(item + " foi adicionado ao seu inventário!");
     }
 
     public static void removeItem(int index) {

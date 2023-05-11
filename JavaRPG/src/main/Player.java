@@ -45,7 +45,7 @@ public class Player extends Character {
 
 	public void removeStats() {
 		currentDefensePoints = 0;
-	};
+	}
 
 }
 /*
