@@ -151,8 +151,8 @@ public class GameLogic {
 					previousWindowText += "Você se defendeu e ganhou " + defensePoints + " pontos de defesa!\n";
 					break;
 				case 3:
-					// Implementar uso de itens
-					Inventory.printInventory();
+					// calls the method printInventory
+					Inventory.chooseItem();
 					break;
 				default:
 					previousWindowText += "Comando inválido!\n";

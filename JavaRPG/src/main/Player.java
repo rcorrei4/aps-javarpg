@@ -29,15 +29,18 @@ public class Player extends Character {
 
 	@Override
 	public double increaseStrength() {
-		currentAttackPoints += 1.5 % atkDamage;
-		return 1.5 % atkDamage;
+		double increase = 0.015 * atkDamage; // increase by 1.5% of atkDamage
+		atkDamage += increase;
+		currentAttackPoints += increase;
+		return increase;
 
 	}
 
 	@Override
 	public double increaseHp() {
-		currentHpPoints += 2.5 % maxHp;
-		return 2.5 % maxHp;
+		double increase = 0.025 * maxHp; // increase by 2.5% of maxHP
+		currentHpPoints += increase;
+		return increase;
 	}
 
 	public void removeStats() {

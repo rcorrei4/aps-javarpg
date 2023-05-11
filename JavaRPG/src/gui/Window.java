@@ -17,6 +17,7 @@ public class Window implements ActionListener {
 	public static JTextArea displayText;
 	public static JTextField input;
 	public static String userInput;
+	public static boolean isChoosingItem = false;
 
 	public Window() {
 		frame = new JFrame("JavaRPG");
@@ -48,10 +49,15 @@ public class Window implements ActionListener {
 		if (e.getSource() == input) {
 			userInput = input.getText();
 			input.setText("");
+
 			if (getUserInput().equals("menu")) {
 				GameLogic.characterInfo();
 			} else if (getUserInput().equals("i")) {
 				Inventory.printInventory();
+				isChoosingItem = true;
+			} else if (isChoosingItem && getUserInput().equals("1")) {
+				Inventory.chooseItem();
+				isChoosingItem = false;
 			} else {
 				GameLogic.handleUserInput();
 			}
