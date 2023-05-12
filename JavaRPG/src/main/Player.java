@@ -1,8 +1,12 @@
 package main;
 
+import java.util.ArrayList;
+
 public class Player extends Character {
 
 	public int numDefUpgrades;
+	public ArrayList<String> items;
+
 	// Arrays para guardar os atributos/habilidades
 	// public static String[] itemsAttk = { "Arma Corporal", "Espada",
 	// "Metralhadora" };
@@ -14,6 +18,7 @@ public class Player extends Character {
 		this.numDefUpgrades = 0;
 		// O jogador pode escolher uma habilidade
 
+		items = new ArrayList<String>();
 	}
 
 	@Override

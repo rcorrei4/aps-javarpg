@@ -56,7 +56,7 @@ public class Enemy extends Character {
         if (random.nextDouble() < ITEM_DROP_RATE) {
             int index = random.nextInt(ITEM_LIST.length);
             String droppedItem = ITEM_LIST[index];
-            Inventory.addItem(droppedItem);
+            Inventory.addEnemyItem(droppedItem);
             return droppedItem;
         } else {
             return null;

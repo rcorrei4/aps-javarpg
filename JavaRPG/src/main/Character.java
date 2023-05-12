@@ -23,6 +23,7 @@ public abstract class Character {
 		this.currentDefensePoints = 0;
 		this.currentAttackPoints = 0;
 		this.currentHpPoints = 0;
+
 	}
 
 	// Métodos que todos os personagens devem ter

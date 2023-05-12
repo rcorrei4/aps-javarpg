@@ -53,15 +53,20 @@ public class Window implements ActionListener {
 			if (getUserInput().equals("menu")) {
 				GameLogic.characterInfo();
 			} else if (getUserInput().equals("i")) {
-				Inventory.printInventory();
+				Window.setDisplayText(Inventory.printInventory());
 				isChoosingItem = true;
 			} else if (isChoosingItem && getUserInput().equals("1")) {
-				Inventory.chooseItem();
+				Window.setDisplayText(Inventory.chooseItem());
 				isChoosingItem = false;
 			} else {
 				GameLogic.handleUserInput();
 			}
+			if (getUserInput().equals("save")) {
+				GameLogic.saveWriter();
+				Window.setDisplayText("Jogo salvo com sucesso");
+			}
 		}
+
 		input.requestFocus();
 	}
 

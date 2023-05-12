@@ -152,7 +152,13 @@ public class GameLogic {
 					break;
 				case 3:
 					// calls the method printInventory
-					Inventory.chooseItem();
+
+					previousWindowText = Inventory.printInventory();
+					onInventory = true;
+					if (onInventory && Window.getUserInput().equals("1")) {
+						Inventory.chooseItem();
+						onInventory = false;
+					}
 					break;
 				default:
 					previousWindowText += "Comando inválido!\n";
