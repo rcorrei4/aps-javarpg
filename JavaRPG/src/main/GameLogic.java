@@ -47,8 +47,8 @@ public class GameLogic {
 			if (Window.getUserInput() != null && Window.getUserInput().equals("1")) {
 				handleUserInput(true, true);
 			} else if (Window.getUserInput() != null && Window.getUserInput().equals("2")) {
+				//handleUserInput(false, false);
 				loadData();
-				handleUserInput(true, false);
 			}
 		}
 	}
@@ -78,7 +78,7 @@ public class GameLogic {
 
 	public static void loadData() {
 		try {
-			BufferedReader br = new BufferedReader(new FileReader("saveFile.txt"));
+			BufferedReader br = new BufferedReader(new FileReader("JavaRPG/src/main/saveFile.txt"));
 			player.name = br.readLine();
 			player.maxHp = Integer.parseInt(br.readLine());
 			player.hp = Integer.parseInt(br.readLine());
@@ -90,11 +90,12 @@ public class GameLogic {
 		} catch (Exception e) {
 
 		}
+		
 	}
 
 	public static void saveWriter() {
 		try {
-			BufferedWriter bw = new BufferedWriter(new FileWriter("saveFile.txt"));
+			BufferedWriter bw = new BufferedWriter(new FileWriter("JavaRPG/src/main/saveFile.txt"));
 			bw.write(player.name);
 			bw.newLine();
 			bw.write("" + player.maxHp);
