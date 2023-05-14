@@ -51,7 +51,7 @@ public class Inventory {
             // uso do estimulante
             double hpPoints = GameLogic.player.increaseHp();
             System.out.println(hpPoints);
-            itemMsg += "Você usou o estimulante e ganhou " + hpPoints + " de vida!\n";
+            itemMsg += "\nVocê usou o estimulante e ganhou " + hpPoints + " de vida!\n";
             removeItem("Estimulante");
         }
         return itemMsg;

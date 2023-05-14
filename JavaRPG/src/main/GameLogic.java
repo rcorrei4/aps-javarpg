@@ -155,15 +155,15 @@ public class GameLogic {
 					// calls the method printInventory
 					previousWindowText += "Seu inventário:\n" + Inventory.printInventory();
 					onInventory = true;
+					if (onInventory) {
+						String itemMsg = Inventory.chooseItem();
+						previousWindowText += itemMsg;
+						onInventory = false;
+					}
 					break;
 				default:
 					previousWindowText += "Comando inválido!\n";
 					break;
-			}
-			if (onInventory) {
-				String itemMsg = Inventory.chooseItem();
-				previousWindowText += itemMsg;
-				onInventory = false;
 			}
 
 			int enemyAction = enemy.randomAction();
