@@ -47,7 +47,7 @@ public class GameLogic {
 			if (Window.getUserInput() != null && Window.getUserInput().equals("1")) {
 				handleUserInput(true, true);
 			} else if (Window.getUserInput() != null && Window.getUserInput().equals("2")) {
-				//handleUserInput(false, false);
+				// handleUserInput(false, false);
 				loadData();
 			}
 		}
@@ -90,7 +90,7 @@ public class GameLogic {
 		} catch (Exception e) {
 
 		}
-		
+
 	}
 
 	public static void saveWriter() {
@@ -153,18 +153,19 @@ public class GameLogic {
 					break;
 				case 3:
 					// calls the method printInventory
-
-					previousWindowText = Inventory.printInventory();
+					previousWindowText += "Seu inventário:\n" + Inventory.printInventory();
 					onInventory = true;
-					if (onInventory && Window.getUserInput().equals("1")) {
-						Inventory.chooseItem();
-						onInventory = false;
-					}
 					break;
 				default:
 					previousWindowText += "Comando inválido!\n";
 					break;
 			}
+			if (onInventory) {
+				String itemMsg = Inventory.chooseItem();
+				previousWindowText += itemMsg;
+				onInventory = false;
+			}
+
 			int enemyAction = enemy.randomAction();
 			switch (enemyAction) {
 				case 1:
@@ -192,13 +193,13 @@ public class GameLogic {
 					enemy.name + "\nHP:" + enemy.hp + "/" + enemy.maxHp +
 							"\n\n\nNome: " + player.name + "\nHP:" + player.hp + "/" + player.maxHp + "\nXP:"
 							+ player.xp +
-							"\n\nAtacar (1) - Defender-se (2) - Abrir Invetário (3)\n\n" + previousWindowText);
+							"\n\nAtacar (1) - Defender-se (2) - Abrir Invetário (3)\n\n" + previousWindowText + "\n");
 		} catch (NumberFormatException erro1) {
 			Window.setDisplayText(
 					enemy.name + "\nHP:" + enemy.hp + "/" + enemy.maxHp +
 							"\n\n\nNome: " + player.name + "\nHP:" + player.hp + "/" + player.maxHp + "\nXP:"
 							+ player.xp +
-							"\n\nAtacar (1) - Defender-se (2) - Utilizar item (3)\n\n" + previousWindowText);
+							"\n\nAtacar (1) - Defender-se (2) - Utilizar item (3)\n\n" + previousWindowText + "\n");
 		}
 	}
 

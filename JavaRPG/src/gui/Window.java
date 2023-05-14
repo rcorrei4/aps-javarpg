@@ -55,7 +55,7 @@ public class Window implements ActionListener {
 			} else if (getUserInput().equals("i")) {
 				Window.setDisplayText(Inventory.printInventory());
 				isChoosingItem = true;
-			} else if (isChoosingItem && getUserInput().equals("1")) {
+			} else if (isChoosingItem) {
 				Window.setDisplayText(Inventory.chooseItem());
 				isChoosingItem = false;
 			} else {

@@ -3,6 +3,7 @@ package main;
 import gui.Window;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class Inventory {
 
@@ -31,27 +32,27 @@ public class Inventory {
         } catch (NumberFormatException e) {
             return "Opção inválida!\n";
         }
-        if (index < 1 || index > map.size()) {
+        if (index < 1) {
             return "Opção inválida!\n";
         }
         if (index == 1) {
             // defesa
             double defensePoints = GameLogic.player.increaseDefense();
             System.out.println(defensePoints);
-            itemMsg += "Você usou o escudo e ganhou " + defensePoints + " pontos de defesa!\n";
-            // removeItem(1);
+            itemMsg += "Você usou o escudo e ganhou " + defensePoints + " pontos de defesa!\n\n";
+            removeItem("Escudo");
         } else if (index == 2) {
             // aumenta força
             double damagePoints = GameLogic.player.increaseStrength();
             System.out.println(damagePoints);
             itemMsg += "Você usou durateston e ganhou " + damagePoints + " pontos de ataque!\n";
-            // removeItem(2);
+            removeItem("Droga");
         } else if (index == 3) {
             // uso do estimulante
             double hpPoints = GameLogic.player.increaseHp();
             System.out.println(hpPoints);
             itemMsg += "Você usou o estimulante e ganhou " + hpPoints + " de vida!\n";
-            // removeItem(3);
+            removeItem("Estimulante");
         }
         return itemMsg;
     }
@@ -75,14 +76,16 @@ public class Inventory {
         Window.setDisplayText(itemName + " foi adicionado ao seu inventário!");
     }
 
-    public static void removeItem(int index) {
-        // checking if the index is within the bounds of the map
-        if (map.containsKey(index)) {
-            // remove the item from the player's items list
-            String itemName = map.remove(index);
-            GameLogic.player.items.remove(itemName);
-
-            Window.setDisplayText(itemName + " foi removido do seu inventário!");
+    public static void removeItem(String itemName) {
+        int index = -1;
+        for (Map.Entry<Integer, String> entry : map.entrySet()) {
+            if (entry.getValue().equals(itemName)) {
+                index = entry.getKey();
+                break;
+            }
+        }
+        if (index != -1) {
+            map.remove(index);
         }
     }
 
