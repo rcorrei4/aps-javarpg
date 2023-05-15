@@ -16,11 +16,15 @@ public class Inventory {
     };
 
     public static String printInventory() {
-        String inventory = "";
-        for (Integer key : map.keySet()) {
-            inventory += "\n" + key + ". " + map.get(key);
+        if (map.size() == 0) {
+            return "Você não possui itens no inventário.";
+        } else {
+            String inventory = "";
+            for (Integer key : map.keySet()) {
+                inventory += "\n" + key + ". " + map.get(key);
+            }
+            return inventory;
         }
-        return inventory;
     }
 
     public static String chooseItem() {
