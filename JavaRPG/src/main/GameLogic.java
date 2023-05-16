@@ -143,7 +143,6 @@ public class GameLogic {
 					previousWindowText += "Você atacou " + enemy.name + " causando " + damageToEnemy + " de dano!\n";
 					if (enemy.hp <= 0) {
 						previousWindowText += "\n\n" + enemy.name + " foi derrotado!";
-						gameStateLvl++;
 					}
 					break;
 				case 2:
@@ -177,7 +176,6 @@ public class GameLogic {
 					previousWindowText += enemy.name + " atacou causando " + damageToPlayer + " de dano!";
 					if (player.hp <= 0) {
 						previousWindowText += "\n\nVocê foi derrotado!";
-						gameStateLvl++;
 					}
 					break;
 				case 2:
@@ -244,7 +242,6 @@ public class GameLogic {
 	}
 
 	public static void secondChapter() {
-		System.out.println(gameStateLvl);
 		if (gameStateLvl == 0) {
 			Story.act2_1();
 		} else if (gameStateLvl == 1) {
