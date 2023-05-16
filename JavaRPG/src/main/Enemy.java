@@ -14,8 +14,9 @@ public class Enemy extends Character {
     // list of possible items to drop
     private static final String[] ITEM_LIST = { "Granada", "Metralhadora kkkkkk", "Espada" };
 
-    public Enemy(String name, int hp, int maxHp, int xp, double atkDamage) {
+    public Enemy(String name, int hp, int maxHp, int xp, double atkDamage, double defenseMultiplier) {
         super(name, hp, maxHp, xp, atkDamage);
+        this.defenseMultiplier = defenseMultiplier;
     }
 
     public int randomAction() {
@@ -36,9 +37,9 @@ public class Enemy extends Character {
 
     @Override
     public double increaseDefense() {
-        currentDefensePoints += 5 % maxHp;
-        return 1 % maxHp;
-    }
+		currentDefensePoints += (defenseMultiplier-(defenseMultiplier/2)) % maxHp;
+		return (defenseMultiplier-(defenseMultiplier/2)) % maxHp;
+	}
 
     @Override
     public double increaseStrength() {

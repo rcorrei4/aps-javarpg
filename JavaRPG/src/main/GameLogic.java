@@ -226,7 +226,7 @@ public class GameLogic {
 			Story.act1_1();
 		} else if (gameStateLvl == 3) {
 			Window.setDisplayText("Você encontrou os mercenários. Lute!");
-			currentEnemy = new Enemy("Mercenários", 100, 100, 0, 2);
+			currentEnemy = new Enemy("Mercenários", 100, 100, 0, 2, 1);
 		} else if (gameStateLvl == 4) {
 			if (player.hp <= 0) {
 				player.hp = player.maxHp;
@@ -256,7 +256,7 @@ public class GameLogic {
 			Story.act2_6();
 		} else if (gameStateLvl == 6) {
 			Story.act2_7();
-			currentEnemy = new Enemy("Mercenários", 15, 15, 0, 1);
+			currentEnemy = new Enemy("Mercenários", 15, 15, 0, 1, 1);
 		} else if (gameStateLvl == 7) {
 			if (player.hp <= 0) {
 				gameState = 999;
@@ -270,6 +270,6 @@ public class GameLogic {
 	}
 
 	public static void thirdChapter() {
-
+		System.out.println("Teste chapter3");
 	}
 }

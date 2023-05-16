@@ -3,7 +3,6 @@ package main;
 import java.util.ArrayList;
 
 public class Player extends Character {
-
 	public int numDefUpgrades;
 	public ArrayList<String> items;
 
@@ -18,6 +17,8 @@ public class Player extends Character {
 		this.numDefUpgrades = 0;
 		// O jogador pode escolher uma habilidade
 
+		this.defenseMultiplier = 2;
+
 		items = new ArrayList<String>();
 	}
 
@@ -28,8 +29,8 @@ public class Player extends Character {
 
 	@Override
 	public double increaseDefense() {
-		currentDefensePoints += 1.5 % maxHp;
-		return 1.5 % maxHp;
+		currentDefensePoints += (defenseMultiplier-(defenseMultiplier/2)) % maxHp;
+		return (defenseMultiplier-(defenseMultiplier/2)) % maxHp;
 	}
 
 	@Override
