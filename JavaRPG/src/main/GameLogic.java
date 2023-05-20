@@ -43,6 +43,8 @@ public class GameLogic {
 	public static void startGame() {
 		if (gameStateLvl == 0) {
 			Window.setDisplayText("(1) Criar novo jogo\n(2) Carregar Jogo");
+			player = new Player(Window.getUserInput(), 10, 10, 1, 5);
+			currentEnemy = new Enemy("Mercenários", 100, 100, 0, 2, 1);
 		} else if (gameStateLvl == 1) {
 			if (Window.getUserInput() != null && Window.getUserInput().equals("1")) {
 				handleUserInput(true, true);
@@ -58,7 +60,7 @@ public class GameLogic {
 			Window.setDisplayText("Digite seu nome: ");
 		} else if (gameStateLvl == 1) {
 			if (!Window.getUserInput().isEmpty()) {
-				player = new Player(Window.getUserInput(), 10, 10, 1, 5);
+				
 				Window.setDisplayText("Seu nome é: " + Window.getUserInput() + "\nEstá correto? (1) Sim (2)Não");
 			} else {
 				handleUserInput(true, false);
@@ -86,14 +88,24 @@ public class GameLogic {
 			gameState = Integer.parseInt(br.readLine());
 			gameStateLvl = Integer.parseInt(br.readLine());
 
+			currentEnemy.name = br.readLine();
+			currentEnemy.maxHp = Integer.parseInt(br.readLine());
+			currentEnemy.hp = Integer.parseInt(br.readLine());
+			currentEnemy.xp = Integer.parseInt(br.readLine());
+			currentEnemy.atkDamage = Integer.parseInt(br.readLine());
+			currentEnemy.defenseMultiplier = Integer.parseInt(br.readLine());
+
+
 			br.close();
 		} catch (Exception e) {
+			e.printStackTrace();
 
 		}
 
 	}
 
 	public static void saveWriter() {
+		
 		try {
 			BufferedWriter bw = new BufferedWriter(new FileWriter("JavaRPG/src/main/saveFile.txt"));
 			bw.write(player.name);
@@ -107,10 +119,25 @@ public class GameLogic {
 			bw.write("" + gameState);
 			bw.newLine();
 			bw.write("" + gameStateLvl);
+			bw.newLine();
+			bw.write(currentEnemy.name);
+			bw.newLine();
+			bw.write("" + currentEnemy.maxHp);
+			bw.newLine();
+			bw.write("" + currentEnemy.hp);
+			bw.newLine();
+			bw.write("" + currentEnemy.xp);
+			bw.newLine();
+			bw.write("" + currentEnemy.atkDamage);
+			bw.newLine();
+			bw.write("" + currentEnemy.defenseMultiplier);
+			
 
 			bw.close();
-		} catch (Exception e) {
 
+			
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -226,7 +253,7 @@ public class GameLogic {
 			Story.act1_1();
 		} else if (gameStateLvl == 3) {
 			Window.setDisplayText("Você encontrou os mercenários. Lute!");
-			currentEnemy = new Enemy("Mercenários", 100, 100, 0, 2, 1);
+			//currentEnemy = new Enemy("Mercenários", 100, 100, 0, 2, 1);
 		} else if (gameStateLvl == 4) {
 			if (player.hp <= 0) {
 				player.hp = player.maxHp;
