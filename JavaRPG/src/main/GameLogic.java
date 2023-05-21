@@ -5,6 +5,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.awt.Color;
 
 public class GameLogic {
 	private static int gameState = 0;
@@ -43,7 +44,7 @@ public class GameLogic {
 	public static void startGame() {
 		Window.input.requestFocus();
 		if (gameStateLvl == 0) {
-			Window.setDisplayText("(1) Criar novo jogo\n(2) Carregar Jogo");
+			Window.setDisplayText("(1) - Criar novo jogo\n(2) - Carregar Jogo");
 			player = new Player(Window.getUserInput(), 10, 10, 1, 5);
 			currentEnemy = new Enemy("Mercenários", 100, 100, 0, 2, 1);
 		} else if (gameStateLvl == 1) {
@@ -65,7 +66,7 @@ public class GameLogic {
 		} else if (gameStateLvl == 1) {
 			if (!Window.getUserInput().isEmpty()) {
 				player = new Player(Window.getUserInput(), 10, 10, 1, 5);
-				Window.setDisplayText("Seu nome é: " + Window.getUserInput() + "\nEstá correto? (1) Sim (2)Não");
+				Window.setDisplayText("Seu nome é: " + Window.getUserInput() + "\nEstá correto? (1) - Sim (2) - Não");
 			} else {
 				handleUserInput(true, false);
 			}
@@ -367,11 +368,21 @@ public class GameLogic {
 		} else if (gameStateLvl == 5) {
 			Story.act4_6();
 		} else if (gameStateLvl == 6) {
+			Window.displayText.setForeground(Color.BLUE);
+			Window.setDisplayText("Miyuki agora pode fazer itens para o jogador a partir dos componentes eletrônicos que você conseguir.");
+		} else if (gameStateLvl == 7) {
+			Window.displayText.setForeground(Color.BLACK);
 			handleUserInput(true, true);
 		}
 	}
 
 	public static void fifthChapther() {
-		System.out.println("teste");
+		if (gameStateLvl == 0) {
+			Story.act5_1();
+		} else if (gameStateLvl == 1) {
+			Story.act5_2();
+		} else if (gameStateLvl == 2) {
+			Story.act5_3();
+		}
 	}
 }

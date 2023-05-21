@@ -40,6 +40,7 @@ public class Window implements ActionListener {
 
 		frame.add(input);
 
+		frame.setResizable(false);
 		frame.setSize(500, 420);
 		frame.setLayout(null);
 		frame.setVisible(true);
