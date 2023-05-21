@@ -16,14 +16,14 @@ public class Inventory {
     };
 
     public static String printInventory() {
-        if (map.size() == 0) {
+        if (map.isEmpty()) {
             return "Você não possui itens no inventário.";
         } else {
-            String inventory = "";
-            for (Integer key : map.keySet()) {
-                inventory += "\n" + key + ". " + map.get(key);
+            StringBuilder inventory = new StringBuilder();
+            for (Map.Entry<Integer, String> entry : map.entrySet()) {
+                inventory.append("\n").append(entry.getKey()).append(". ").append(entry.getValue());
             }
-            return inventory;
+            return inventory.toString();
         }
     }
 
@@ -36,7 +36,7 @@ public class Inventory {
         } catch (NumberFormatException e) {
             return "Opção inválida!\n";
         }
-        if (index < 1) {
+        if (index < 1 ) {
             return "Opção inválida!\n";
         }
         if (index == 1) {
@@ -61,23 +61,24 @@ public class Inventory {
         return itemMsg;
     }
 
-    public static void addEnemyItem(String droppedItem) {
-        /*
-         * String[] newItems = new String[items.length + 1]; // new array with the new
-         * items
-         * for (int i = 0; i < items.length; i++) {
-         * newItems[i] = items[i];
-         * }
-         * newItems[newItems.length - 1] = item;
-         * items = newItems;
-         */
-
-    }
-
     public static void addItem(Player player, String itemName) {
         player.items.add(itemName);
 
         Window.setDisplayText(itemName + " foi adicionado ao seu inventário!");
+    }
+
+    public static void addEnemyItem(String droppedItem) {
+        // generate a unique index for the new item
+
+        int newIndex = map.size() + 1;
+
+        // add the item to the Inventory map
+        map.put(newIndex, droppedItem);
+
+        //display a message
+        Window.setDisplayText(droppedItem + " foi adicionado ao seu inventário!");
+    
+
     }
 
     public static void removeItem(String itemName) {
@@ -92,5 +93,4 @@ public class Inventory {
             map.remove(index);
         }
     }
-
 }

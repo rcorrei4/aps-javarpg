@@ -85,6 +85,26 @@ public class Story {
     }
 
     public static void act3_1 () {
-        
+        Window.setDisplayText(
+            "Hefesto: Você está atrapalhando o progresso, e isso é algo que não posso permitir, está perdendo seu tempo, sabia? Você não pode mudar nada, por mais que tente."
+        );
+    }
+
+    public static void act3_2 () {
+        Window.setDisplayText(
+            "Talvez não hoje, talvez não amanhã. Mas, eventualmente, faremos a diferença. Temos que fazer."
+        );
+    }
+
+    public static void act3_3 () {
+        Window.setDisplayText(
+            "Hefesto: E como você tem tanta certeza disso?"
+        );
+    }
+
+    public static void act3_4 () {
+        Window.setDisplayText(
+            "Porque acreditamos no que estamos lutando. E quando você acredita em algo, você pode conseguir qualquer coisa."
+        );
     }
 }

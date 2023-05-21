@@ -41,15 +41,18 @@ public class GameLogic {
 	}
 
 	public static void startGame() {
+		Window.input.requestFocus();
 		if (gameStateLvl == 0) {
 			Window.setDisplayText("(1) Criar novo jogo\n(2) Carregar Jogo");
 			player = new Player(Window.getUserInput(), 10, 10, 1, 5);
 			currentEnemy = new Enemy("Mercenários", 100, 100, 0, 2, 1);
 		} else if (gameStateLvl == 1) {
+			if (Window.getUserInput() != null && !Window.getUserInput().equals("1") && !Window.getUserInput().equals("2")){
+				handleUserInput(true, false);
+			}
 			if (Window.getUserInput() != null && Window.getUserInput().equals("1")) {
 				handleUserInput(true, true);
 			} else if (Window.getUserInput() != null && Window.getUserInput().equals("2")) {
-				// handleUserInput(false, false);
 				loadData();
 			}
 		}
@@ -60,7 +63,7 @@ public class GameLogic {
 			Window.setDisplayText("Digite seu nome: ");
 		} else if (gameStateLvl == 1) {
 			if (!Window.getUserInput().isEmpty()) {
-				
+				player = new Player(Window.getUserInput(), 10, 10, 1, 5);
 				Window.setDisplayText("Seu nome é: " + Window.getUserInput() + "\nEstá correto? (1) Sim (2)Não");
 			} else {
 				handleUserInput(true, false);
@@ -81,7 +84,7 @@ public class GameLogic {
 	public static void loadData() {
 		try {
 			BufferedReader br = new BufferedReader(new FileReader("JavaRPG/src/main/saveFile.txt"));
-			player.name = br.readLine();
+			/*player.name = br.readLine();
 			player.maxHp = Integer.parseInt(br.readLine());
 			player.hp = Integer.parseInt(br.readLine());
 			player.xp = Integer.parseInt(br.readLine());
@@ -93,7 +96,16 @@ public class GameLogic {
 			currentEnemy.hp = Integer.parseInt(br.readLine());
 			currentEnemy.xp = Integer.parseInt(br.readLine());
 			currentEnemy.atkDamage = Integer.parseInt(br.readLine());
-			currentEnemy.defenseMultiplier = Integer.parseInt(br.readLine());
+			currentEnemy.defenseMultiplier = Integer.parseInt(br.readLine());*/
+
+			String line = br.readLine();
+			if (line != null){
+				gameState = Integer.parseInt(line);
+			}
+			String line2 = br.readLine();
+			if (line2 != null){
+				gameStateLvl = Integer.parseInt(line2);
+			}
 
 
 			br.close();
@@ -108,7 +120,7 @@ public class GameLogic {
 		
 		try {
 			BufferedWriter bw = new BufferedWriter(new FileWriter("JavaRPG/src/main/saveFile.txt"));
-			bw.write(player.name);
+			/*bw.write(player.name);
 			bw.newLine();
 			bw.write("" + player.maxHp);
 			bw.newLine();
@@ -130,8 +142,12 @@ public class GameLogic {
 			bw.newLine();
 			bw.write("" + currentEnemy.atkDamage);
 			bw.newLine();
-			bw.write("" + currentEnemy.defenseMultiplier);
+			bw.write("" + currentEnemy.defenseMultiplier);*/
 			
+			bw.write(String.valueOf(gameState));
+			bw.newLine();
+			gameStateLvl--;
+			bw.write(String.valueOf(gameStateLvl));
 
 			bw.close();
 
@@ -139,6 +155,17 @@ public class GameLogic {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public static void tutorial() {
+		Window.setDisplayText(
+			"Comandos: \ni - Abre o inventário\ntutorial - Tutorial básico do jogo\nmenu - Mostra informações sobre personagem"
+		);
+	}
+
+	public static void battleTutorial(){
+		Window.setDisplayText("Instruções: \nDurante a batalha, você terá as seguintes opções: \n1. Atacar - Escolha essa opção para atacar o inimigo.\n2. Defender - Use essa opção para aumentar sua defesa.\n3. Utilizar o item - Abra o inventário e escolha um item.\nVocê pode digitar 'i' para abrir o inventário.\nVocê pode digitar 'menu' para retomar a tela inicial do jogo."
+		);
 	}
 
 	public static void characterInfo() {
@@ -210,6 +237,10 @@ public class GameLogic {
 					previousWindowText += enemy.name + " se defendeu e ganhou " + defensePoints + " pontos de defesa!";
 					break;
 				case 3:
+					String droppedItem = enemy.dropItem();
+					if(droppedItem != null) {
+						previousWindowText += enemy.name + " deixou cair um item: " + droppedItem + "\n";
+					}
 					System.out.println("Item especial enemy");
 					break;
 			}
@@ -297,6 +328,20 @@ public class GameLogic {
 	}
 
 	public static void thirdChapter() {
-		System.out.println("Teste chapter3");
+		if (gameStateLvl == 0) {
+			Story.act3_1();
+		} else if (gameStateLvl == 1) {
+			Story.act3_2();
+		} else if (gameStateLvl == 2) {
+			Story.act3_3();
+		} else if (gameStateLvl == 3) {
+			Story.act3_4();
+		} else if (gameStateLvl == 4) {
+			handleUserInput(true, true);
+		}
+	}
+
+	public static void fourthChapter() {
+		System.out.println("teste");
 	}
 }
