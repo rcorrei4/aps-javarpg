@@ -56,6 +56,7 @@ public class GameLogic {
 				handleUserInput(true, true);
 			} else if (Window.getUserInput() != null && Window.getUserInput().equals("2")) {
 				loadData();
+				
 			}
 		}
 	}
@@ -86,32 +87,14 @@ public class GameLogic {
 	public static void loadData() {
 		try {
 			BufferedReader br = new BufferedReader(new FileReader("JavaRPG/src/main/saveFile.txt"));
-			/*
-			 * player.name = br.readLine();
-			 * player.maxHp = Integer.parseInt(br.readLine());
-			 * player.hp = Integer.parseInt(br.readLine());
-			 * player.xp = Integer.parseInt(br.readLine());
-			 * gameState = Integer.parseInt(br.readLine());
-			 * gameStateLvl = Integer.parseInt(br.readLine());
-			 * 
-			 * currentEnemy.name = br.readLine();
-			 * currentEnemy.maxHp = Integer.parseInt(br.readLine());
-			 * currentEnemy.hp = Integer.parseInt(br.readLine());
-			 * currentEnemy.xp = Integer.parseInt(br.readLine());
-			 * currentEnemy.atkDamage = Integer.parseInt(br.readLine());
-			 * currentEnemy.defenseMultiplier = Integer.parseInt(br.readLine());
-			 */
-
-			String line = br.readLine();
-			if (line != null) {
-				gameState = Integer.parseInt(line);
-			}
-			String line2 = br.readLine();
-			if (line2 != null) {
-				gameStateLvl = Integer.parseInt(line2);
-			}
-
+			
+			player.name = br.readLine();
+			gameState = Integer.parseInt(br.readLine());
+			gameStateLvl = Integer.parseInt(br.readLine());
+			
 			br.close();
+
+			Main.gameMap.get(gameState).run();
 		} catch (Exception e) {
 			e.printStackTrace();
 
@@ -123,35 +106,12 @@ public class GameLogic {
 
 		try {
 			BufferedWriter bw = new BufferedWriter(new FileWriter("JavaRPG/src/main/saveFile.txt"));
-			/*
-			 * bw.write(player.name);
-			 * bw.newLine();
-			 * bw.write("" + player.maxHp);
-			 * bw.newLine();
-			 * bw.write("" + player.hp);
-			 * bw.newLine();
-			 * bw.write("" + player.xp);
-			 * bw.newLine();
-			 * bw.write("" + gameState);
-			 * bw.newLine();
-			 * bw.write("" + gameStateLvl);
-			 * bw.newLine();
-			 * bw.write(currentEnemy.name);
-			 * bw.newLine();
-			 * bw.write("" + currentEnemy.maxHp);
-			 * bw.newLine();
-			 * bw.write("" + currentEnemy.hp);
-			 * bw.newLine();
-			 * bw.write("" + currentEnemy.xp);
-			 * bw.newLine();
-			 * bw.write("" + currentEnemy.atkDamage);
-			 * bw.newLine();
-			 * bw.write("" + currentEnemy.defenseMultiplier);
-			 */
-
+		
+			bw.write(String.valueOf(player.name));
+			bw.newLine();
 			bw.write(String.valueOf(gameState));
 			bw.newLine();
-			gameStateLvl--;
+			//gameStateLvl--;
 			bw.write(String.valueOf(gameStateLvl));
 
 			bw.close();
@@ -163,7 +123,7 @@ public class GameLogic {
 
 	public static void tutorial() {
 		Window.setDisplayText(
-				"Comandos: \ni - Abre o inventário\ntutorial - Tutorial básico do jogo\nmenu - Mostra informações sobre personagem");
+				"Comandos: \ni - Abre o inventário\ntutorial - Tutorial básico do jogo\nmenu - Mostra informações sobre personagem\nsave - Salva o jogo\nload - Carrega o save");
 	}
 
 	public static void battleTutorial() {

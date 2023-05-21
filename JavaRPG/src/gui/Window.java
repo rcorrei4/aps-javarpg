@@ -66,7 +66,6 @@ public class Window implements ActionListener {
 				Window.setDisplayText("Jogo salvo com sucesso");
 			} else if (getUserInput().equals("load")){
 				GameLogic.loadData();
-				Window.setDisplayText("jogo carregado");
 			} else {
 				GameLogic.handleUserInput();
 			}
