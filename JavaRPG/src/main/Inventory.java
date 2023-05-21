@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Inventory {
-    private static boolean isAvailable = false;
+    private static boolean isAvailable = true;
 
     public static HashMap<Integer, String> map = new HashMap<Integer, String>() {
         {
@@ -35,37 +35,40 @@ public class Inventory {
     }
 
     public static String chooseItem() {
-        String itemMsg = "";
-        String userInput = Window.getUserInput();
-        int index;
-        try {
-            index = Integer.parseInt(userInput);
-        } catch (NumberFormatException e) {
-            return "Opção inválida!\n";
+        if (isAvailable) {
+            String itemMsg = "";
+            String userInput = Window.getUserInput();
+            int index;
+            try {
+                index = Integer.parseInt(userInput);
+            } catch (NumberFormatException e) {
+                return "Opção inválida!\n";
+            }
+            if (index == 1) {
+                // defesa
+                double defensePoints = GameLogic.player.increaseDefense();
+                System.out.println(defensePoints);
+                itemMsg += "Você usou o escudo e ganhou " + defensePoints + " pontos de defesa!\n\n";
+                removeItem("Escudo");
+            } else if (index == 2) {
+                // aumenta força
+                double damagePoints = GameLogic.player.increaseStrength();
+                System.out.println(damagePoints);
+                itemMsg += "Você usou durateston e ganhou " + damagePoints + " pontos de ataque!\n";
+                removeItem("Droga");
+            } else if (index == 3) {
+                // uso do estimulante
+                double hpPoints = GameLogic.player.increaseHp();
+                System.out.println(hpPoints);
+                itemMsg += "\nVocê usou o estimulante e ganhou " + hpPoints + " de vida!\n";
+                removeItem("Estimulante");
+            } else {
+                return "Opção inválida!\n";
+            }
+            return itemMsg;
+        } else {
+            return "";
         }
-        if (index < 1) {
-            return "Opção inválida!\n";
-        }
-        if (index == 1) {
-            // defesa
-            double defensePoints = GameLogic.player.increaseDefense();
-            System.out.println(defensePoints);
-            itemMsg += "Você usou o escudo e ganhou " + defensePoints + " pontos de defesa!\n\n";
-            removeItem("Escudo");
-        } else if (index == 2) {
-            // aumenta força
-            double damagePoints = GameLogic.player.increaseStrength();
-            System.out.println(damagePoints);
-            itemMsg += "Você usou durateston e ganhou " + damagePoints + " pontos de ataque!\n";
-            removeItem("Droga");
-        } else if (index == 3) {
-            // uso do estimulante
-            double hpPoints = GameLogic.player.increaseHp();
-            System.out.println(hpPoints);
-            itemMsg += "\nVocê usou o estimulante e ganhou " + hpPoints + " de vida!\n";
-            removeItem("Estimulante");
-        }
-        return itemMsg;
     }
 
     public static void addItem(Player player, String itemName) {
