@@ -20,8 +20,9 @@ public class Main {
 		gameMap.put(3, GameLogic::secondChapter);
 		gameMap.put(4, GameLogic::thirdChapter);
 		gameMap.put(5, GameLogic::fourthChapter);
+		gameMap.put(6, GameLogic::fifthChapther);
 		gameMap.put(666, GameLogic::deathScreen);
-		
+
 		int userInput = 0; // example userInpu4
 
 		// invoke the method based on the userInput

@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Inventory {
+    private static boolean isAvailable = false;
 
     public static HashMap<Integer, String> map = new HashMap<Integer, String>() {
         {
@@ -15,8 +16,14 @@ public class Inventory {
         }
     };
 
+    public static void setAvailable(boolean value) {
+        isAvailable = value;
+    }
+
     public static String printInventory() {
-        if (map.isEmpty()) {
+        if (!isAvailable) {
+            return "O inventário não está disponível no momento.";
+        } else if (map.isEmpty()) {
             return "Você não possui itens no inventário.";
         } else {
             StringBuilder inventory = new StringBuilder();
@@ -36,7 +43,7 @@ public class Inventory {
         } catch (NumberFormatException e) {
             return "Opção inválida!\n";
         }
-        if (index < 1 ) {
+        if (index < 1) {
             return "Opção inválida!\n";
         }
         if (index == 1) {
@@ -75,9 +82,8 @@ public class Inventory {
         // add the item to the Inventory map
         map.put(newIndex, droppedItem);
 
-        //display a message
+        // display a message
         Window.setDisplayText(droppedItem + " foi adicionado ao seu inventário!");
-    
 
     }
 

@@ -47,7 +47,8 @@ public class GameLogic {
 			player = new Player(Window.getUserInput(), 10, 10, 1, 5);
 			currentEnemy = new Enemy("Mercenários", 100, 100, 0, 2, 1);
 		} else if (gameStateLvl == 1) {
-			if (Window.getUserInput() != null && !Window.getUserInput().equals("1") && !Window.getUserInput().equals("2")){
+			if (Window.getUserInput() != null && !Window.getUserInput().equals("1")
+					&& !Window.getUserInput().equals("2")) {
 				handleUserInput(true, false);
 			}
 			if (Window.getUserInput() != null && Window.getUserInput().equals("1")) {
@@ -84,29 +85,30 @@ public class GameLogic {
 	public static void loadData() {
 		try {
 			BufferedReader br = new BufferedReader(new FileReader("JavaRPG/src/main/saveFile.txt"));
-			/*player.name = br.readLine();
-			player.maxHp = Integer.parseInt(br.readLine());
-			player.hp = Integer.parseInt(br.readLine());
-			player.xp = Integer.parseInt(br.readLine());
-			gameState = Integer.parseInt(br.readLine());
-			gameStateLvl = Integer.parseInt(br.readLine());
-
-			currentEnemy.name = br.readLine();
-			currentEnemy.maxHp = Integer.parseInt(br.readLine());
-			currentEnemy.hp = Integer.parseInt(br.readLine());
-			currentEnemy.xp = Integer.parseInt(br.readLine());
-			currentEnemy.atkDamage = Integer.parseInt(br.readLine());
-			currentEnemy.defenseMultiplier = Integer.parseInt(br.readLine());*/
+			/*
+			 * player.name = br.readLine();
+			 * player.maxHp = Integer.parseInt(br.readLine());
+			 * player.hp = Integer.parseInt(br.readLine());
+			 * player.xp = Integer.parseInt(br.readLine());
+			 * gameState = Integer.parseInt(br.readLine());
+			 * gameStateLvl = Integer.parseInt(br.readLine());
+			 * 
+			 * currentEnemy.name = br.readLine();
+			 * currentEnemy.maxHp = Integer.parseInt(br.readLine());
+			 * currentEnemy.hp = Integer.parseInt(br.readLine());
+			 * currentEnemy.xp = Integer.parseInt(br.readLine());
+			 * currentEnemy.atkDamage = Integer.parseInt(br.readLine());
+			 * currentEnemy.defenseMultiplier = Integer.parseInt(br.readLine());
+			 */
 
 			String line = br.readLine();
-			if (line != null){
+			if (line != null) {
 				gameState = Integer.parseInt(line);
 			}
 			String line2 = br.readLine();
-			if (line2 != null){
+			if (line2 != null) {
 				gameStateLvl = Integer.parseInt(line2);
 			}
-
 
 			br.close();
 		} catch (Exception e) {
@@ -117,33 +119,35 @@ public class GameLogic {
 	}
 
 	public static void saveWriter() {
-		
+
 		try {
 			BufferedWriter bw = new BufferedWriter(new FileWriter("JavaRPG/src/main/saveFile.txt"));
-			/*bw.write(player.name);
-			bw.newLine();
-			bw.write("" + player.maxHp);
-			bw.newLine();
-			bw.write("" + player.hp);
-			bw.newLine();
-			bw.write("" + player.xp);
-			bw.newLine();
-			bw.write("" + gameState);
-			bw.newLine();
-			bw.write("" + gameStateLvl);
-			bw.newLine();
-			bw.write(currentEnemy.name);
-			bw.newLine();
-			bw.write("" + currentEnemy.maxHp);
-			bw.newLine();
-			bw.write("" + currentEnemy.hp);
-			bw.newLine();
-			bw.write("" + currentEnemy.xp);
-			bw.newLine();
-			bw.write("" + currentEnemy.atkDamage);
-			bw.newLine();
-			bw.write("" + currentEnemy.defenseMultiplier);*/
-			
+			/*
+			 * bw.write(player.name);
+			 * bw.newLine();
+			 * bw.write("" + player.maxHp);
+			 * bw.newLine();
+			 * bw.write("" + player.hp);
+			 * bw.newLine();
+			 * bw.write("" + player.xp);
+			 * bw.newLine();
+			 * bw.write("" + gameState);
+			 * bw.newLine();
+			 * bw.write("" + gameStateLvl);
+			 * bw.newLine();
+			 * bw.write(currentEnemy.name);
+			 * bw.newLine();
+			 * bw.write("" + currentEnemy.maxHp);
+			 * bw.newLine();
+			 * bw.write("" + currentEnemy.hp);
+			 * bw.newLine();
+			 * bw.write("" + currentEnemy.xp);
+			 * bw.newLine();
+			 * bw.write("" + currentEnemy.atkDamage);
+			 * bw.newLine();
+			 * bw.write("" + currentEnemy.defenseMultiplier);
+			 */
+
 			bw.write(String.valueOf(gameState));
 			bw.newLine();
 			gameStateLvl--;
@@ -151,7 +155,6 @@ public class GameLogic {
 
 			bw.close();
 
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -159,13 +162,12 @@ public class GameLogic {
 
 	public static void tutorial() {
 		Window.setDisplayText(
-			"Comandos: \ni - Abre o inventário\ntutorial - Tutorial básico do jogo\nmenu - Mostra informações sobre personagem"
-		);
+				"Comandos: \ni - Abre o inventário\ntutorial - Tutorial básico do jogo\nmenu - Mostra informações sobre personagem");
 	}
 
-	public static void battleTutorial(){
-		Window.setDisplayText("Instruções: \nDurante a batalha, você terá as seguintes opções: \n1. Atacar - Escolha essa opção para atacar o inimigo.\n2. Defender - Use essa opção para aumentar sua defesa.\n3. Utilizar o item - Abra o inventário e escolha um item.\nVocê pode digitar 'i' para abrir o inventário.\nVocê pode digitar 'menu' para retomar a tela inicial do jogo."
-		);
+	public static void battleTutorial() {
+		Window.setDisplayText(
+				"Instruções: \nDurante a batalha, você terá as seguintes opções: \n1. Atacar - Escolha essa opção para atacar o inimigo.\n2. Defender - Use essa opção para aumentar sua defesa.\n3. Utilizar o item - Abra o inventário e escolha um item.\nVocê pode digitar 'i' para abrir o inventário.\nVocê pode digitar 'menu' para retomar a tela inicial do jogo.");
 	}
 
 	public static void characterInfo() {
@@ -177,6 +179,7 @@ public class GameLogic {
 
 	public static void battle(Enemy enemy) {
 		gameStateLvl -= 1;
+		Inventory.setAvailable(false); // set inventory as unavailable
 		battleRound(enemy);
 	}
 
@@ -207,6 +210,7 @@ public class GameLogic {
 				case 3:
 					// calls the method printInventory
 					previousWindowText += "Seu inventário:\n" + Inventory.printInventory();
+					Inventory.setAvailable(true); // Set inventory as available
 					onInventory = true;
 					if (onInventory) {
 						String itemMsg = Inventory.chooseItem();
@@ -238,7 +242,7 @@ public class GameLogic {
 					break;
 				case 3:
 					String droppedItem = enemy.dropItem();
-					if(droppedItem != null) {
+					if (droppedItem != null && enemy.hp < 0) {
 						previousWindowText += enemy.name + " deixou cair um item: " + droppedItem + "\n";
 					}
 					System.out.println("Item especial enemy");
@@ -284,7 +288,7 @@ public class GameLogic {
 			Story.act1_1();
 		} else if (gameStateLvl == 3) {
 			Window.setDisplayText("Você encontrou os mercenários. Lute!");
-			//currentEnemy = new Enemy("Mercenários", 100, 100, 0, 2, 1);
+			// currentEnemy = new Enemy("Mercenários", 100, 100, 0, 2, 1);
 		} else if (gameStateLvl == 4) {
 			if (player.hp <= 0) {
 				player.hp = player.maxHp;
@@ -337,11 +341,33 @@ public class GameLogic {
 		} else if (gameStateLvl == 3) {
 			Story.act3_4();
 		} else if (gameStateLvl == 4) {
+			Story.act3_5();
+		} else if (gameStateLvl == 5) {
+			Story.act3_6();
+		} else if (gameStateLvl == 6) {
 			handleUserInput(true, true);
 		}
 	}
 
 	public static void fourthChapter() {
+		if (gameStateLvl == 0) {
+			Story.act4_1();
+		} else if (gameStateLvl == 1) {
+			Story.act4_2();
+		} else if (gameStateLvl == 2) {
+			Story.act4_3();
+		} else if (gameStateLvl == 3) {
+			Story.act4_4();
+		} else if (gameStateLvl == 4) {
+			Story.act4_5();
+		} else if (gameStateLvl == 5) {
+			Story.act4_6();
+		} else if (gameStateLvl == 6) {
+			handleUserInput(true, true);
+		}
+	}
+
+	public static void fifthChapther() {
 		System.out.println("teste");
 	}
 }
