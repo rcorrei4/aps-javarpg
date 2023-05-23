@@ -28,11 +28,8 @@ public abstract class Character {
 
 	// Métodos que todos os personagens devem ter
 	public abstract double attack();
-
 	public abstract double increaseDefense();
-
 	public abstract double increaseStrength();
-
 	public abstract double increaseHp();
 
 }

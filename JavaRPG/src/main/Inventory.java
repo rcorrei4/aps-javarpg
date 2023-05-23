@@ -8,7 +8,7 @@ import java.util.Map;
 public class Inventory {
     private static boolean isAvailable = true;
 
-    public static HashMap<Integer, String> map = new HashMap<Integer, String>() {
+    public static HashMap<Integer, String> inventario = new HashMap<Integer, String>() {
         {
             put(1, "Escudo");
             put(2, "Droga");
@@ -23,11 +23,11 @@ public class Inventory {
     public static String printInventory() {
         if (!isAvailable) {
             return "O inventário não está disponível no momento.";
-        } else if (map.isEmpty()) {
+        } else if (inventario.isEmpty()) {
             return "Você não possui itens no inventário.";
         } else {
             StringBuilder inventory = new StringBuilder();
-            for (Map.Entry<Integer, String> entry : map.entrySet()) {
+            for (Map.Entry<Integer, String> entry : inventario.entrySet()) {
                 inventory.append("\n").append(entry.getKey()).append(". ").append(entry.getValue());
             }
             return inventory.toString();
@@ -44,24 +44,28 @@ public class Inventory {
             } catch (NumberFormatException e) {
                 return "Opção inválida!\n";
             }
-            if (index == 1) {
-                // defesa
-                double defensePoints = GameLogic.player.increaseDefense();
-                System.out.println(defensePoints);
-                itemMsg += "Você usou o escudo e ganhou " + defensePoints + " pontos de defesa!\n\n";
-                removeItem("Escudo");
-            } else if (index == 2) {
-                // aumenta força
-                double damagePoints = GameLogic.player.increaseStrength();
-                System.out.println(damagePoints);
-                itemMsg += "Você usou durateston e ganhou " + damagePoints + " pontos de ataque!\n";
-                removeItem("Droga");
-            } else if (index == 3) {
-                // uso do estimulante
-                double hpPoints = GameLogic.player.increaseHp();
-                System.out.println(hpPoints);
-                itemMsg += "\nVocê usou o estimulante e ganhou " + hpPoints + " de vida!\n";
-                removeItem("Estimulante");
+            if (inventario.containsKey(index)) {
+                if (index == 1) {
+                    // defesa
+                    double defensePoints = GameLogic.player.increaseDefense();
+                    System.out.println(defensePoints);
+                    itemMsg += "Você usou o escudo e ganhou " + defensePoints + " pontos de defesa!\n\n";
+                    removeItem(1);
+                } else if (index == 2) {
+                    // aumenta força
+                    double damagePoints = GameLogic.player.increaseStrength();
+                    System.out.println(damagePoints);
+                    itemMsg += "Você usou durateston e ganhou " + damagePoints + " pontos de ataque!\n";
+                    removeItem(2);
+                } else if (index == 3) {
+                    // uso do estimulante
+                    double hpPoints = GameLogic.player.increaseHp();
+                    System.out.println(hpPoints);
+                    itemMsg += "\nVocê usou o estimulante e ganhou " + hpPoints + " de vida!\n";
+                    removeItem(3);
+                } else {
+                    return "Opção inválida!\n";
+                }
             } else {
                 return "Opção inválida!\n";
             }
@@ -77,29 +81,27 @@ public class Inventory {
         Window.setDisplayText(itemName + " foi adicionado ao seu inventário!");
     }
 
-    public static void addEnemyItem(String droppedItem) {
+    public static String addEnemyItem(String droppedItem) {
         // generate a unique index for the new item
 
-        int newIndex = map.size() + 1;
+        String enemyItemMsg = "";       
+
+        int newIndex = inventario.size() + 1;
 
         // add the item to the Inventory map
-        map.put(newIndex, droppedItem);
+        inventario.put(newIndex, droppedItem);
 
         // display a message
-        Window.setDisplayText(droppedItem + " foi adicionado ao seu inventário!");
+        enemyItemMsg += droppedItem + " foi adicionado ao seu inventário!";
+
+        return enemyItemMsg;
 
     }
 
-    public static void removeItem(String itemName) {
-        int index = -1;
-        for (Map.Entry<Integer, String> entry : map.entrySet()) {
-            if (entry.getValue().equals(itemName)) {
-                index = entry.getKey();
-                break;
-            }
-        }
-        if (index != -1) {
-            map.remove(index);
-        }
+
+
+    public static void removeItem(int index) {
+        inventario.remove(index);
+
     }
 }

@@ -2,6 +2,12 @@ package main;
 
 import java.util.Random;
 
+import gui.Window;
+
+import java.util.HashMap;
+
+import java.util.Map;
+
 public class Enemy extends Character {
 
     // Chances de cada ação que o inimigo pode fazer
@@ -9,10 +15,19 @@ public class Enemy extends Character {
     private static final double DEFENSE_WEIGHT = 0.3;
 
     // Item drop rate
-    private static final double ITEM_DROP_RATE = 0.2;
+    private static final double ITEM_DROP_RATE = 1.0;
 
     // list of possible items to drop
-    private static final String[] ITEM_LIST = { "Granada", "Metralhadora kkkkkk", "Espada" };
+
+    public static HashMap<Integer, String> enemyItems = new HashMap<Integer, String>() {
+        {
+           
+            put(1, "Granada sla");
+            put(2, "Metralhadora kkkkk n sei");
+        }
+    }; 
+
+  
 
     public Enemy(String name, int hp, int maxHp, int xp, double atkDamage, double defenseMultiplier) {
         super(name, hp, maxHp, xp, atkDamage);
@@ -52,15 +67,19 @@ public class Enemy extends Character {
         return 0;
     }
 
+
     public String dropItem() {
         Random random = new Random();
-        if (random.nextDouble() < ITEM_DROP_RATE) {
-            int index = random.nextInt(ITEM_LIST.length);
-            String droppedItem = ITEM_LIST[index];
+        if (random.nextDouble() <= ITEM_DROP_RATE) {
+            int index = random.nextInt(enemyItems.size());
+            String droppedItem = enemyItems.get(index);
             Inventory.addEnemyItem(droppedItem);
             return droppedItem;
         } else {
             return null;
         }
     }
+
+    
+
 }

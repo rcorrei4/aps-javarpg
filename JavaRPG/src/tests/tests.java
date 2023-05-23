@@ -1,25 +1,20 @@
 package tests;
 
 import javax.swing.*;
+import java.util.HashMap;
 
 public class tests extends JDialog {
-
-    public tests(JFrame parent, String message) {
-        super(parent, "Message", true);
-
-        JLabel label = new JLabel(message);
-        getContentPane().add(label);
-
-        pack();
-        setLocationRelativeTo(parent);
-        setVisible(true);
-    }
-
     public static void main(String[] args) {
-        JFrame parent = new JFrame();
-        parent.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        parent.setVisible(true);
+        HashMap<Integer, String> inventario = new HashMap<Integer, String>() {
+            {
+                put(1, "Escudo");
+                put(2, "Droga");
+                put(3, "Estimulante");
+            }
+        };
 
-        new tests(parent, "Hello World!");
+        inventario.remove(1);
+        inventario.remove(1);
     }
+    
 }

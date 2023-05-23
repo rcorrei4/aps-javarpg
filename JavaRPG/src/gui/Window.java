@@ -52,7 +52,7 @@ public class Window implements ActionListener {
 			input.setText("");
 
 			if (getUserInput().equals("menu")) {
-				GameLogic.characterInfo();
+				GameLogic.startGame();
 			} else if (getUserInput().equals("tutorial")) {
 				GameLogic.tutorial();
 			} else if (getUserInput().equals("i")) {
@@ -64,7 +64,9 @@ public class Window implements ActionListener {
 			} else if (getUserInput().equals("save")) {
 				GameLogic.saveWriter();
 				Window.setDisplayText("Jogo salvo com sucesso");
-			} else if (getUserInput().equals("load")){
+			} else if (getUserInput().equals("info")) {
+				GameLogic.characterInfo();
+			}else if (getUserInput().equals("load")){
 				GameLogic.loadData();
 			} else {
 				GameLogic.handleUserInput();

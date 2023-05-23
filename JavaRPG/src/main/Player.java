@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Player extends Character {
 	public int numDefUpgrades;
 	public ArrayList<String> items;
+	public int eletronicComponents;
 
 	// Arrays para guardar os atributos/habilidades
 	// public static String[] itemsAttk = { "Arma Corporal", "Espada",
@@ -20,6 +21,7 @@ public class Player extends Character {
 		this.defenseMultiplier = 2;
 
 		items = new ArrayList<String>();
+		this.eletronicComponents = 0;
 	}
 
 	@Override
@@ -29,8 +31,8 @@ public class Player extends Character {
 
 	@Override
 	public double increaseDefense() {
-		currentDefensePoints += (defenseMultiplier-(defenseMultiplier/2)) % maxHp;
-		return (defenseMultiplier-(defenseMultiplier/2)) % maxHp;
+		currentDefensePoints += (defenseMultiplier-(defenseMultiplier/3)) % maxHp;
+		return (defenseMultiplier-(defenseMultiplier/3)) % maxHp;
 	}
 
 	@Override
@@ -44,7 +46,7 @@ public class Player extends Character {
 
 	@Override
 	public double increaseHp() {
-		double increase = 0.025 * maxHp; // increase by 2.5% of maxHP
+		double increase = 0.01 * maxHp; // increase by 2.5% of maxHP
 		currentHpPoints += increase;
 		return increase;
 	}

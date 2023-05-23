@@ -5,6 +5,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.util.Map.Entry;
 import java.awt.Color;
 
 public class GameLogic {
@@ -56,7 +57,7 @@ public class GameLogic {
 				handleUserInput(true, true);
 			} else if (Window.getUserInput() != null && Window.getUserInput().equals("2")) {
 				loadData();
-				
+
 			}
 		}
 	}
@@ -87,11 +88,28 @@ public class GameLogic {
 	public static void loadData() {
 		try {
 			BufferedReader br = new BufferedReader(new FileReader("JavaRPG/src/main/saveFile.txt"));
-			
+
 			player.name = br.readLine();
+			player.maxHp = Integer.parseInt(br.readLine());
+			player.xp = Integer.parseInt(br.readLine());
+			player.defenseMultiplier = Double.parseDouble(br.readLine());
 			gameState = Integer.parseInt(br.readLine());
 			gameStateLvl = Integer.parseInt(br.readLine());
+
+			String line;
+
 			
+			Inventory.inventario.remove(1);
+			Inventory.inventario.remove(2);
+			Inventory.inventario.remove(3);
+
+    		while ((line = br.readLine()) != null) {
+        		String[] parts = line.split(":");
+            	int id = Integer.parseInt(parts[0]);
+            	String value = parts[1];
+				Inventory.inventario.put(id, value);
+				
+			}
 			br.close();
 
 			Main.gameMap.get(gameState).run();
@@ -106,13 +124,27 @@ public class GameLogic {
 
 		try {
 			BufferedWriter bw = new BufferedWriter(new FileWriter("JavaRPG/src/main/saveFile.txt"));
-		
+
 			bw.write(String.valueOf(player.name));
+			bw.newLine();
+			bw.write(String.valueOf(player.maxHp));
+			bw.newLine();
+			bw.write(String.valueOf(player.xp));
+			bw.newLine();
+			bw.write(String.valueOf(player.defenseMultiplier));
 			bw.newLine();
 			bw.write(String.valueOf(gameState));
 			bw.newLine();
-			//gameStateLvl--;
 			bw.write(String.valueOf(gameStateLvl));
+			bw.newLine();
+
+	
+			for (Entry<Integer, String> entry : Inventory.inventario.entrySet()) {
+				int id = entry.getKey();
+				String item = entry.getValue();
+				bw.write(id + ":" + item);
+				bw.newLine();
+			}
 
 			bw.close();
 
@@ -163,7 +195,8 @@ public class GameLogic {
 							damageToEnemy = 0;
 						}
 						enemy.hp -= damageToEnemy;
-						previousWindowText += "Você atacou " + enemy.name + " causando " + damageToEnemy + " de dano!\n";
+						previousWindowText += "Você atacou " + enemy.name + " causando " + damageToEnemy
+								+ " de dano!\n";
 						if (enemy.hp <= 0) {
 							previousWindowText += "\n\n" + enemy.name + " foi derrotado!";
 						}
@@ -200,13 +233,10 @@ public class GameLogic {
 						break;
 					case 2:
 						double defensePoints = enemy.increaseDefense();
-						previousWindowText += enemy.name + " se defendeu e ganhou " + defensePoints + " pontos de defesa!";
+						previousWindowText += enemy.name + " se defendeu e ganhou " + defensePoints
+								+ " pontos de defesa!";
 						break;
 					case 3:
-						String droppedItem = enemy.dropItem();
-						if (droppedItem != null && enemy.hp < 0) {
-							previousWindowText += enemy.name + " deixou cair um item: " + droppedItem + "\n";
-						}
 						System.out.println("Item especial enemy");
 						break;
 				}
@@ -239,7 +269,19 @@ public class GameLogic {
 				System.exit(0);
 			}
 		}
+	}
 
+	public static void enemyDefeated(Enemy enemy) {
+		String message = "";
+		message += "[Você conseguiu 1 componente eletrônico ao derrotar os mercenários]";
+		String droppedItem = enemy.dropItem();
+		if (droppedItem != null) {
+			message += enemy.name + " deixou cair um item: " + droppedItem + "\n" + Inventory.addEnemyItem(droppedItem); // 
+		}
+
+		player.eletronicComponents++;
+
+		Window.setDisplayText(message);
 	}
 
 	public static void firstChapter() {
@@ -257,7 +299,6 @@ public class GameLogic {
 			if (player.hp <= 0) {
 				Inventory.setAvailable(true);
 				player.hp = player.maxHp;
-				gameStateLvl++;
 			} else {
 				battle(currentEnemy);
 			}
@@ -289,10 +330,23 @@ public class GameLogic {
 				gameState = 999;
 				gameStateLvl = 0;
 			} else if (currentEnemy.hp <= 0) {
-				handleUserInput(true, true);
+				enemyDefeated(currentEnemy);
 			} else {
 				battle(currentEnemy);
 			}
+		} else if (gameStateLvl == 8){
+			Window.displayText.setForeground(Color.BLUE);
+			Window.setDisplayText("");
+			player.eletronicComponents += 1;
+			Window.displayText.setForeground(Color.BLACK);
+		} else if (gameStateLvl == 8){
+			Story.act2_8();
+		} else if (gameStateLvl == 9) {
+			Story.act2_9();
+		} else if (gameStateLvl == 10) {
+			Story.act2_10();
+		} else if (gameStateLvl == 11) {
+			handleUserInput(true, true);
 		}
 	}
 
@@ -329,7 +383,8 @@ public class GameLogic {
 			Story.act4_6();
 		} else if (gameStateLvl == 6) {
 			Window.displayText.setForeground(Color.BLUE);
-			Window.setDisplayText("Miyuki agora pode fazer itens para o jogador a partir dos componentes eletrônicos que você conseguir.");
+			Window.setDisplayText(
+				"[Miyuki agora pode fazer itens para o jogador a partir dos componentes eletrônicos que você conseguir.]");
 		} else if (gameStateLvl == 7) {
 			Window.displayText.setForeground(Color.BLACK);
 			handleUserInput(true, true);
