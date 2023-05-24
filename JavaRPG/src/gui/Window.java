@@ -43,6 +43,7 @@ public class Window implements ActionListener {
 		frame.setResizable(false);
 		frame.setSize(500, 420);
 		frame.setLayout(null);
+		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
 

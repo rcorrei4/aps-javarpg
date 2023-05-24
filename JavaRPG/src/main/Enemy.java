@@ -1,12 +1,7 @@
 package main;
 
 import java.util.Random;
-
-import gui.Window;
-
 import java.util.HashMap;
-
-import java.util.Map;
 
 public class Enemy extends Character {
 

@@ -224,6 +224,7 @@ public class GameLogic {
 						previousWindowText += "Você atacou " + enemy.name + " causando " + damageToEnemy
 								+ " de dano!\n";
 						if (enemy.hp <= 0) {
+							player.hp = player.maxHp;
 							previousWindowText += "\n\n" + enemy.name + " foi derrotado!";
 						}
 						break;
@@ -243,7 +244,7 @@ public class GameLogic {
 				}
 			}
 
-			if (!onInventory) {
+			if (!onInventory && enemy.hp > 0) {
 				int enemyAction = enemy.randomAction();
 				switch (enemyAction) {
 					case 1:
@@ -282,6 +283,44 @@ public class GameLogic {
 		}
 	}
 
+	public static void battleQuestion() {
+		if (currentEnemy.hp == currentEnemy.maxHp && !firstBattleQuestion) {
+			firstBattleQuestion = true;
+
+			previousGameStateAndLvl[0] = gameState;
+			previousGameStateAndLvl[1] = gameStateLvl;
+
+			gameState = 999;
+			gameStateLvl = 0;
+			Main.gameMap.get(999).run();
+		} else if (currentEnemy.hp <= (currentEnemy.maxHp/2) && !secondBattleQuestion) {
+			secondBattleQuestion = true;
+			
+			previousGameStateAndLvl[0] = gameState;
+			previousGameStateAndLvl[1] = gameStateLvl;
+
+			gameState = 999;
+			gameStateLvl = 0;
+			Main.gameMap.get(999).run();
+		}
+
+		if (gameStateLvl == 0) {
+			int currentQuestionIndex = new Random().nextInt(questions.length);
+			System.out.println(currentQuestionIndex);
+		
+			Window.setDisplayText(questions[currentQuestionIndex] + "\n" + answers[currentQuestionIndex]);
+		} else if (gameStateLvl == 1) {
+			if (Window.getUserInput().equals(correctAnswers[currentQuestionIndex])) {
+				Window.setDisplayText("Resposta correta");
+				battleAtkBonus += 1.5;
+			} else {
+				Window.setDisplayText("Resposta incorreta");
+			}
+			gameState = previousGameStateAndLvl[0];
+			gameStateLvl = previousGameStateAndLvl[1]-1;
+		}
+	}
+
 	public static void deathScreen() {
 		if (gameStateLvl == 0) {
 			Window.setDisplayText("(1) Retomar progresso anterior\n(2) Voltar ao início\n(3) Sair do jogo");
@@ -297,26 +336,9 @@ public class GameLogic {
 		}
 	}
 
-	public static void battleQuestion() {
-		if (gameStateLvl == 0) {
-			int randomQuestionIndex = new Random().nextInt(questions.length);
-		
-			Window.setDisplayText(questions[randomQuestionIndex] + "\n" + answers[randomQuestionIndex]);
-		} else if (gameStateLvl == 1) {
-			if (Window.getUserInput().equals(correctAnswers[currentQuestionIndex])) {
-				Window.setDisplayText("Resposta correta");
-				battleAtkBonus += 1.5;
-			} else {
-				Window.setDisplayText("Resposta incorreta");
-			}
-			gameState = previousGameStateAndLvl[0];
-			gameStateLvl = previousGameStateAndLvl[1]-1;
-		}
-	}
-
 	public static void enemyDefeated(Enemy enemy) {
 		String message = "";
-		message += "[Você conseguiu 1 componente eletrônico ao derrotar os mercenários]";
+		message += "[Você conseguiu 1 componente eletrônico ao derrotar os mercenários]\n";
 		String droppedItem = enemy.dropItem();
 		if (droppedItem != null) {
 			message += enemy.name + " deixou cair um item: " + droppedItem + "\n" + Inventory.addEnemyItem(droppedItem); // 
@@ -351,7 +373,7 @@ public class GameLogic {
 		} else if (gameStateLvl == 3) {
 			Inventory.setAvailable(false);
 			Window.setDisplayText("Você encontrou os mercenários. Lute!");
-			// currentEnemy = new Enemy("Mercenários", 100, 100, 0, 2, 1);
+			currentEnemy = new Enemy("Mercenários", 100, 100, 0, 5, 1);
 		} else if (gameStateLvl == 4) {
 			if (player.hp <= 0) {
 				Inventory.setAvailable(true);
@@ -381,28 +403,9 @@ public class GameLogic {
 			Story.act2_6();
 		} else if (gameStateLvl == 6) {
 			Story.act2_7();
-			currentEnemy = new Enemy("Mercenários", 15, 15, 0, 1, 1);
+			currentEnemy = new Enemy("Mercenários", 20, 20, 0, 1.5, 1);
 		} else if (gameStateLvl == 7) {
-			if (currentEnemy.hp == currentEnemy.maxHp && !firstBattleQuestion) {
-				System.out.println("teste");
-				firstBattleQuestion = true;
-				
-				previousGameStateAndLvl[0] = gameState;
-				previousGameStateAndLvl[1] = gameStateLvl;
-
-				gameState = 999;
-				gameStateLvl = 0;
-				Main.gameMap.get(999).run();
-			} else if (currentEnemy.hp <= (currentEnemy.maxHp/2) && !secondBattleQuestion) {
-				secondBattleQuestion = true;
-				
-				previousGameStateAndLvl[0] = gameState;
-				previousGameStateAndLvl[1] = gameStateLvl;
-
-				gameState = 999;
-				gameStateLvl = 0;
-				Main.gameMap.get(999).run();
-			}
+			battleQuestion();
 
 			if (player.hp <= 0) {
 				gameState = 666;
@@ -410,15 +413,11 @@ public class GameLogic {
 				Main.gameMap.get(666).run();
 			} else if (currentEnemy.hp <= 0) {
 				enemyDefeated(currentEnemy);
+				player.eletronicComponents += 1;
 			} else {
 				battle(currentEnemy);
 			}
-		} else if (gameStateLvl == 8){
-			Window.displayText.setForeground(Color.BLUE);
-			Window.setDisplayText("");
-			player.eletronicComponents += 1;
-			Window.displayText.setForeground(Color.BLACK);
-		} else if (gameStateLvl == 8){
+		}  else if (gameStateLvl == 8){
 			Story.act2_8();
 		} else if (gameStateLvl == 9) {
 			Story.act2_9();

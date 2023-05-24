@@ -1,10 +1,9 @@
-m
+r
 10
 1
-2.0
+1.0
+3
 6
-4
 1:Escudo
 2:Droga
 3:Estimulante
-4:null

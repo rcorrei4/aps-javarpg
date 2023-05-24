@@ -18,7 +18,7 @@ public class Player extends Character {
 		this.numDefUpgrades = 0;
 		// O jogador pode escolher uma habilidade
 
-		this.defenseMultiplier = 2;
+		this.defenseMultiplier = 1;
 
 		items = new ArrayList<String>();
 		this.eletronicComponents = 0;
