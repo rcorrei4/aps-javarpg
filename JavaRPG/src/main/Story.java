@@ -224,7 +224,31 @@ public class Story {
 
     public static void act5_4() {
         Window.setDisplayText(
-            "");
+            "Nos dias que se seguiram, Akira e Nakamura se prepararam meticulosamente para sua missão. Eles recrutaram um grupo de ativistas experientes " + 
+            "e habilidosos para ajudá-los na invasão da sede da Corporação Arashi." + "O grupo treinou intensamente, aprimorando suas habilidades de combate, " + 
+            "hacking e infiltração. Eles desenvolveram um plano detalhado para entrar no prédio, desativar os sistemas de segurança e acessar a sala dos servidores " + 
+            "onde os sistemas de computador da corporação estavam localizados.");
+            // batalha
+            // puzzle
+            // final
 
     }
+
+    public static void act5_5() {
+        Window.setDisplayText("[Você se depara com mercenários na entrada da Corporação Arashi.]");
+    }
+
+    public static void act5_6(){
+        Window.setDisplayText("Após a entrada, Akira Nakamura trabalhava incansavelmente para rastrear e desmantelar a rede de distribuição da droga Bliss. " + 
+        "Ela descobriu os principais pontos de distribuição e as conexões com as corporações que lucravam com o comércio ilegal. " + "Durante suas investigações, Nakamura interceptou " + 
+        "uma mensagem criptografada enviada pela Corporação Arashi. A mensagem continha uma sequência de números binários intrigante: '01101001 01101110 01110110 01100001 01110011 01100011'." + 
+        "Ela sabia que aquela sequência estava relacionada ao esquema de segurança da sede da corporação e que poderia ser a chave para desvendar o acesso à sala dos servidores. " + 
+        "Determinada a decifrar a mensagem, Nakamura começou a estudar os números binários e descobriu que poderiam ser convertidos em caracteres ASCII. " + 
+        "Dica: a senha começa com 21");
+    }
+    
+    public static void act5_7() {
+        Window.setDisplayText("Após abrir a porta Akira continua com a invasão.");
+    }
+
 }

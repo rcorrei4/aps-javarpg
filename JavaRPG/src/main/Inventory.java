@@ -8,7 +8,7 @@ import java.util.Map;
 public class Inventory {
     private static boolean isAvailable = true;
 
-    public static HashMap<Integer, String> inventario = new HashMap<Integer, String>() {
+    public static HashMap<Integer, String> inventory = new HashMap<Integer, String>() {
         {
             put(1, "Escudo");
             put(2, "Droga");
@@ -23,14 +23,14 @@ public class Inventory {
     public static String printInventory() {
         if (!isAvailable) {
             return "O inventário não está disponível no momento.";
-        } else if (inventario.isEmpty()) {
+        } else if (inventory.isEmpty()) {
             return "Você não possui itens no inventário.";
         } else {
-            StringBuilder inventory = new StringBuilder();
-            for (Map.Entry<Integer, String> entry : inventario.entrySet()) {
-                inventory.append("\n").append(entry.getKey()).append(". ").append(entry.getValue());
+            StringBuilder inventoryBuilder = new StringBuilder();
+            for (Map.Entry<Integer, String> entry : inventory.entrySet()) {
+                inventoryBuilder.append("\n").append(entry.getKey()).append(". ").append(entry.getValue());
             }
-            return inventory.toString();
+            return inventoryBuilder.toString();
         }
     }
 
@@ -44,7 +44,7 @@ public class Inventory {
             } catch (NumberFormatException e) {
                 return "Opção inválida!\n";
             }
-            if (inventario.containsKey(index)) {
+            if (inventory.containsKey(index)) {
                 if (index == 1) {
                     // defesa
                     double defensePoints = GameLogic.player.increaseDefense();
@@ -86,10 +86,10 @@ public class Inventory {
 
         String enemyItemMsg = "";       
 
-        int newIndex = inventario.size() + 1;
+        int newIndex = inventory.size() + 1;
 
         // add the item to the Inventory map
-        inventario.put(newIndex, droppedItem);
+        inventory.put(newIndex, droppedItem);
 
         // display a message
         enemyItemMsg += droppedItem + " foi adicionado ao seu inventário!";
@@ -101,7 +101,7 @@ public class Inventory {
 
 
     public static void removeItem(int index) {
-        inventario.remove(index);
+        inventory.remove(index);
 
     }
 }

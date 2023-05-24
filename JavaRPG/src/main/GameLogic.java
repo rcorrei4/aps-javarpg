@@ -5,6 +5,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.util.Random;
 import java.util.Map.Entry;
 import java.awt.Color;
 
@@ -13,7 +14,33 @@ public class GameLogic {
 	private static int gameStateLvl = 0;
 	private static Enemy currentEnemy;
 	private static String previousWindowText;
+	private static boolean firstBattleQuestion;
+	private static boolean secondBattleQuestion;
+	private static int currentQuestionIndex;
+	private static int[] previousGameStateAndLvl = {0, 0};
+	private static double battleAtkBonus = 1.0;
 	public static boolean onInventory;
+	public static String password = "216248";
+
+	
+	private static String[] questions = {
+		"Qual é o princípio por trás do mantra 'reduzir, reutilizar, reciclar' no desenvolvimento sustentável?",
+		"O que é o conceito de 'biodiversidade' no desenvolvimento sustentável?"
+	};
+
+	private static String[] answers = {
+		"a) Minimizar a geração de resíduos e o consumo de recursos\n" +
+		"b) Incentivar avanços tecnológicos em energia verde\n" +
+		"c) Foco no crescimento econômico em detrimento das preocupações ambientais",
+
+		"a) A variedade de plantas, animais e outros organismos em um ecossistema\n" +
+		"b) O uso sustentável dos recursos naturais\n" +
+		"c) A promoção da igualdade de gênero nas áreas rurais",
+
+
+	};
+	
+	private static String[] correctAnswers = {"a", "b"};
 
 	static Player player = null; // creating a player
 
@@ -99,15 +126,15 @@ public class GameLogic {
 			String line;
 
 			
-			Inventory.inventario.remove(1);
-			Inventory.inventario.remove(2);
-			Inventory.inventario.remove(3);
+			Inventory.inventory.remove(1);
+			Inventory.inventory.remove(2);
+			Inventory.inventory.remove(3);
 
     		while ((line = br.readLine()) != null) {
         		String[] parts = line.split(":");
             	int id = Integer.parseInt(parts[0]);
             	String value = parts[1];
-				Inventory.inventario.put(id, value);
+				Inventory.inventory.put(id, value);
 				
 			}
 			br.close();
@@ -139,7 +166,7 @@ public class GameLogic {
 			bw.newLine();
 
 	
-			for (Entry<Integer, String> entry : Inventory.inventario.entrySet()) {
+			for (Entry<Integer, String> entry : Inventory.inventory.entrySet()) {
 				int id = entry.getKey();
 				String item = entry.getValue();
 				bw.write(id + ":" + item);
@@ -166,7 +193,7 @@ public class GameLogic {
 	public static void characterInfo() {
 		Window.setDisplayText(
 				"Informações do personagem:" +
-						"\n\nNome: " + player.name + "\nHP:" + player.hp + "\nXP:" + player.xp);
+						"\n\nNome: " + "Akira Kankyo" + "\nHP:" + player.hp + "\nXP:" + player.xp);
 		gameStateLvl -= 1;
 	}
 
@@ -177,9 +204,8 @@ public class GameLogic {
 
 	public static void battleRound(Enemy enemy) {
 		previousWindowText = "";
-
+		
 		try {
-
 			if (onInventory) {
 				String itemMsg = Inventory.chooseItem();
 				previousWindowText += itemMsg;
@@ -190,7 +216,7 @@ public class GameLogic {
 
 				switch (playerAction) {
 					case 1:
-						double damageToEnemy = player.attack() - enemy.currentDefensePoints;
+						double damageToEnemy = (player.attack()*battleAtkBonus) - enemy.currentDefensePoints;
 						if (damageToEnemy < 0) {
 							damageToEnemy = 0;
 						}
@@ -244,13 +270,13 @@ public class GameLogic {
 
 			Window.setDisplayText(
 					enemy.name + "\nHP:" + enemy.hp + "/" + enemy.maxHp +
-							"\n\n\nNome: " + player.name + "\nHP:" + player.hp + "/" + player.maxHp + "\nXP:"
+							"\n\n\nNome: " + "Akira Kankyo" + "\nHP:" + player.hp + "/" + player.maxHp + "\nXP:"
 							+ player.xp +
 							"\n\nAtacar (1) - Defender-se (2) - Abrir Inventário (3)\n\n" + previousWindowText + "\n");
 		} catch (NumberFormatException erro1) {
 			Window.setDisplayText(
 					enemy.name + "\nHP:" + enemy.hp + "/" + enemy.maxHp +
-							"\n\n\nNome: " + player.name + "\nHP:" + player.hp + "/" + player.maxHp + "\nXP:"
+							"\n\n\nNome: " + "Akira Kankyo" + "\nHP:" + player.hp + "/" + player.maxHp + "\nXP:"
 							+ player.xp +
 							"\n\nAtacar (1) - Defender-se (2) - Utilizar item (3)\n\n" + previousWindowText + "\n");
 		}
@@ -271,6 +297,23 @@ public class GameLogic {
 		}
 	}
 
+	public static void battleQuestion() {
+		if (gameStateLvl == 0) {
+			int randomQuestionIndex = new Random().nextInt(questions.length);
+		
+			Window.setDisplayText(questions[randomQuestionIndex] + "\n" + answers[randomQuestionIndex]);
+		} else if (gameStateLvl == 1) {
+			if (Window.getUserInput().equals(correctAnswers[currentQuestionIndex])) {
+				Window.setDisplayText("Resposta correta");
+				battleAtkBonus += 1.5;
+			} else {
+				Window.setDisplayText("Resposta incorreta");
+			}
+			gameState = previousGameStateAndLvl[0];
+			gameStateLvl = previousGameStateAndLvl[1]-1;
+		}
+	}
+
 	public static void enemyDefeated(Enemy enemy) {
 		String message = "";
 		message += "[Você conseguiu 1 componente eletrônico ao derrotar os mercenários]";
@@ -282,6 +325,20 @@ public class GameLogic {
 		player.eletronicComponents++;
 
 		Window.setDisplayText(message);
+	}
+
+	public static String decodePassword(String binaryPassword) {
+		StringBuilder asciiPassword = new StringBuilder();
+		String[] binaryChunks = binaryPassword.split(" "); // divides the string "binaryPassword" in small parts
+
+		for (String binaryChunk : binaryChunks){
+			int decimalValue = Integer.parseInt(binaryChunk, 2);
+			char asciiChar = (char)decimalValue; // the decimalValue is converted to a ascii char
+			asciiPassword.append(asciiChar);
+		}	
+			 
+		return asciiPassword.toString();
+		
 	}
 
 	public static void firstChapter() {
@@ -326,9 +383,31 @@ public class GameLogic {
 			Story.act2_7();
 			currentEnemy = new Enemy("Mercenários", 15, 15, 0, 1, 1);
 		} else if (gameStateLvl == 7) {
-			if (player.hp <= 0) {
+			if (currentEnemy.hp == currentEnemy.maxHp && !firstBattleQuestion) {
+				System.out.println("teste");
+				firstBattleQuestion = true;
+				
+				previousGameStateAndLvl[0] = gameState;
+				previousGameStateAndLvl[1] = gameStateLvl;
+
 				gameState = 999;
 				gameStateLvl = 0;
+				Main.gameMap.get(999).run();
+			} else if (currentEnemy.hp <= (currentEnemy.maxHp/2) && !secondBattleQuestion) {
+				secondBattleQuestion = true;
+				
+				previousGameStateAndLvl[0] = gameState;
+				previousGameStateAndLvl[1] = gameStateLvl;
+
+				gameState = 999;
+				gameStateLvl = 0;
+				Main.gameMap.get(999).run();
+			}
+
+			if (player.hp <= 0) {
+				gameState = 666;
+				gameStateLvl = 0;
+				Main.gameMap.get(666).run();
 			} else if (currentEnemy.hp <= 0) {
 				enemyDefeated(currentEnemy);
 			} else {
@@ -398,6 +477,34 @@ public class GameLogic {
 			Story.act5_2();
 		} else if (gameStateLvl == 2) {
 			Story.act5_3();
+		} else if (gameStateLvl == 3) {
+			Story.act5_4();
+		} else if (gameStateLvl == 4) {
+			Story.act5_5();
+			currentEnemy = new Enemy("Mercenários", 10, 10, 50, 1, 1);
+		} else if (gameStateLvl == 5) {
+			if (player.hp <= 0) {
+				gameState = 999;
+				gameStateLvl = 0;
+			} else if (currentEnemy.hp <= 0) {
+				enemyDefeated(currentEnemy);
+			} else {
+				battle(currentEnemy);
+			}
+		} else if (gameStateLvl == 6){
+			Story.act5_6();
+		} else if (gameStateLvl == 7){
+			Window.setDisplayText("\nDigite a senha: ");
+		} else if (gameStateLvl == 8) {
+			if (Window.getUserInput().equals(password)){
+				Window.setDisplayText("\nSenha correta");
+			} else {
+				Window.setDisplayText("\nSenha incorreta lol");
+			}
+		} else if (gameStateLvl == 9) {
+			Story.act5_7();
 		}
 	}
+		
+		
 }

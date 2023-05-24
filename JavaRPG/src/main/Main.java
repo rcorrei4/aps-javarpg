@@ -22,6 +22,7 @@ public class Main {
 		gameMap.put(5, GameLogic::fourthChapter);
 		gameMap.put(6, GameLogic::fifthChapther);
 		gameMap.put(666, GameLogic::deathScreen);
+		gameMap.put(999, GameLogic::battleQuestion);
 
 		int userInput = 0; // example userInpu4
 
