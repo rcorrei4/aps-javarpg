@@ -7,11 +7,6 @@ public class Player extends Character {
 	public ArrayList<String> items;
 	public int eletronicComponents;
 
-	// Arrays para guardar os atributos/habilidades
-	// public static String[] itemsAttk = { "Arma Corporal", "Espada",
-	// "Metralhadora" };
-
-	// 0 //1 //2
 	public Player(String name, int hp, int maxHp, int xp, int atkDamage) {
 		super(name, hp, maxHp, xp, atkDamage);
 		// Setando upgrades para 0
@@ -31,7 +26,10 @@ public class Player extends Character {
 
 	@Override
 	public double increaseDefense() {
-		currentDefensePoints += (defenseMultiplier-(defenseMultiplier/3)) % maxHp;
+		currentDefensePoints += (defenseMultiplier - (defenseMultiplier/3)) % maxHp;
+		if (defenseMultiplier <= 3) {
+			defenseMultiplier ++;	
+		} 
 		return (defenseMultiplier-(defenseMultiplier/3)) % maxHp;
 	}
 

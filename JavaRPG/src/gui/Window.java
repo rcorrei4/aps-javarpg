@@ -45,6 +45,7 @@ public class Window implements ActionListener {
 		frame.setLayout(null);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 	public void actionPerformed(ActionEvent e) {

@@ -17,12 +17,10 @@ public class Enemy extends Character {
     public static HashMap<Integer, String> enemyItems = new HashMap<Integer, String>() {
         {
            
-            put(1, "Granada sla");
-            put(2, "Metralhadora kkkkk n sei");
+            put(1, "Granada");
+            put(2, "Metralhadora");
         }
     }; 
-
-  
 
     public Enemy(String name, int hp, int maxHp, int xp, double atkDamage, double defenseMultiplier) {
         super(name, hp, maxHp, xp, atkDamage);
@@ -53,7 +51,6 @@ public class Enemy extends Character {
 
     @Override
     public double increaseStrength() {
-
         return 0;
     }
 
@@ -61,7 +58,6 @@ public class Enemy extends Character {
     public double increaseHp() {
         return 0;
     }
-
 
     public String dropItem() {
         Random random = new Random();
@@ -74,7 +70,4 @@ public class Enemy extends Character {
             return null;
         }
     }
-
-    
-
 }

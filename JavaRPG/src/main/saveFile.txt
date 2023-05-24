@@ -1,9 +1,0 @@
-r
-10
-1
-1.0
-3
-6
-1:Escudo
-2:Droga
-3:Estimulante

@@ -72,7 +72,7 @@ public class GameLogic {
 	public static void startGame() {
 		Window.input.requestFocus();
 		if (gameStateLvl == 0) {
-			Window.setDisplayText("(1) - Criar novo jogo\n(2) - Carregar Jogo\n(3) - Tutorial");
+			Window.setDisplayText("(1) - Criar novo jogo\n(2) - Carregar Jogo\n(3) - Tutorial\n(4) - Sair Jogo");
 			player = new Player(Window.getUserInput(), 10, 10, 1, 5);
 			currentEnemy = new Enemy("Mercenários", 100, 100, 0, 2, 1);
 		} else if (gameStateLvl == 1) {
@@ -86,6 +86,8 @@ public class GameLogic {
 				loadData();
 			} else if (Window.getUserInput() != null && Window.getUserInput().equals("3")){
 				tutorial();
+			} else if (Window.getUserInput() != null && Window.getUserInput().equals("4")) {
+				System.exit(0);
 			}
 		}
 	}
@@ -95,7 +97,7 @@ public class GameLogic {
 			Window.setDisplayText("Digite seu nome: ");
 		} else if (gameStateLvl == 1) {
 			if (!Window.getUserInput().isEmpty()) {
-				player = new Player(Window.getUserInput(), 10, 10, 1, 5);
+				player = new Player(Window.getUserInput(), 100, 100, 1, 25);
 				Window.setDisplayText("Seu nome é: " + Window.getUserInput() + "\nEstá correto? (1) - Sim (2) - Não");
 			} else {
 				handleUserInput(true, false);
@@ -125,7 +127,6 @@ public class GameLogic {
 			gameStateLvl = Integer.parseInt(br.readLine());
 
 			String line;
-
 			
 			Inventory.inventory.remove(1);
 			Inventory.inventory.remove(2);
@@ -149,7 +150,6 @@ public class GameLogic {
 	}
 
 	public static void saveWriter() {
-
 		try {
 			BufferedWriter bw = new BufferedWriter(new FileWriter("JavaRPG/src/main/saveFile.txt"));
 
@@ -264,9 +264,6 @@ public class GameLogic {
 						previousWindowText += enemy.name + " se defendeu e ganhou " + defensePoints
 								+ " pontos de defesa!";
 						break;
-					case 3:
-						System.out.println("Item especial enemy");
-						break;
 				}
 			}
 
@@ -285,7 +282,7 @@ public class GameLogic {
 	}
 
 	public static void battleQuestion() {
-		if (currentEnemy.hp == currentEnemy.maxHp && !firstBattleQuestion) {
+		if (currentEnemy.hp == (currentEnemy.maxHp/100*80) && !firstBattleQuestion) {
 			firstBattleQuestion = true;
 
 			previousGameStateAndLvl[0] = gameState;
@@ -306,19 +303,22 @@ public class GameLogic {
 		}
 
 		if (gameStateLvl == 0) {
-			int currentQuestionIndex = new Random().nextInt(questions.length);
-			System.out.println(currentQuestionIndex);
-		
 			Window.setDisplayText(questions[currentQuestionIndex] + "\n" + answers[currentQuestionIndex]);
 		} else if (gameStateLvl == 1) {
-			if (Window.getUserInput().equals(correctAnswers[currentQuestionIndex])) {
-				Window.setDisplayText("Resposta correta");
-				battleAtkBonus += 1.5;
+			String abc = "abc";
+			if (abc.contains(Window.getUserInput()) && !Window.getUserInput().equals("")) {
+				if (Window.getUserInput().equals(correctAnswers[currentQuestionIndex])) {
+					Window.setDisplayText("Resposta correta");
+					battleAtkBonus += 1.5;
+				} else {
+					Window.setDisplayText("Resposta incorreta");
+				}
+				gameState = previousGameStateAndLvl[0];
+				gameStateLvl = previousGameStateAndLvl[1]-1;
 			} else {
-				Window.setDisplayText("Resposta incorreta");
+				handleUserInput(true, false);
 			}
-			gameState = previousGameStateAndLvl[0];
-			gameStateLvl = previousGameStateAndLvl[1]-1;
+			
 		}
 	}
 
@@ -360,7 +360,7 @@ public class GameLogic {
 		} else if (gameStateLvl == 3) {
 			Inventory.setAvailable(false);
 			Window.setDisplayText("Você encontrou os mercenários. Lute!");
-			currentEnemy = new Enemy("Mercenários", 100, 100, 0, 5, 1);
+			currentEnemy = new Enemy("Mercenários", 100, 100, 0, 70, 1);
 		} else if (gameStateLvl == 4) {
 			if (player.hp <= 0) {
 				Inventory.setAvailable(true);
@@ -392,6 +392,7 @@ public class GameLogic {
 			Story.act2_7();
 			currentEnemy = new Enemy("Mercenários", 20, 20, 0, 1.5, 1);
 		} else if (gameStateLvl == 7) {
+			currentQuestionIndex = new Random().nextInt(questions.length);
 			battleQuestion();
 
 			if (player.hp <= 0) {
@@ -467,7 +468,7 @@ public class GameLogic {
 			Story.act5_4();
 		} else if (gameStateLvl == 4) {
 			Story.act5_5();
-			currentEnemy = new Enemy("Mercenários", 10, 10, 50, 1, 1);
+			currentEnemy = new Enemy("Mercenários", 100, 100, 50, 25, 1);
 		} else if (gameStateLvl == 5) {
 			if (player.hp <= 0) {
 				gameState = 999;
@@ -492,10 +493,12 @@ public class GameLogic {
 		} else if (gameStateLvl == 1) {
 			if (Window.getUserInput().equals(password)) {
 				Window.setDisplayText("Senha correta! A porta foi aberta.");
-			} else { 
+		} else if (gameStateLvl == 1){
+			if(!Window.getUserInput().equals(password)){
 				Window.setDisplayText("Senha incorreta. Tente novamente!");
 				handleUserInput(true, false);
 			}
+		}
 		} else if(gameStateLvl == 2) {
 			Story.act5_8();	
 		} else if(gameStateLvl == 3) {
@@ -506,7 +509,7 @@ public class GameLogic {
 	public static void sixthChapter() {
 		if(gameStateLvl == 0) {
 			Story.act6_1();
-			currentEnemy = new Enemy("Mercenário", 10, 10, 0, 1, 1);
+			currentEnemy = new Enemy("Mercenário", 100, 100, 0, 25, 1);
 		} else if(gameStateLvl == 1) {
 			if (player.hp <= 0) {
 				gameState = 999;
@@ -538,7 +541,7 @@ public class GameLogic {
 			Story.act7_1();
 		} else if(gameStateLvl == 1){
 			Story.act7_2();
-			currentEnemy = new Enemy("Hefesto", 100, 100, 100, 2, 2);
+			currentEnemy = new Enemy("Hefesto", 100, 100, 100, 50, 1);
 		} else if(gameStateLvl == 2) {
 			if (player.hp <= 0) {
 				gameState = 999;
