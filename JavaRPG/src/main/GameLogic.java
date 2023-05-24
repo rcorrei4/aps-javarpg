@@ -327,20 +327,6 @@ public class GameLogic {
 		Window.setDisplayText(message);
 	}
 
-	public static String decodePassword(String binaryPassword) {
-		StringBuilder asciiPassword = new StringBuilder();
-		String[] binaryChunks = binaryPassword.split(" "); // divides the string "binaryPassword" in small parts
-
-		for (String binaryChunk : binaryChunks){
-			int decimalValue = Integer.parseInt(binaryChunk, 2);
-			char asciiChar = (char)decimalValue; // the decimalValue is converted to a ascii char
-			asciiPassword.append(asciiChar);
-		}	
-			 
-		return asciiPassword.toString();
-		
-	}
-
 	public static void firstChapter() {
 		if (gameStateLvl == 0) {
 			Story.intro();
@@ -494,17 +480,77 @@ public class GameLogic {
 		} else if (gameStateLvl == 6){
 			Story.act5_6();
 		} else if (gameStateLvl == 7){
-			Window.setDisplayText("\nDigite a senha: ");
-		} else if (gameStateLvl == 8) {
-			if (Window.getUserInput().equals(password)){
-				Window.setDisplayText("\nSenha correta");
-			} else {
-				Window.setDisplayText("\nSenha incorreta lol");
-			}
-		} else if (gameStateLvl == 9) {
 			Story.act5_7();
+			handleUserInput(true, true);
+		} 
+	}
+
+	public static void puzzle() {
+		if(gameStateLvl == 0) {
+			Window.setDisplayText("\nDigite a senha: ");
+		} else if (gameStateLvl == 1) {
+			if (Window.getUserInput().equals(password)) {
+				Window.setDisplayText("Senha correta! A porta foi aberta.");
+			} else {
+				Window.setDisplayText("Senha incorreta. Tente novamente!");
+				handleUserInput(true, false);
+			}
+		} else if(gameStateLvl == 2) {
+			Story.act5_8();
 		}
 	}
 		
-		
+	public static void sixthChapter() {
+		if(gameStateLvl == 0) {
+			Story.act6_1();
+			currentEnemy = new Enemy("Mercenário", 10, 10, 0, 1, 1);
+		} else if(gameStateLvl == 1) {
+			if (player.hp <= 0) {
+				gameState = 999;
+				gameStateLvl = 0;
+			} else if (currentEnemy.hp <= 0) {
+				enemyDefeated(currentEnemy);
+			} else {
+				battle(currentEnemy);
+			}
+		} else if(gameStateLvl == 2) {
+			Story.act6_2();
+		} else if (gameStateLvl == 3) {
+			Story.act6_3();
+		} else if(gameStateLvl == 4) {
+			Story.act6_4();
+		} else if (gameStateLvl == 5) {
+			Story.act6_5();
+		} else if(gameStateLvl == 6) {
+			Story.act6_6();
+		} else if (gameStateLvl == 7) {
+			Story.act6_7();
+		}
+	}	
+
+	public static void seventhChapter() {
+		if(gameStateLvl == 0) {
+			Story.act7_1();
+		} else if(gameStateLvl == 1){
+			Story.act7_2();
+			currentEnemy = new Enemy("Hefesto", 100, 100, 100, 2, 2);
+		} else if(gameStateLvl == 1) {
+			if (player.hp <= 0) {
+				gameState = 999;
+				gameStateLvl = 0;
+			} else if (currentEnemy.hp <= 0) {
+				enemyDefeated(currentEnemy);
+			} else {
+				battle(currentEnemy);
+			}
+		} else if(gameStateLvl == 2) {
+			Story.act7_3();
+		} else if(gameStateLvl == 3) {
+			Story.act7_4();
+		} else if(gameStateLvl == 4) {
+			Story.act7_5();
+		} else if(gameStateLvl == 5) {
+			Story.act7_6();
+		}
+	}
 }

@@ -21,6 +21,9 @@ public class Main {
 		gameMap.put(4, GameLogic::thirdChapter);
 		gameMap.put(5, GameLogic::fourthChapter);
 		gameMap.put(6, GameLogic::fifthChapther);
+		gameMap.put(7, GameLogic::puzzle);
+		gameMap.put(8, GameLogic::sixthChapter);
+		gameMap.put(9, GameLogic::seventhChapter);
 		gameMap.put(666, GameLogic::deathScreen);
 		gameMap.put(999, GameLogic::battleQuestion);
 

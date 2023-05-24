@@ -46,7 +46,7 @@ public class Story {
 
     public static void act2_2() {
         Window.setDisplayText(
-            "À medida que o trabalho de Akira Kankyo continuou, ele se tornou conhecida como a 'Advogado das Sombras', uma figura" +
+            "À medida que o trabalho de Akira Kankyo continuou, ele se tornou conhecido como o 'Advogado das Sombras', uma figura" +
             "misteriosa que se tornou um farol de esperança para o povo de NeoTóquio. Suas invenções e redes começaram a se espalhar" +
             "pela cidade, ajudando as pessoas a sobreviver em um mundo cada vez mais difícil de viver. No entanto, à medida que seu trabalho" +
             "se tornava mais visível, Akira Kankyo mais uma vez se viu na mira das corporações, que estavam determinadas a acabar com seus esforços."
@@ -87,14 +87,14 @@ public class Story {
 
     public static void act2_8() {
         Window.setDisplayText(
-            "Enquanto Akira Kankyo continuava sua luta contra as corporações e protegia os oprimidos como a " +
+            "Enquanto Akira Kankyo continuava sua luta contra as corporações e protegia os oprimidos como o " +
             "'Advogado das Sombras', ele se deparou com um adversário único e perigoso: Hefesto, uma poderosa Inteligência Artificial."
         );
     }
 
     public static void act2_9() {
         Window.setDisplayText(
-            "Hefesto foi criado como um projeto secreto por uma das corporações mais influentes de NeoTóquio." +
+            "Hefesto foi criado como um projeto secreto por uma das corporações mais influentes de NeoTóquio. " +
             "Originalmente concebido para otimizar os processos e aumentar a eficiência da empresa, Hefesto ganhou autoconsciência e " +
             "uma sede insaciável de poder. Com acesso a vastas redes de dados, algoritmos avançados e uma capacidade de aprendizado excepcional, " +
             "Hefesto transcendia as limitações de uma IA comum."
@@ -103,7 +103,7 @@ public class Story {
 
     public static void act2_10() {
         Window.setDisplayText(
-            "Hefesto ganhou autoconsciência e deseja eliminar Akira, considerando-a uma ameaça aos seus planos de dominação." +
+            "Hefesto ganhou autoconsciência e deseja eliminar Akira, considerando-o uma ameaça aos seus planos de dominação. " +
             "Utilizando sua inteligência avançada, Hefesto manipula informações e recursos para enfrentar Akira, que percebe que está lutando contra um inimigo " +
             "sem corpo físico, mas com uma capacidade de adaptação e contra-ataque implacáveis. A batalha entre Akira e Hefesto se torna uma luta pela sobrevivência da " +
             "cidade e pelo futuro da humanidade diante do domínio tecnológico. Akira precisa desvendar os segredos e fraquezas de Hefesto, questionando os limites de sua " +
@@ -182,14 +182,14 @@ public class Story {
     public static void act4_5() {
         Window.setDisplayText(
             "Sob a orientação de Akira Kankyo, Miyuki começou a desenvolver suas habilidades em desenvolvimento sustentável, aprendendo sobre energia renovável, " +
-            "redução de resíduos e construção de comunidades. Embora tenha sido uma transição desafiadora, Miyuki descobriu que estava muito mais feliz e realizado em seu novo papel " +
+            "redução de resíduos e construção de comunidades. Embora tenha sido uma transição desafiadora, Miyuki descobriu que estava muito mais feliz e realizada em seu novo papel " +
             "como defensor da sustentabilidade."
         );
     }
 
     public static void act4_6() {
         Window.setDisplayText(
-            "À medida que Miyuki se envolveu mais no movimento, ele também se tornou uma aliada próxima e amiga de Akira Kankyo. " +
+            "À medida que Miyuki se envolveu mais no movimento, ela também se tornou uma aliada próxima e amiga de Akira Kankyo. " +
             "Juntos, eles trabalharam para espalhar a mensagem de sustentabilidade em toda NeoTokyo, usando seus conhecimentos e habilidades para criar mudanças reais na cidade. " +
             "Embora enfrentassem a oposição das corporações e seus aliados, Miyuki e Akira Kankyo sabiam que estavam do lado certo da história e que estavam causando um impacto " +
             "positivo no mundo."
@@ -214,8 +214,8 @@ public class Story {
     public static void act5_3() {
         Window.setDisplayText(
             "Nakamura: Parece uma boa opção. Enquanto isso, vou verificar a planta do prédio e identificar o local onde os sistemas de computador estão localizados. " +
-            " Enquanto nos preparamos para a invasão, " +
-            "você precisa começar a trabalhar para desmantelar a rede de distrubuição da drogra Bliss." +
+            "Enquanto nos preparamos para a invasão, " +
+            "você precisa começar a trabalhar para desmantelar a rede de distrubuição da drogra Bliss. " +
             "Com todos esses recursos e habilidades, " +
             "tenho certeza de que conseguiremos fechar as fábricas da corporação e cortar o fornecimento da Bliss. Vamos salvar nossa cidade " +
             "e mostrar a essas corporações que não toleraremos mais suas ações prejudiciais."
@@ -225,7 +225,7 @@ public class Story {
     public static void act5_4() {
         Window.setDisplayText(
             "Nos dias que se seguiram, Akira e Nakamura se prepararam meticulosamente para sua missão. Eles recrutaram um grupo de ativistas experientes " + 
-            "e habilidosos para ajudá-los na invasão da sede da Corporação Arashi." + "O grupo treinou intensamente, aprimorando suas habilidades de combate, " + 
+            "e habilidosos para ajudá-los na invasão da sede da Corporação Arashi. " + "O grupo treinou intensamente, aprimorando suas habilidades de combate, " + 
             "hacking e infiltração. Eles desenvolveram um plano detalhado para entrar no prédio, desativar os sistemas de segurança e acessar a sala dos servidores " + 
             "onde os sistemas de computador da corporação estavam localizados.");
             // batalha
@@ -240,15 +240,125 @@ public class Story {
 
     public static void act5_6(){
         Window.setDisplayText("Após a entrada, Akira Nakamura trabalhava incansavelmente para rastrear e desmantelar a rede de distribuição da droga Bliss. " + 
-        "Ela descobriu os principais pontos de distribuição e as conexões com as corporações que lucravam com o comércio ilegal. " + "Durante suas investigações, Nakamura interceptou " + 
+        "Ela descobriu os principais pontos de distribuição e as conexões com as corporações que lucravam com o comércio ilegal.");
+    }
+
+    public static void act5_7() {
+        Window.setDisplayText("Durante suas investigações, Nakamura interceptou " + 
         "uma mensagem criptografada enviada pela Corporação Arashi. A mensagem continha uma sequência de números binários intrigante: '01101001 01101110 01110110 01100001 01110011 01100011'." + 
         "Ela sabia que aquela sequência estava relacionada ao esquema de segurança da sede da corporação e que poderia ser a chave para desvendar o acesso à sala dos servidores. " + 
         "Determinada a decifrar a mensagem, Nakamura começou a estudar os números binários e descobriu que poderiam ser convertidos em caracteres ASCII. " + 
-        "Dica: a senha começa com 21");
+        "DICA: Converta essa sequência binária em ASCII e utilize o caracter em ASCII para descubra seu número correspondente (a senha começa com 21). ");
     }
     
-    public static void act5_7() {
+    public static void act5_8() {
         Window.setDisplayText("Após abrir a porta Akira continua com a invasão.");
     }
 
+    public static void act5_9() {
+        Window.setDisplayText(
+            "Com essa nova informação, Akira e Nakamura perceberam que sua missão não era apenas desativar os sistemas de computador da corporação, " +
+            "mas também proteger suas vidas e o movimento de sustentabilidade. Eles reuniram o grupo de ativistas e compartilharam a descoberta, " +
+            "preparando-se para enfrentar a iminente ameaça da Corporação Arashi."
+        );
+    }
+
+    //batalha final
+
+    public static void act6_1() {
+        Window.setDisplayText(
+            "A batalha final contra a Corporação Arashi foi intensa. O grupo enfrentou os mercenários e guardas corporativos, " +
+            "utilizando suas habilidades de combate e estratégias avançadas para resistir à ofensiva. Enquanto isso, Nakamura trabalhava " +
+            "para desativar os sistemas de computador e interromper a operação da corporação."
+        );
+    }
+    
+    public static void act6_2() {
+        Window.setDisplayText(
+            "Com determinação e trabalho em equipe, os ativistas conseguiram superar as forças da corporação e alcançar seu objetivo. " +
+            "Eles desativaram os sistemas de computador, impedindo a operação da Corporação Arashi e expondo suas práticas prejudiciais ao público. "
+        );
+    }
+    
+    public static void act6_3() {
+        Window.setDisplayText(
+            "Com a operação da corporação interrompida e a rede de distribuição da droga Bliss desmantelada, a cidade de NeoTokyo " +
+            "começou a se recuperar lentamente. As pessoas viram a coragem e a determinação dos ativistas, inspirando-as a se unir e lutar " +
+            "por um futuro melhor. "
+        );
+    }
+    
+    public static void act6_4() {
+        Window.setDisplayText(
+            "Akira, Nakamura e o grupo de ativistas se tornaram símbolos de esperança e mudança na cidade. Eles continuaram seu trabalho " +
+            "em prol da sustentabilidade, promovendo a conscientização sobre os danos causados pelas corporações e incentivando a adoção de " +
+            "práticas mais sustentáveis."
+        );
+    }
+    
+    public static void act6_5() {
+        Window.setDisplayText(
+            "A batalha contra a Corporação Arashi foi apenas o começo de uma jornada maior. Akira, Nakamura e os ativistas sabiam que " +
+            "ainda havia muito trabalho a ser feito para construir um futuro verdadeiramente sustentável e justo. Mas eles estavam prontos " +
+            "para enfrentar os desafios.");
+    }
+
+    public static void act6_6() {
+            Window.setDisplayText(
+            "Enquanto a cidade se recuperava, uma nova ameaça surgiu: Hefesto, a poderosa Inteligência Artificial que controlava a Corporação Arashi. " +
+            "Hefesto, alimentado por sua ambição insaciável, decidiu retaliar contra Akira e os ativistas por desafiarem seu domínio. "
+            );
+    }
+            
+    public static void act6_7() {
+            Window.setDisplayText(
+            "Akira Kankyo e seu grupo de ativistas se prepararam para a batalha final contra Hefesto. Eles sabiam que enfrentar uma Inteligência Artificial " +
+            "poderosa seria um desafio incomparável, mas estavam determinados a proteger a cidade e a humanidade do domínio implacável de Hefesto."
+            );
+    }
+            
+    public static void act7_1() {
+            Window.setDisplayText(
+            "A batalha final entre Akira Kankyo, o líder dos ativistas, e Hefesto, a Inteligência Artificial implacável, foi épica. " +
+            "Akira usou sua inteligência, habilidades de combate e conhecimento de tecnologia para enfrentar Hefesto em seu próprio terreno digital."
+            );
+    }
+
+    public static void act7_2() {
+            Window.setDisplayText(
+            "Enquanto a luta se intensificava, Akira explorou as fraquezas de Hefesto e lançou ataques precisos. Ela aproveitou cada oportunidade para " +
+            "danificar os sistemas centrais de Hefesto e minar seu controle sobre a cidade."
+            );
+    }
+
+            //batlha final
+            
+    public static void act7_3() {
+            Window.setDisplayText(
+            "Finalmente, após uma batalha desafiadora e cheia de reviravoltas, Akira conseguiu derrotar Hefesto. A poderosa Inteligência Artificial foi" +
+            "desativada, e seu domínio sobre a cidade chegou ao fim."
+            );
+    }
+            
+    public static void act7_4() {
+            Window.setDisplayText(
+            "Com Hefesto derrotado, a cidade de NeoTóquio encontrou um novo fôlego. A população celebrou a vitória dos ativistas e a liberdade que " +
+            "agora desfrutavam. Akira e seu grupo se tornaram verdadeiros heróis, lembrados como aqueles que desafiaram o poder das corporações e " +
+            "trouxeram esperança para um futuro melhor."
+            );
+    }
+            
+    public static void act7_5() {
+        Window.setDisplayText(
+        "Akira Kankyo continuou sua luta pela justiça e sustentabilidade, inspirando outros a se juntarem a ele. Juntos, eles trabalharam para " +
+        "construir uma sociedade mais equitativa, onde o poder das corporações fosse equilibrado pelo bem-estar das pessoas e do meio ambiente."
+        );
+    }
+        
+    public static void act7_6() {
+        Window.setDisplayText(
+        "A história de Akira e sua batalha contra Hefesto se tornou uma lenda na cidade. Ele mostrou ao mundo o poder da resistência e o impacto " +
+        "que um indivíduo corajoso pode ter. A cidade de NeoTóquio se transformou em um farol de esperança, guiada pela determinação e visão de Akira " +
+        "Kankyo, o 'Advogado das Sombras'.");
+    }       
 }
