@@ -17,8 +17,8 @@ public class Enemy extends Character {
     public static HashMap<Integer, String> enemyItems = new HashMap<Integer, String>() {
         {
            
-            put(1, "Granada");
-            put(2, "Metralhadora");
+            put(1, "Granada Sombria");
+            put(2, "Rugido do Demônio");
         }
     }; 
 

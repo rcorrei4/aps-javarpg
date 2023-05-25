@@ -44,7 +44,7 @@ public class Player extends Character {
 
 	@Override
 	public double increaseHp() {
-		double increase = 0.01 * maxHp; // increase by 2.5% of maxHP
+		double increase = 0.020 * maxHp; // increase by 2.5% of maxHP
 		currentHpPoints += increase;
 		return increase;
 	}

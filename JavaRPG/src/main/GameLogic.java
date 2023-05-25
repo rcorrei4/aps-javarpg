@@ -73,8 +73,8 @@ public class GameLogic {
 		Window.input.requestFocus();
 		if (gameStateLvl == 0) {
 			Window.setDisplayText("(1) - Criar novo jogo\n(2) - Carregar Jogo\n(3) - Tutorial\n(4) - Sair Jogo");
-			player = new Player(Window.getUserInput(), 10, 10, 1, 5);
-			currentEnemy = new Enemy("Mercenários", 100, 100, 0, 2, 1);
+			player = new Player(Window.getUserInput(), 100, 100, 1, 25);
+			currentEnemy = new Enemy("Mercenários", 100, 100, 0, 25, 1); 
 		} else if (gameStateLvl == 1) {
 			if (Window.getUserInput() != null && !Window.getUserInput().equals("1")
 					&& !Window.getUserInput().equals("2")) {
@@ -279,6 +279,7 @@ public class GameLogic {
 							+ player.xp +
 							"\n\nAtacar (1) - Defender-se (2) - Utilizar item (3)\n\n" + previousWindowText + "\n");
 		}
+		previousWindowText = "";
 	}
 
 	public static void battleQuestion() {
@@ -308,17 +309,16 @@ public class GameLogic {
 			String abc = "abc";
 			if (abc.contains(Window.getUserInput()) && !Window.getUserInput().equals("")) {
 				if (Window.getUserInput().equals(correctAnswers[currentQuestionIndex])) {
-					Window.setDisplayText("Resposta correta");
+					Window.setDisplayText("Resposta correta!\n\nVocê recebeu x1.5 bônus de ataque.");
 					battleAtkBonus += 1.5;
 				} else {
-					Window.setDisplayText("Resposta incorreta");
+					Window.setDisplayText("Resposta incorreta!");
 				}
 				gameState = previousGameStateAndLvl[0];
 				gameStateLvl = previousGameStateAndLvl[1]-1;
 			} else {
 				handleUserInput(true, false);
 			}
-			
 		}
 	}
 
@@ -489,16 +489,18 @@ public class GameLogic {
 
 	public static void puzzle() {
 		if(gameStateLvl == 0) {
-			Window.setDisplayText("\nDigite a senha: ");
-		} else if (gameStateLvl == 1) {
-			if (Window.getUserInput().equals(password)) {
-				Window.setDisplayText("Senha correta! A porta foi aberta.");
-		} else if (gameStateLvl == 1){
-			if(!Window.getUserInput().equals(password)){
-				Window.setDisplayText("Senha incorreta. Tente novamente!");
-				handleUserInput(true, false);
+			if(previousWindowText != null){
+				Window.setDisplayText(previousWindowText + "\nDigite a senha: ");
+			} else {
+				Window.setDisplayText("Digite a senha: ");
 			}
-		}
+		} else if (gameStateLvl == 1) {
+			if (Window.getUserInput().equals(password)){
+				Window.setDisplayText("Senha correta!");
+			} else {
+				previousWindowText = "Senha incorreta!";
+				handleUserInput(true, false);
+			}					//0    // continua no puzzle //216248
 		} else if(gameStateLvl == 2) {
 			Story.act5_8();	
 		} else if(gameStateLvl == 3) {

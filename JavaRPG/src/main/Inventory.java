@@ -11,7 +11,7 @@ public class Inventory {
     public static HashMap<Integer, String> inventory = new HashMap<Integer, String>() {
         {
             put(1, "Escudo");
-            put(2, "Droga");
+            put(2, "Êxtase de Éter");
             put(3, "Estimulante");
         }
     };
