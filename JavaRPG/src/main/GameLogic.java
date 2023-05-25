@@ -73,8 +73,8 @@ public class GameLogic {
 		Window.input.requestFocus();
 		if (gameStateLvl == 0) {
 			Window.setDisplayText("(1) - Criar novo jogo\n(2) - Carregar Jogo\n(3) - Tutorial\n(4) - Sair Jogo");
-			player = new Player(Window.getUserInput(), 100, 100, 1, 25);
-			currentEnemy = new Enemy("Mercenários", 100, 100, 0, 25, 1); 
+			player = new Player(Window.getUserInput(), 100, 100, 1, 10);
+			//currentEnemy = new Enemy("Mercenários", 100, 100, 0, 25, 1); 
 		} else if (gameStateLvl == 1) {
 			if (Window.getUserInput() != null && !Window.getUserInput().equals("1")
 					&& !Window.getUserInput().equals("2")) {
@@ -222,6 +222,9 @@ public class GameLogic {
 							damageToEnemy = 0;
 						}
 						enemy.hp -= damageToEnemy;
+						if(enemy.hp < 0)  {
+							enemy.hp = 0;
+						}
 						previousWindowText += "Você atacou " + enemy.name + " causando " + damageToEnemy
 								+ " de dano!\n";
 						if (enemy.hp <= 0) {
@@ -254,6 +257,10 @@ public class GameLogic {
 							damageToPlayer = 0;
 						}
 						player.hp -= damageToPlayer;
+						if(player.hp < 0)  {
+							player.hp = 0;
+						}
+
 						previousWindowText += enemy.name + " atacou causando " + damageToPlayer + " de dano!";
 						if (player.hp <= 0) {
 							previousWindowText += "\n\nVocê foi derrotado!";
@@ -310,7 +317,7 @@ public class GameLogic {
 			if (abc.contains(Window.getUserInput()) && !Window.getUserInput().equals("")) {
 				if (Window.getUserInput().equals(correctAnswers[currentQuestionIndex])) {
 					Window.setDisplayText("Resposta correta!\n\nVocê recebeu x1.5 bônus de ataque.");
-					battleAtkBonus += 1.5;
+					battleAtkBonus += 0.5;
 				} else {
 					Window.setDisplayText("Resposta incorreta!");
 				}
@@ -390,7 +397,7 @@ public class GameLogic {
 			Story.act2_6();
 		} else if (gameStateLvl == 6) {
 			Story.act2_7();
-			currentEnemy = new Enemy("Mercenários", 20, 20, 0, 1.5, 1);
+			currentEnemy = new Enemy("Mercenários", 120, 120, 0, 6, 1);
 		} else if (gameStateLvl == 7) {
 			currentQuestionIndex = new Random().nextInt(questions.length);
 			battleQuestion();

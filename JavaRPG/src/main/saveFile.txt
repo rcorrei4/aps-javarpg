@@ -1,13 +1,9 @@
-vitor
+r
 100
 1
 1.0
-6
-6
+3
+5
 1:Escudo
-2:Droga
+2:Êxtase de Éter
 3:Estimulante
-4:null
-5:null
-6:Granada
-7:Granada
