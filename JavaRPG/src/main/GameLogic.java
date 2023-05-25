@@ -73,7 +73,6 @@ public class GameLogic {
 		Window.input.requestFocus();
 		if (gameStateLvl == 0) {
 			Window.setDisplayText("(1) - Criar novo jogo\n(2) - Carregar Jogo\n(3) - Tutorial\n(4) - Sair Jogo");
-			player = new Player(Window.getUserInput(), 100, 100, 1, 10);
 			//currentEnemy = new Enemy("Mercenários", 100, 100, 0, 25, 1); 
 		} else if (gameStateLvl == 1) {
 			if (Window.getUserInput() != null && !Window.getUserInput().equals("1")
@@ -97,7 +96,7 @@ public class GameLogic {
 			Window.setDisplayText("Digite seu nome: ");
 		} else if (gameStateLvl == 1) {
 			if (!Window.getUserInput().isEmpty()) {
-				player = new Player(Window.getUserInput(), 100, 100, 1, 25);
+				player = new Player(Window.getUserInput(), 100, 100, 1, 40);
 				Window.setDisplayText("Seu nome é: " + Window.getUserInput() + "\nEstá correto? (1) - Sim (2) - Não");
 			} else {
 				handleUserInput(true, false);
@@ -121,6 +120,7 @@ public class GameLogic {
 
 			player.name = br.readLine();
 			player.maxHp = Integer.parseInt(br.readLine());
+			player.hp = player.maxHp;
 			player.xp = Integer.parseInt(br.readLine());
 			player.defenseMultiplier = Double.parseDouble(br.readLine());
 			gameState = Integer.parseInt(br.readLine());
@@ -140,6 +140,10 @@ public class GameLogic {
 				
 			}
 			br.close();
+
+			firstBattleQuestion = false; 
+			secondBattleQuestion = false;
+			battleAtkBonus = 1;
 
 			Main.gameMap.get(gameState).run();
 		} catch (Exception e) {
@@ -198,12 +202,34 @@ public class GameLogic {
 		gameStateLvl -= 1;
 	}
 
-	public static void battle(Enemy enemy) {
-		gameStateLvl -= 1;
-		battleRound(enemy);
+	public static void battle() {
+		if (currentEnemy.hp <= (currentEnemy.maxHp % 70) && !firstBattleQuestion && !secondBattleQuestion) {
+			currentQuestionIndex = new Random().nextInt(questions.length);
+			firstBattleQuestion = true;
+
+			previousGameStateAndLvl[0] = gameState;
+			previousGameStateAndLvl[1] = gameStateLvl;
+
+			gameState = 999;
+			gameStateLvl = 0;
+			Main.gameMap.get(999).run();
+		} else if (currentEnemy.hp <= (currentEnemy.maxHp/2) && !secondBattleQuestion) {
+			currentQuestionIndex = new Random().nextInt(questions.length);
+			secondBattleQuestion = true;
+			
+			previousGameStateAndLvl[0] = gameState;
+			previousGameStateAndLvl[1] = gameStateLvl;
+
+			gameState = 999;
+			gameStateLvl = 0;
+			Main.gameMap.get(999).run();
+		} else {
+			gameStateLvl -= 1;
+			battleRound();
+		}
 	}
 
-	public static void battleRound(Enemy enemy) {
+	public static void battleRound() {
 		previousWindowText = "";
 		
 		try {
@@ -217,25 +243,28 @@ public class GameLogic {
 
 				switch (playerAction) {
 					case 1:
-						double damageToEnemy = (player.attack()*battleAtkBonus) - enemy.currentDefensePoints;
+						double damageToEnemy = (player.attack()*battleAtkBonus) - currentEnemy.currentDefensePoints;
 						if (damageToEnemy < 0) {
 							damageToEnemy = 0;
 						}
-						enemy.hp -= damageToEnemy;
-						if(enemy.hp < 0)  {
-							enemy.hp = 0;
+						currentEnemy.hp -= damageToEnemy;
+						if(currentEnemy.hp < 0)  {
+							currentEnemy.hp = 0;
 						}
-						previousWindowText += "Você atacou " + enemy.name + " causando " + damageToEnemy
+						previousWindowText += "Você atacou " + currentEnemy.name + " causando " + damageToEnemy
 								+ " de dano!\n";
-						if (enemy.hp <= 0) {
-							player.hp = player.maxHp;
-							previousWindowText += "\n\n" + enemy.name + " foi derrotado!";
+						if (currentEnemy.hp <= 0) {
+							previousWindowText += "\n\n" + currentEnemy.name + " foi derrotado!";
 						}
 						break;
 					case 2:
-						double defensePoints = player.increaseDefense();
-						System.out.println(defensePoints);
-						previousWindowText += "Você se defendeu e ganhou " + defensePoints + " pontos de defesa!\n";
+						if(player.defenseCount < 3) {
+							double defensePoints = player.increaseDefense();
+							System.out.println(defensePoints);
+							previousWindowText += "Você se defendeu e ganhou " + defensePoints + " pontos de defesa!\n";
+						} else {
+							previousWindowText += "Você atingiu o limite de pontos de defesa.\n";
+						}
 						break;
 					case 3:
 						// calls the method printInventory
@@ -248,11 +277,14 @@ public class GameLogic {
 				}
 			}
 
-			if (!onInventory && enemy.hp > 0) {
-				int enemyAction = enemy.randomAction();
+			if (!onInventory && currentEnemy.hp > 0) {
+				int enemyAction = currentEnemy.randomAction();
+				if(enemyAction == 2 && currentEnemy.defenseCount == 3) {
+					enemyAction = 1;
+				}
 				switch (enemyAction) {
 					case 1:
-						double damageToPlayer = enemy.attack() - player.currentDefensePoints;
+						double damageToPlayer = currentEnemy.attack() - player.currentDefensePoints;
 						if (damageToPlayer < 0) {
 							damageToPlayer = 0;
 						}
@@ -261,27 +293,27 @@ public class GameLogic {
 							player.hp = 0;
 						}
 
-						previousWindowText += enemy.name + " atacou causando " + damageToPlayer + " de dano!";
+						previousWindowText += currentEnemy.name + " atacou causando " + damageToPlayer + " de dano!";
 						if (player.hp <= 0) {
 							previousWindowText += "\n\nVocê foi derrotado!";
 						}
 						break;
 					case 2:
-						double defensePoints = enemy.increaseDefense();
-						previousWindowText += enemy.name + " se defendeu e ganhou " + defensePoints
+						double defensePoints = currentEnemy.increaseDefense();
+						previousWindowText += currentEnemy.name + " se defendeu e ganhou " + defensePoints
 								+ " pontos de defesa!";
 						break;
 				}
 			}
 
 			Window.setDisplayText(
-					enemy.name + "\nHP:" + enemy.hp + "/" + enemy.maxHp +
+				currentEnemy.name + "\nHP:" + currentEnemy.hp + "/" + currentEnemy.maxHp +
 							"\n\n\nNome: " + "Akira Kankyo" + "\nHP:" + player.hp + "/" + player.maxHp + "\nXP:"
 							+ player.xp +
 							"\n\nAtacar (1) - Defender-se (2) - Abrir Inventário (3)\n\n" + previousWindowText + "\n");
 		} catch (NumberFormatException erro1) {
 			Window.setDisplayText(
-					enemy.name + "\nHP:" + enemy.hp + "/" + enemy.maxHp +
+				currentEnemy.name + "\nHP:" + currentEnemy.hp + "/" + currentEnemy.maxHp +
 							"\n\n\nNome: " + "Akira Kankyo" + "\nHP:" + player.hp + "/" + player.maxHp + "\nXP:"
 							+ player.xp +
 							"\n\nAtacar (1) - Defender-se (2) - Utilizar item (3)\n\n" + previousWindowText + "\n");
@@ -290,33 +322,17 @@ public class GameLogic {
 	}
 
 	public static void battleQuestion() {
-		if (currentEnemy.hp == (currentEnemy.maxHp/100*80) && !firstBattleQuestion) {
-			firstBattleQuestion = true;
-
-			previousGameStateAndLvl[0] = gameState;
-			previousGameStateAndLvl[1] = gameStateLvl;
-
-			gameState = 999;
-			gameStateLvl = 0;
-			Main.gameMap.get(999).run();
-		} else if (currentEnemy.hp <= (currentEnemy.maxHp/2) && !secondBattleQuestion) {
-			secondBattleQuestion = true;
-			
-			previousGameStateAndLvl[0] = gameState;
-			previousGameStateAndLvl[1] = gameStateLvl;
-
-			gameState = 999;
-			gameStateLvl = 0;
-			Main.gameMap.get(999).run();
-		}
+		System.out.println("test");
+		
 
 		if (gameStateLvl == 0) {
+			System.out.println("test2");
 			Window.setDisplayText(questions[currentQuestionIndex] + "\n" + answers[currentQuestionIndex]);
 		} else if (gameStateLvl == 1) {
 			String abc = "abc";
 			if (abc.contains(Window.getUserInput()) && !Window.getUserInput().equals("")) {
 				if (Window.getUserInput().equals(correctAnswers[currentQuestionIndex])) {
-					Window.setDisplayText("Resposta correta!\n\nVocê recebeu x1.5 bônus de ataque.");
+					Window.setDisplayText("Resposta correta!\n\nVocê recebeu x0.5 bônus de ataque.");
 					battleAtkBonus += 0.5;
 				} else {
 					Window.setDisplayText("Resposta incorreta!");
@@ -373,7 +389,7 @@ public class GameLogic {
 				Inventory.setAvailable(true);
 				player.hp = player.maxHp;
 			} else {
-				battle(currentEnemy);
+				battle();
 			}
 		} else if (gameStateLvl == 5) {
 			Story.act1_2();
@@ -399,9 +415,7 @@ public class GameLogic {
 			Story.act2_7();
 			currentEnemy = new Enemy("Mercenários", 120, 120, 0, 6, 1);
 		} else if (gameStateLvl == 7) {
-			currentQuestionIndex = new Random().nextInt(questions.length);
-			battleQuestion();
-
+			System.out.println(currentEnemy.hp);
 			if (player.hp <= 0) {
 				gameState = 666;
 				gameStateLvl = 0;
@@ -410,9 +424,12 @@ public class GameLogic {
 				enemyDefeated(currentEnemy);
 				player.eletronicComponents += 1;
 			} else {
-				battle(currentEnemy);
+				battle();
 			}
 		}  else if (gameStateLvl == 8){
+			player.hp = player.maxHp;
+			firstBattleQuestion = false; 
+			secondBattleQuestion = false;
 			Story.act2_8();
 		} else if (gameStateLvl == 9) {
 			Story.act2_9();
@@ -475,17 +492,21 @@ public class GameLogic {
 			Story.act5_4();
 		} else if (gameStateLvl == 4) {
 			Story.act5_5();
-			currentEnemy = new Enemy("Mercenários", 100, 100, 50, 25, 1);
+			currentEnemy = new Enemy("Mercenários", 250, 250, 50, 10, 1);
 		} else if (gameStateLvl == 5) {
+
 			if (player.hp <= 0) {
 				gameState = 999;
 				gameStateLvl = 0;
 			} else if (currentEnemy.hp <= 0) {
 				enemyDefeated(currentEnemy);
 			} else {
-				battle(currentEnemy);
+				currentQuestionIndex = new Random().nextInt(questions.length);
+				battleQuestion();
+				battle();
 			}
 		} else if (gameStateLvl == 6){
+			player.hp = player.maxHp;
 			Story.act5_6();
 		} else if (gameStateLvl == 7){
 			Story.act5_7();	
@@ -526,9 +547,10 @@ public class GameLogic {
 			} else if (currentEnemy.hp <= 0) {
 				enemyDefeated(currentEnemy);
 			} else {
-				battle(currentEnemy);
+				battle();
 			}
 		} else if(gameStateLvl == 2) {
+			player.hp = player.maxHp;
 			Story.act6_2();
 		} else if (gameStateLvl == 3) {
 			Story.act6_3();
@@ -558,9 +580,10 @@ public class GameLogic {
 			} else if (currentEnemy.hp <= 0) {
 				enemyDefeated(currentEnemy);
 			} else {
-				battle(currentEnemy);
+				battle();
 			}
 		} else if(gameStateLvl == 3) {
+			player.hp = player.maxHp;
 			Story.act7_3();
 		} else if(gameStateLvl == 4) {
 			Story.act7_4();

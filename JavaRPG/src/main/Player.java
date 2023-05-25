@@ -13,8 +13,6 @@ public class Player extends Character {
 		this.numDefUpgrades = 0;
 		// O jogador pode escolher uma habilidade
 
-		this.defenseMultiplier = 1;
-
 		items = new ArrayList<String>();
 		this.eletronicComponents = 0;
 	}
@@ -26,11 +24,10 @@ public class Player extends Character {
 
 	@Override
 	public double increaseDefense() {
-		currentDefensePoints += (defenseMultiplier - (defenseMultiplier/3)) % maxHp;
-		if (defenseMultiplier <= 3) {
-			defenseMultiplier ++;	
-		} 
-		return (defenseMultiplier-(defenseMultiplier/3)) % maxHp;
+		defenseCount++;
+		currentDefensePoints += 2 % maxHp;
+
+		return (2 % maxHp);
 	}
 
 	@Override
