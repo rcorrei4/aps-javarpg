@@ -12,7 +12,7 @@ import java.awt.Color;
 public class GameLogic {
 	private static int gameState = 0;
 	private static int gameStateLvl = 0;
-	private static Enemy currentEnemy;
+	public static Enemy currentEnemy;
 	private static String previousWindowText;
 	private static boolean firstBattleQuestion;
 	private static boolean secondBattleQuestion;
@@ -25,7 +25,11 @@ public class GameLogic {
 	
 	private static String[] questions = {
 		"Qual é o princípio por trás do mantra 'reduzir, reutilizar, reciclar' no desenvolvimento sustentável?",
-		"O que é o conceito de 'biodiversidade' no desenvolvimento sustentável?"
+		"O que é o conceito de 'biodiversidade' no desenvolvimento sustentável?",
+		"O que é energia renovável?",
+		"O que é agricultura sustentável?",
+		"Qual é o objetivo principal do desenvolvimento sustentável?",
+		"O que é o conceito de eficiência energética?"
 	};
 
 	private static String[] answers = {
@@ -37,10 +41,26 @@ public class GameLogic {
 		"b) O uso sustentável dos recursos naturais\n" +
 		"c) A promoção da igualdade de gênero nas áreas rurais",
 
+		"a) Fontes de energia que são naturalmente reabastecidas, como solar, eólica, hidrelétrica e biomassa.\n"+
+		"b) Energia gerada a partir de combustíveis fósseis, como carvão e petróleo.\n"+
+		"c) Energia obtida por meio da queima de resíduos e lixo.\n",
 
+		"a) A produção em larga escala de culturas transgênicas.\n"+
+		"b) Um sistema de produção agrícola que busca minimizar os impactos negativos no meio ambiente, conservar os recursos naturais e garantir a viabilidade econômica a longo prazo.\n"+
+		"c) O uso intensivo de pesticidas e fertilizantes para aumentar a produtividade agrícola.",
+
+		
+		"a) Promover o crescimento econômico global sem levar em consideração os impactos ambientais\n"+
+		"b) Aumentar a disponibilidade de recursos naturais para garantir o bem-estar das gerações futuras\n"+
+		"c) Atender às necessidades das gerações presentes sem comprometer a capacidade das futuras gerações de atenderem às suas próprias necessidades.",
+
+		
+		"a) A substituição de fontes de energia convencionais por energias renováveis.\n"+
+		"b) O uso racional de energia, reduzindo o desperdício e aumentando a produtividade energética por unidade de produção.\n"+
+		"c) A utilização de técnicas agrícolas que reduzem o consumo de água."
 	};
 	
-	private static String[] correctAnswers = {"a", "b"};
+	private static String[] correctAnswers = {"a", "b", "a", "b", "c", "b"};
 
 	static Player player = null; // creating a player
 
@@ -96,7 +116,7 @@ public class GameLogic {
 			Window.setDisplayText("Digite seu nome: ");
 		} else if (gameStateLvl == 1) {
 			if (!Window.getUserInput().isEmpty()) {
-				player = new Player(Window.getUserInput(), 100, 100, 1, 40);
+				player = new Player(Window.getUserInput(), 100, 100, 1, 10);
 				Window.setDisplayText("Seu nome é: " + Window.getUserInput() + "\nEstá correto? (1) - Sim (2) - Não");
 			} else {
 				handleUserInput(true, false);
@@ -203,29 +223,33 @@ public class GameLogic {
 	}
 
 	public static void battle() {
-		if (currentEnemy.hp <= (currentEnemy.maxHp % 70) && !firstBattleQuestion && !secondBattleQuestion) {
-			currentQuestionIndex = new Random().nextInt(questions.length);
-			firstBattleQuestion = true;
+		if(player.hp > 0) {
+			if (currentEnemy.hp <= (currentEnemy.maxHp % 70) && !firstBattleQuestion && !secondBattleQuestion) {
+				currentQuestionIndex = new Random().nextInt(questions.length);
+				firstBattleQuestion = true;
 
-			previousGameStateAndLvl[0] = gameState;
-			previousGameStateAndLvl[1] = gameStateLvl;
+				previousGameStateAndLvl[0] = gameState;
+				previousGameStateAndLvl[1] = gameStateLvl;
 
-			gameState = 999;
-			gameStateLvl = 0;
-			Main.gameMap.get(999).run();
-		} else if (currentEnemy.hp <= (currentEnemy.maxHp/2) && !secondBattleQuestion) {
-			currentQuestionIndex = new Random().nextInt(questions.length);
-			secondBattleQuestion = true;
-			
-			previousGameStateAndLvl[0] = gameState;
-			previousGameStateAndLvl[1] = gameStateLvl;
+				gameState = 999;
+				gameStateLvl = 0;
+				Main.gameMap.get(999).run();
+			} else if (currentEnemy.hp <= (currentEnemy.maxHp/2) && !secondBattleQuestion) {
+				currentQuestionIndex = new Random().nextInt(questions.length);
+				secondBattleQuestion = true;
+				
+				previousGameStateAndLvl[0] = gameState;
+				previousGameStateAndLvl[1] = gameStateLvl;
 
-			gameState = 999;
-			gameStateLvl = 0;
-			Main.gameMap.get(999).run();
+				gameState = 999;
+				gameStateLvl = 0;
+				Main.gameMap.get(999).run();
+			} else {
+				gameStateLvl -= 1;
+				battleRound();
+			}
 		} else {
-			gameStateLvl -= 1;
-			battleRound();
+
 		}
 	}
 
@@ -322,11 +346,7 @@ public class GameLogic {
 	}
 
 	public static void battleQuestion() {
-		System.out.println("test");
-		
-
 		if (gameStateLvl == 0) {
-			System.out.println("test2");
 			Window.setDisplayText(questions[currentQuestionIndex] + "\n" + answers[currentQuestionIndex]);
 		} else if (gameStateLvl == 1) {
 			String abc = "abc";
@@ -363,11 +383,6 @@ public class GameLogic {
 	public static void enemyDefeated(Enemy enemy) {
 		String message = "";
 		message += "[Você conseguiu 1 componente eletrônico ao derrotar os mercenários]\n";
-		String droppedItem = enemy.dropItem();
-		if (droppedItem != null) {
-			message += enemy.name + " deixou cair um item: " + droppedItem + "\n" + Inventory.addEnemyItem(droppedItem); // 
-		}
-
 		player.eletronicComponents++;
 
 		Window.setDisplayText(message);
@@ -474,7 +489,9 @@ public class GameLogic {
 		} else if (gameStateLvl == 6) {
 			Window.displayText.setForeground(Color.BLUE);
 			Window.setDisplayText(
-				"[Miyuki agora pode fazer itens para o jogador a partir dos componentes eletrônicos que você conseguir.]");
+				"[Miyuki agora pode fazer itens para o jogador a partir dos componentes eletrônicos que você conseguir.]\n[Você recebeu um Flipper Zero!]"
+				);
+			Inventory.inventory.put(5, "Flipper Zero");
 		} else if (gameStateLvl == 7) {
 			Window.displayText.setForeground(Color.BLACK);
 			handleUserInput(true, true);
@@ -496,13 +513,12 @@ public class GameLogic {
 		} else if (gameStateLvl == 5) {
 
 			if (player.hp <= 0) {
-				gameState = 999;
+				gameState = 666;
 				gameStateLvl = 0;
+				Main.gameMap.get(666).run();
 			} else if (currentEnemy.hp <= 0) {
 				enemyDefeated(currentEnemy);
 			} else {
-				currentQuestionIndex = new Random().nextInt(questions.length);
-				battleQuestion();
 				battle();
 			}
 		} else if (gameStateLvl == 6){
@@ -539,11 +555,12 @@ public class GameLogic {
 	public static void sixthChapter() {
 		if(gameStateLvl == 0) {
 			Story.act6_1();
-			currentEnemy = new Enemy("Mercenário", 100, 100, 0, 25, 1);
+			currentEnemy = new Enemy("Mercenário", 300, 100, 0, 10, 1);
 		} else if(gameStateLvl == 1) {
 			if (player.hp <= 0) {
-				gameState = 999;
+				gameState = 666;
 				gameStateLvl = 0;
+				Main.gameMap.get(666).run();
 			} else if (currentEnemy.hp <= 0) {
 				enemyDefeated(currentEnemy);
 			} else {
@@ -572,11 +589,12 @@ public class GameLogic {
 			Story.act7_1();
 		} else if(gameStateLvl == 1){
 			Story.act7_2();
-			currentEnemy = new Enemy("Hefesto", 100, 100, 100, 50, 1);
+			currentEnemy = new Enemy("Hefesto", 1000, 1000, 100, 15, 1);
 		} else if(gameStateLvl == 2) {
 			if (player.hp <= 0) {
-				gameState = 999;
+				gameState = 666;
 				gameStateLvl = 0;
+				Main.gameMap.get(666).run();
 			} else if (currentEnemy.hp <= 0) {
 				enemyDefeated(currentEnemy);
 			} else {

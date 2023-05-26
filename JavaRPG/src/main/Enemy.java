@@ -1,26 +1,10 @@
 package main;
 
-import java.util.Random;
-import java.util.HashMap;
-
 public class Enemy extends Character {
 
     // Chances de cada ação que o inimigo pode fazer
     private static final double ATTACK_WEIGHT = 0.6;
     private static final double DEFENSE_WEIGHT = 0.3;
-
-    // Item drop rate
-    private static final double ITEM_DROP_RATE = 1.0;
-
-    // list of possible items to drop
-
-    public static HashMap<Integer, String> enemyItems = new HashMap<Integer, String>() {
-        {
-           
-            put(1, "Granada Sombria");
-            put(2, "Rugido do Demônio");
-        }
-    }; 
 
     public Enemy(String name, int hp, int maxHp, int xp, double atkDamage, double defenseMultiplier) {
         super(name, hp, maxHp, xp, atkDamage);
@@ -57,17 +41,5 @@ public class Enemy extends Character {
     @Override
     public double increaseHp() {
         return 0;
-    }
-
-    public String dropItem() {
-        Random random = new Random();
-        if (random.nextDouble() <= ITEM_DROP_RATE) {
-            int index = random.nextInt(enemyItems.size());
-            String droppedItem = enemyItems.get(index);
-            Inventory.addEnemyItem(droppedItem);
-            return droppedItem;
-        } else {
-            return null;
-        }
     }
 }

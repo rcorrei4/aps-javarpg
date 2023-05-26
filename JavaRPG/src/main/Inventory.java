@@ -13,6 +13,9 @@ public class Inventory {
             put(1, "Escudo");
             put(2, "Êxtase de Éter");
             put(3, "Estimulante");
+            //put(4, "Mega Ímã");
+            //put(5, "Flipper Zero");
+
         }
     };
 
@@ -48,21 +51,28 @@ public class Inventory {
                 if (index == 1) {
                     // defesa
                     double defensePoints = GameLogic.player.increaseDefense();
-                    System.out.println(defensePoints);
                     itemMsg += "Você usou o escudo e ganhou " + defensePoints + " pontos de defesa!\n\n";
                     removeItem(1);
                 } else if (index == 2) {
                     // aumenta força
                     double damagePoints = GameLogic.player.increaseStrength();
-                    System.out.println(damagePoints);
-                    itemMsg += "Você usou durateston e ganhou " + damagePoints + " pontos de ataque!\n";
+                    itemMsg += "Você usou êxtase de éter e ganhou " + damagePoints + " pontos de ataque!\n";
                     removeItem(2);
                 } else if (index == 3) {
                     // uso do estimulante
                     double hpPoints = GameLogic.player.increaseHp();
-                    System.out.println(hpPoints);
                     itemMsg += "\nVocê usou o estimulante e ganhou " + hpPoints + " de vida!\n";
                     removeItem(3);
+                } else if (index == 4) {
+                    // uso do estimulante
+                    GameLogic.currentEnemy.hp -= GameLogic.player.atkDamage * 3;
+                    itemMsg += "\nVocê usou o mega ímã causando "+ GameLogic.player.atkDamage * 3 +"\n";
+                    removeItem(4);
+                } else if (index == 5) {
+                    // uso do estimulante
+                    GameLogic.currentEnemy.currentDefensePoints = 0;
+                    itemMsg += "\nVocê usou o flipper zero e removeu totalmente as defesas do inimigo\n";
+                    removeItem(5);
                 } else {
                     return "Opção inválida!\n";
                 }
@@ -73,12 +83,6 @@ public class Inventory {
         } else {
             return "";
         }
-    }
-
-    public static void addItem(Player player, String itemName) {
-        player.items.add(itemName);
-
-        Window.setDisplayText(itemName + " foi adicionado ao seu inventário!");
     }
 
     public static String addEnemyItem(String droppedItem) {

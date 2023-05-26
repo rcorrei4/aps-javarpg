@@ -6,6 +6,7 @@ public class Player extends Character {
 	public int numDefUpgrades;
 	public ArrayList<String> items;
 	public int eletronicComponents;
+	public boolean tripleDamage;
 
 	public Player(String name, int hp, int maxHp, int xp, int atkDamage) {
 		super(name, hp, maxHp, xp, atkDamage);
@@ -32,17 +33,17 @@ public class Player extends Character {
 
 	@Override
 	public double increaseStrength() {
-		double increase = 0.015 * atkDamage; // increase by 1.5% of atkDamage
+		double increase = 20; 
 		atkDamage += increase;
-		currentAttackPoints += increase;
 		return increase;
 
 	}
 
 	@Override
 	public double increaseHp() {
-		double increase = 0.020 * maxHp; // increase by 2.5% of maxHP
-		currentHpPoints += increase;
+		double increase = 50;
+		maxHp += increase;
+		hp += increase;
 		return increase;
 	}
 
@@ -51,18 +52,3 @@ public class Player extends Character {
 	}
 
 }
-/*
- * int input = Window.getUserInput("-> ", 3);
- * 
- * // lidando com os casos
- * if (input == 1) {
- * Window.setDisplayText("Você escolheu: " + atkUpgrades[0] + "!");
- * 
- * } else if (input == 2) {
- * Window.setDisplayText("Você escolheu: " + atkUpgrades[1] + "!");
- * numDefUpgrades++;
- * } else if (input == 3) {
- * Window.setDisplayText("Você escolheu: " + atkUpgrades[2] + "!");
- * numDefUpgrades++;
- * }
- */

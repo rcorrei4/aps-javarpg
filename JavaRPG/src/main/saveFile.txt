@@ -2,8 +2,8 @@ r
 100
 1
 0.0
-3
-4
+5
+2
 1:Escudo
 2:Êxtase de Éter
 3:Estimulante
